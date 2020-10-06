@@ -1,5 +1,5 @@
 # first_vuetify_project
-
+.
 ## Project setup
 ```
 npm install
