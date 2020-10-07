@@ -1,7 +1,9 @@
 <template>
-  <div class="home">
-    <h1>This is the Dashboard page</h1>
-    
+  <div class="Dashboard">
+    <h1 class="subheading grey--text">This is the Dashboard page</h1>
+    <v-container class="my-5">
+      content
+    </v-container>
   </div>
 </template>
 
@@ -11,5 +13,3 @@ export default {
   components: {},
 };
 </script>
-
-

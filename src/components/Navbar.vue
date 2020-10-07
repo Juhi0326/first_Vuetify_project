@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-toolbar app flat>
+    <v-toolbar app flat height="150" class="grey lighten-4">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <span class="font-weight-light">Todo</span>
@@ -14,19 +14,16 @@
     </v-toolbar>
 
     <v-navigation-drawer app v-model="drawer" class="blue-grey lighten-5">
+      <p class="ma-5">Juhász István</p>
       <v-list-item>
         <v-list-item-avatar size="150">
           <v-img src="../assets/me3.jpg"></v-img>
         </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>Juhász István</v-list-item-title>
-        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense>
         <v-list-item @click="drawer = !drawer">
-          <v-list-item-icon>
+          <v-list-item-icon class="font-weight-light">
             <v-icon>mdi mdi-close-circle</v-icon>
           </v-list-item-icon>
 
@@ -61,7 +58,7 @@ export default {
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
         { title: "Projects", icon: "mdi-forum", route: "/projects" },
-         { title: "Team", icon: "mdi-forum", route: "/team" },
+        { title: "Team", icon: "mdi-forum", route: "/team" },
       ],
     };
   },
