@@ -59,8 +59,8 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Home", icon: "mdi-view-dashboard", route: "/" },
-        { title: "About", icon: "mdi-forum", route: "/about" },
+        { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
+        { title: "Projects", icon: "mdi-forum", route: "/projects" },
       ],
     };
   },
