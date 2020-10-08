@@ -14,17 +14,18 @@
     </v-toolbar>
 
     <v-navigation-drawer app v-model="drawer" class="blue-grey lighten-5">
-      <v-column align-center >
-        <v-row class="mt-5 ml-15" >
-          <v-avatar size="120">
-            <img src="/me3.jpg" alt="">
-          </v-avatar>
-        </v-row>
-        <v-row class="mt-5 ml-16 mb-5" >
-          <p class="subheading mt-5 ">Juhász István</p>
-        </v-row>
-
-      </v-column>
+      <v-list >
+        <v-list-item class="px-2 ml-10 mt-5" > 
+          <v-list-item-avatar size="150">
+            <v-img src="/me3.jpg"></v-img>
+          </v-list-item-avatar>
+        </v-list-item>
+      </v-list>
+      <v-list>
+        <v-list-item class="ml-14">
+          <v-list-item-title>Juhász István</v-list-item-title>
+        </v-list-item>
+      </v-list>
 
 
 
