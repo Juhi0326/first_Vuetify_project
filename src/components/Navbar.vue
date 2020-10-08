@@ -7,6 +7,22 @@
         <span>Projects</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+
+      <div class="text-center">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text color="grey" dark v-bind="attrs" v-on="on">
+              Dropdown
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in items" :key="index" :to="item.route" >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+
       <v-btn text color="grey">
         <span>Sign out</span>
         <v-icon right>mdi mdi-exit-to-app </v-icon>
@@ -14,8 +30,8 @@
     </v-toolbar>
 
     <v-navigation-drawer app v-model="drawer" class="blue-grey lighten-5">
-      <v-list >
-        <v-list-item class="px-2 ml-10 mt-5" > 
+      <v-list>
+        <v-list-item class="px-2 ml-10 mt-5">
           <v-list-item-avatar size="150">
             <v-img src="/me3.jpg"></v-img>
           </v-list-item-avatar>
@@ -23,11 +39,11 @@
       </v-list>
       <v-list>
         <v-list-item class="ml-14">
-          <v-list-item-title class="font-weight-bold">Juhász István</v-list-item-title>
+          <v-list-item-title class="font-weight-bold"
+            >Juhász István</v-list-item-title
+          >
         </v-list-item>
       </v-list>
-
-
 
       <v-divider></v-divider>
       <v-list dense>
@@ -58,9 +74,7 @@
   </nav>
 </template>
 
-
 <script>
-
 export default {
   name: "Navbar",
   data() {
