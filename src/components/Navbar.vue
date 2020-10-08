@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-toolbar app flat height="150" class="grey lighten-4">
+    <v-toolbar app flat height="150" class="grey lighten-4 ml-4">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <span class="font-weight-light">Todo</span>
