@@ -23,7 +23,7 @@
       </v-list>
       <v-list>
         <v-list-item class="ml-14">
-          <v-list-item-title>Juhász István</v-list-item-title>
+          <v-list-item-title class="font-weight-bold">Juhász István</v-list-item-title>
         </v-list-item>
       </v-list>
 
