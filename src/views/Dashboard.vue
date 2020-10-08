@@ -2,7 +2,7 @@
   <div class="Dashboard">
     <h1 class="subheading grey--text">This is the Dashboard page</h1>
     <v-container class="my-5">
-      <v-card class="pa-4" v-for="(project, index) in projects" :key="index">
+      <v-card tile class="pa-4" v-for="(project, index) in projects" :key="index">
         <v-row :class="`pa-3 project ${project.status}`">
           <v-col cols="12" md="6">
             <div class="caption grey--text">
