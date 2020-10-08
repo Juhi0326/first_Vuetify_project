@@ -8,7 +8,7 @@
             <v-expansion-panel-header>
               Item
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content class="px-4 grey--text">
               <div class="font-weight-bold">2020.10.17</div>
               <div>info</div>
             </v-expansion-panel-content>
