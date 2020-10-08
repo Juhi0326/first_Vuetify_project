@@ -3,18 +3,36 @@
     <h1 class="subheading grey--text">This is the Dashboard page</h1>
     <v-container class="my-5">
       <v-row class="mb-3">
-        <v-btn small text color="grey" @click="sortBy('title')">
-          <v-icon left small>
-            mdi mdi-folder
-          </v-icon>
-          <span class="caption text lowercase">By project name</span>
-        </v-btn>
-        <v-btn small text color="grey" @click="sortBy('person')">
-          <v-icon left small>
-            mdi mdi-account
-          </v-icon>
-          <span class="caption text lowercase">By person</span>
-        </v-btn>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              small
+              text
+              color="grey"
+              @click="sortBy('title')"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon left small>
+                mdi mdi-folder
+              </v-icon>
+              <span class="caption text lowercase">By project name</span>
+            </v-btn>
+          </template>
+          <span>Sorting by project name</span>
+        </v-tooltip>
+
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn small text color="grey" @click="sortBy('person')" v-on="on" v-bind="attrs">
+              <v-icon left small>
+                mdi mdi-account
+              </v-icon>
+              <span class="caption text lowercase">By person</span>
+            </v-btn>
+          </template>
+          <span>Sorting by person</span>
+        </v-tooltip>
       </v-row>
       <v-card
         tile
@@ -102,7 +120,7 @@ export default {
   },
   methods: {
     sortBy(prop) {
-      this.projects.sort((a, b) => a[prop] < b[prop] ? -1 : 1);
+      this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
     },
   },
   components: {},

@@ -17,7 +17,7 @@
       <p class="ma-5">Juhász István</p>
       <v-list-item>
         <v-list-item-avatar size="150">
-          <v-img src="../assets/me3.jpg"></v-img>
+          <v-img src='../../public/me3.jpg'></v-img>
         </v-list-item-avatar>
       </v-list-item>
       <v-divider></v-divider>
@@ -49,7 +49,9 @@
   </nav>
 </template>
 
+
 <script>
+
 export default {
   name: "Navbar",
   data() {
