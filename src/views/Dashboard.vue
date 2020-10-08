@@ -35,6 +35,7 @@
             </div>
           </v-col>
         </v-row>
+        <v-dividier></v-dividier>
       </v-card>
     </v-container>
   </div>
