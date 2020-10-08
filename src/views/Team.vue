@@ -13,7 +13,10 @@
         >
           <v-card flat class="text-center ma-3">
             <v-responsive class="pt-4">
-              images are here
+              <v-avatar size="100" class="grey lighten-2">
+                <img :src="person.avatar" alt="">
+              </v-avatar>
+              
             </v-responsive>
             <v-card-text>
               <div class="subheading">
@@ -39,15 +42,25 @@
 </template>
 
 <script>
+
+
 export default {
   name: "Team",
   data() {
     return {
       team: [
-        { name: "Juhász István", role: "Junior web developer" },
-        { name: "Bigos András", role: "Graphic designer" },
-        { name: "Borzsák Anna", role: "web developer" },
-        { name: "Márkus Szabolcs", role: "Sales account manager" },
+        {
+          name: "Juhász István",
+          role: "Junior web developer",
+          avatar: "/me3.jpg",
+        },
+        { name: "Bigos András", role: "Graphic designer", avatar: "/santa.webp" },
+        { name: "Borzsák Anna", role: "web developer", avatar: "/anna.webp" },
+        {
+          name: "Márkus Szabolcs",
+          role: "Sales account manager",
+          avatar: "/man.webp",
+        },
       ],
     };
   },
