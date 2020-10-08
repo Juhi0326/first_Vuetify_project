@@ -37,8 +37,8 @@
       <v-card
         tile
         class="pa-4"
-        v-for="(project, index) in projects"
-        :key="index"
+        v-for="(project , i ) in projects"
+        :key="i"
       >
         <v-row :class="`pa-3 project ${project.status}`">
           <v-col cols="12" md="6">
@@ -115,6 +115,14 @@ export default {
           content:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi reprehenderit accusantium itaque distinctio officia ratione error. Soluta, consequatur? Vitae at eum deleniti, iste veniam sapiente! Id hic nisi magni doloribus?",
         },
+        {
+          title: "Design a new website again",
+          person: "Juhász István",
+          due: "2020.12.01",
+          status: "ongoing",
+          content:
+            "Ez már a második projectem leírása",
+        }
       ],
     };
   },
