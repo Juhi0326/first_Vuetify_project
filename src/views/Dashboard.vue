@@ -2,20 +2,39 @@
   <div class="Dashboard">
     <h1 class="subheading grey--text">This is the Dashboard page</h1>
     <v-container class="my-5">
-      <v-card tile class="pa-4" v-for="(project, index) in projects" :key="index">
+      <v-row class="mb-3">
+        <v-btn small text color="grey" @click="sortBy('title')">
+          <v-icon left small>
+            mdi mdi-folder
+          </v-icon>
+          <span class="caption text lowercase">By project name</span>
+        </v-btn>
+        <v-btn small text color="grey" @click="sortBy('person')">
+          <v-icon left small>
+            mdi mdi-account
+          </v-icon>
+          <span class="caption text lowercase">By person</span>
+        </v-btn>
+      </v-row>
+      <v-card
+        tile
+        class="pa-4"
+        v-for="(project, index) in projects"
+        :key="index"
+      >
         <v-row :class="`pa-3 project ${project.status}`">
           <v-col cols="12" md="6">
             <div class="caption grey--text">
               Project title
             </div>
-            <div>{{ project.title}}</div>
+            <div>{{ project.title }}</div>
           </v-col>
           <v-col cols="6" sm="4" md="2">
             <div class="caption grey--text">
               Person
             </div>
             <div>
-              {{ project.person}}
+              {{ project.person }}
             </div>
           </v-col>
           <v-col cols="6" sm="4" md="2">
@@ -23,12 +42,14 @@
               Due by
             </div>
             <div>
-              {{ project.due}}
+              {{ project.due }}
             </div>
           </v-col>
           <v-col cols="6" sm="4" md="2">
             <div>
-              <v-chip :class="`${project.status} white--text caption my-2`">{{project.status}}</v-chip>
+              <v-chip :class="`${project.status} white--text caption my-2`">{{
+                project.status
+              }}</v-chip>
             </div>
           </v-col>
         </v-row>
@@ -79,29 +100,32 @@ export default {
       ],
     };
   },
+  methods: {
+    sortBy(prop) {
+      this.projects.sort((a, b) => a[prop] < b[prop] ? -1 : 1);
+    },
+  },
   components: {},
 };
 </script>
 
 <style>
-
 .project.complete {
-  border-left: 4px solid rgb(0, 255, 0)  ;
+  border-left: 4px solid rgb(0, 255, 0);
 }
 .project.ongoing {
-  border-left: 4px solid rgb(255, 192, 0)  ;
+  border-left: 4px solid rgb(255, 192, 0);
 }
 .project.overdue {
-  border-left: 4px solid rgb(255, 0, 0)  ;
+  border-left: 4px solid rgb(255, 0, 0);
 }
 .theme--light.v-chip:not(.v-chip--active).complete {
- background: rgb(0,255,0) ;
+  background: rgb(0, 255, 0);
 }
 .theme--light.v-chip:not(.v-chip--active).ongoing {
- background: rgb(255, 192, 0) ;
+  background: rgb(255, 192, 0);
 }
 .theme--light.v-chip:not(.v-chip--active).overdue {
- background: rgb(255,0,0) ;
+  background: rgb(255, 0, 0);
 }
-
 </style>
