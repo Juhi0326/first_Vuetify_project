@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-toolbar app flat height="150" class="grey lighten-4 ml-4">
+    <v-app-bar app flat height="150" class="grey lighten-4 ml-4">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <span class="font-weight-light">Todo</span>
@@ -27,7 +27,7 @@
         <span>Sign out</span>
         <v-icon right>mdi mdi-exit-to-app </v-icon>
       </v-btn>
-    </v-toolbar>
+    </v-app-bar>
 
     <v-navigation-drawer app v-model="drawer" class="blue-grey lighten-5">
       <v-list>

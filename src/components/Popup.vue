@@ -8,20 +8,21 @@
       </template>
 
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          Popup title
-        </v-card-title>
+        <v-card-title class="headline grey lighten-3"> </v-card-title>
 
         <v-card-text>
-          Popup text
+          <v-form class="px-3">
+            <v-text-field label="Title" v-model="title" prepend-icon="mdi mdi-format-title"> </v-text-field>
+            <v-textarea label="Information" v-model="content" prepend-icon="mdi mdi-grease-pencil"></v-textarea>
+          </v-form>
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false">
-            Submit
+          <v-btn color="green lighten-2 mb-5" dark @click="submit">
+            Add project
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -32,9 +33,17 @@
 <script>
 export default {
   data() {
-      return {
-        dialog: false,
-      }
+    return {
+      dialog: false,
+      title: "",
+      content:""
+    };
   },
+  methods: {
+      submit() {
+          this.dialog=false;
+          console.log(this.title, this.content);
+      }
+  }
 };
 </script>
