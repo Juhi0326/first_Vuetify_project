@@ -43,6 +43,8 @@ export default {
       submit() {
           this.dialog=false;
           console.log(this.title, this.content);
+          this.title='';
+          this.content=''
       }
   }
 };

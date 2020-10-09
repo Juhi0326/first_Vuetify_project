@@ -12,7 +12,7 @@
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text color="grey" dark v-bind="attrs" v-on="on">
-              Dropdown
+              Menu
             </v-btn>
           </template>
           <v-list>
