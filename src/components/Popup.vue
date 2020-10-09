@@ -17,7 +17,7 @@
         <v-card-title class="headline grey lighten-3"> </v-card-title>
 
         <v-card-text>
-          <v-form class="px-3" v-model="valid">
+          <v-form class="px-3" ref="form">
             <v-text-field
               label="Title"
               v-model="title"
@@ -46,6 +46,7 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
+                        required
                         :value="computedDateFormattedDatefns"
                         clearable
                         label="Due date"
@@ -55,10 +56,7 @@
                         v-model="date"
                         @click:clear="date = null"
                         prepend-icon="mdi-calendar"
-                        :rules="inputRules"
-                        :counter="3"
-
-                        required
+                        :rules="dateRule"
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -91,26 +89,33 @@ import { format, parseISO } from "date-fns";
 export default {
   data() {
     return {
+      justOpened: false,
       valid: false,
       date: null,
       menu: false,
       dialog: false,
       title: "",
       content: "",
-      inputRules: [
-        v => !!v || 'This field is required',
-        v => v.length >= 3 || 'This field must be more than 3 characters',
+      inputRules: 
+      [
+        (v) => !!v || "This field is required",
+        (v) => v.length >= 3 || "This field must be more than 3 characters",
       ],
+      dateRule: [(v) => !!v || "This field is required"],
     };
   },
   methods: {
     submit() {
-      this.dialog = false;
-      console.log(this.title, this.content, this.date);
-      this.title = "";
-      this.content = "";
+      if (this.$refs.form.validate()) {
+        this.dialog = false;
+        console.log(this.title, this.content, this.date);
+        this.title = "";
+        this.content = "";
+        this.justOpened=false;
+      }
     },
     openDialog() {
+      this.justOpened = true;
       this.title = "";
       this.content = "";
       this.date = null;
