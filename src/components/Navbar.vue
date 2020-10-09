@@ -44,6 +44,7 @@
           >
         </v-list-item>
       </v-list>
+      <Popup/>
 
       <v-divider></v-divider>
       <v-list dense>
@@ -75,7 +76,11 @@
 </template>
 
 <script>
+import Popup from './Popup'
 export default {
+  components: {
+    Popup
+  },
   name: "Navbar",
   data() {
     return {
