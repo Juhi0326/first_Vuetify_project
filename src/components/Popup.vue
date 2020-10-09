@@ -89,7 +89,7 @@ import { format, parseISO } from "date-fns";
 export default {
   data() {
     return {
-      justOpened: false,
+      
       valid: false,
       date: null,
       menu: false,
@@ -111,11 +111,11 @@ export default {
         console.log(this.title, this.content, this.date);
         this.title = "";
         this.content = "";
-        this.justOpened=false;
+        
       }
     },
     openDialog() {
-      this.justOpened = true;
+      
       this.title = "";
       this.content = "";
       this.date = null;
