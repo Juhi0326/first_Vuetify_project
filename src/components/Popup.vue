@@ -85,6 +85,7 @@
 
 <script>
 import { format, parseISO } from "date-fns";
+import db from '@/fb'
 
 export default {
   data() {
@@ -108,10 +109,20 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         this.dialog = false;
-        console.log(this.title, this.content, this.date);
-        this.title = "";
-        this.content = "";
-        
+        const project = {
+            title: this.title,
+            content: this.content,
+            due: this.date.toString(),
+            person: 'Juhász István',
+            status: 'ongoing'
+            
+        }
+        db.collection('projects').add(project).then(()=> {
+            console.log('the project added to db!');
+            console.log(project.title);
+            console.log(project.content);
+            console.log(project.person);
+        })
       }
     },
     openDialog() {
@@ -124,7 +135,7 @@ export default {
   computed: {
     computedDateFormattedDatefns() {
       return this.date
-        ? format(parseISO(new Date().toISOString()), "yyyy.MM.dd")
+        ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
     },
   },
