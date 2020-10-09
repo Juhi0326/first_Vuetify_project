@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     computedDateFormattedDatefns() {
-      return this.date ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd") : '';
+      return this.date ? format(parseISO(new Date().toISOString()), "yyyy.MM.dd") : '';
     },
   },
 };
