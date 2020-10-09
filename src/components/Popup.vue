@@ -2,7 +2,13 @@
   <div class="text-center">
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green lighten-2 mb-5" dark v-bind="attrs" v-on="on" @click="openDialog()">
+        <v-btn
+          color="green lighten-2 mb-5"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          @click="openDialog()"
+        >
           Add new project
         </v-btn>
       </template>
@@ -70,7 +76,7 @@
 
 <script>
 import { format, parseISO } from "date-fns";
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -83,10 +89,18 @@ export default {
     };
   },
   validations: {
-    name: {
+    title: {
       required,
-      minLength: minLength(3)
-    }
+      minLength: minLength(3),
+    },
+    content: {
+      required,
+      minLength: minLength(3),
+    },
+    date: {
+      required,
+      minLength: minLength(3),
+    },
   },
   methods: {
     submit() {
@@ -96,14 +110,16 @@ export default {
       this.content = "";
     },
     openDialog() {
-        this.title = "";
-        this.content = "";
-        this.date=null;
-    }
+      this.title = "";
+      this.content = "";
+      this.date = null;
+    },
   },
   computed: {
     computedDateFormattedDatefns() {
-      return this.date ? format(parseISO(new Date().toISOString()), "yyyy.MM.dd") : '';
+      return this.date
+        ? format(parseISO(new Date().toISOString()), "yyyy.MM.dd")
+        : "";
     },
   },
 };
