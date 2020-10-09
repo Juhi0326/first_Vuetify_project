@@ -41,6 +41,7 @@
                         v-bind="attrs"
                         v-on="on"
                         @click:clear="date = null"
+                        prepend-icon="mdi-calendar"
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -89,9 +90,9 @@ export default {
     },
   },
   computed: {
-computedDateFormattedDatefns () {
-        return this.date;
-      }
+    computedDateFormattedDatefns() {
+      return this.date;
+    },
   },
 };
 </script>
