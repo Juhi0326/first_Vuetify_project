@@ -74,7 +74,7 @@ import { format, parseISO } from "date-fns";
 export default {
   data() {
     return {
-      date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+      date: null,
       menu: false,
       dialog: false,
       title: "",
@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     computedDateFormattedDatefns() {
-      return this.date;
+      return this.date ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd") : '';
     },
   },
 };
