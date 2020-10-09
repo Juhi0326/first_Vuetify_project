@@ -14,20 +14,26 @@
       </template>
 
       <v-card>
-        <v-card-title class="headline grey lighten-3 "> </v-card-title>
+        <v-card-title class="headline grey lighten-3"> </v-card-title>
 
         <v-card-text>
-          <v-form class="px-3">
+          <v-form class="px-3" v-model="valid">
             <v-text-field
               label="Title"
               v-model="title"
               prepend-icon="mdi mdi-format-title"
+              :rules="inputRules"
+              :counter="3"
+              required
             >
             </v-text-field>
             <v-textarea
               label="Information"
               v-model="content"
               prepend-icon="mdi mdi-grease-pencil"
+              :rules="inputRules"
+              :counter="3"
+              required
             ></v-textarea>
 
             <v-container>
@@ -46,8 +52,13 @@
                         readonly
                         v-bind="attrs"
                         v-on="on"
+                        v-model="date"
                         @click:clear="date = null"
                         prepend-icon="mdi-calendar"
+                        :rules="inputRules"
+                        :counter="3"
+
+                        required
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -76,31 +87,21 @@
 
 <script>
 import { format, parseISO } from "date-fns";
-import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   data() {
     return {
+      valid: false,
       date: null,
       menu: false,
       dialog: false,
       title: "",
       content: "",
+      inputRules: [
+        v => !!v || 'This field is required',
+        v => v.length >= 3 || 'This field must be more than 3 characters',
+      ],
     };
-  },
-  validations: {
-    title: {
-      required,
-      minLength: minLength(3),
-    },
-    content: {
-      required,
-      minLength: minLength(3),
-    },
-    date: {
-      required,
-      minLength: minLength(3),
-    },
   },
   methods: {
     submit() {
