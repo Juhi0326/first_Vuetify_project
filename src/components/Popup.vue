@@ -12,8 +12,45 @@
 
         <v-card-text>
           <v-form class="px-3">
-            <v-text-field label="Title" v-model="title" prepend-icon="mdi mdi-format-title"> </v-text-field>
-            <v-textarea label="Information" v-model="content" prepend-icon="mdi mdi-grease-pencil"></v-textarea>
+            <v-text-field
+              label="Title"
+              v-model="title"
+              prepend-icon="mdi mdi-format-title"
+            >
+            </v-text-field>
+            <v-textarea
+              label="Information"
+              v-model="content"
+              prepend-icon="mdi mdi-grease-pencil"
+            ></v-textarea>
+
+            <v-container>
+              <v-row>
+                <v-col cols="12" lg="6">
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    max-width="290"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        :value="computedDateFormattedDatefns"
+                        clearable
+                        label="Due date"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        @click:clear="date = null"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="date"
+                      @change="menu = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-form>
         </v-card-text>
 
@@ -31,21 +68,30 @@
 </template>
 
 <script>
+import { format, parseISO } from "date-fns";
+
 export default {
   data() {
     return {
+      date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+      menu: false,
       dialog: false,
       title: "",
-      content:""
+      content: "",
     };
   },
   methods: {
-      submit() {
-          this.dialog=false;
-          console.log(this.title, this.content);
-          this.title='';
-          this.content=''
+    submit() {
+      this.dialog = false;
+      console.log(this.title, this.content, this.date);
+      this.title = "";
+      this.content = "";
+    },
+  },
+  computed: {
+computedDateFormattedDatefns () {
+        return this.date;
       }
-  }
+  },
 };
 </script>
