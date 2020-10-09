@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green lighten-2 mb-5" dark v-bind="attrs" v-on="on">
+        <v-btn color="green lighten-2 mb-5" dark v-bind="attrs" v-on="on" @click="date=null">
           Add new project
         </v-btn>
       </template>
