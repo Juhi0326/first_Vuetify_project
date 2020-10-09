@@ -8,7 +8,7 @@
       </template>
 
       <v-card>
-        <v-card-title class="headline grey lighten-3"> </v-card-title>
+        <v-card-title class="headline grey lighten-3 "> </v-card-title>
 
         <v-card-text>
           <v-form class="px-3">
@@ -70,6 +70,7 @@
 
 <script>
 import { format, parseISO } from "date-fns";
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   data() {
@@ -80,6 +81,12 @@ export default {
       title: "",
       content: "",
     };
+  },
+  validations: {
+    name: {
+      required,
+      minLength: minLength(3)
+    }
   },
   methods: {
     submit() {
