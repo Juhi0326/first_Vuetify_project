@@ -78,53 +78,31 @@
 </template>
 
 <script>
+import db from '@/fb';
+
 export default {
   name: "Dashboard",
   data() {
     return {
-      projects: [
-        {
-          title: "Design a new website",
-          person: "Juhász István",
-          due: "2020.11.01",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi reprehenderit accusantium itaque distinctio officia ratione error. Soluta, consequatur? Vitae at eum deleniti, iste veniam sapiente! Id hic nisi magni doloribus?",
-        },
-        {
-          title: "Code the homepage",
-          person: "Bigos András",
-          due: "2020.12.01",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi reprehenderit accusantium itaque distinctio officia ratione error. Soluta, consequatur? Vitae at eum deleniti, iste veniam sapiente! Id hic nisi magni doloribus?",
-        },
-        {
-          title: "Design video thumbnails",
-          person: "Borzsák Anna",
-          due: "2020.10.01",
-          status: "complete",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi reprehenderit accusantium itaque distinctio officia ratione error. Soluta, consequatur? Vitae at eum deleniti, iste veniam sapiente! Id hic nisi magni doloribus?",
-        },
-        {
-          title: "Create a community forum",
-          person: "Márkus Szabolcs",
-          due: "2020.10.01",
-          status: "overdue",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi reprehenderit accusantium itaque distinctio officia ratione error. Soluta, consequatur? Vitae at eum deleniti, iste veniam sapiente! Id hic nisi magni doloribus?",
-        },
-        {
-          title: "Design a new website again",
-          person: "Juhász István",
-          due: "2020.12.01",
-          status: "ongoing",
-          content:
-            "Ez már a második projectem leírása",
-        }
-      ],
+      projects: [],
     };
+  },
+  created() {
+    db.collection("projects").onSnapshot(res=> {
+      const changes = res.docChanges();
+      console.log(changes.data);
+
+    changes.forEach(change => {
+      if (change.type ==='added') {
+        this.projects.push({
+          ...change.doc.data(),
+          id: change.doc.id
+        })
+      }
+    })
+
+
+    })
   },
   methods: {
     sortBy(prop) {

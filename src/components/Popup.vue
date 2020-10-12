@@ -149,7 +149,7 @@ export default {
     },
 
     titleErrors() {
-      console.log(this.$v.title);
+    
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
       !this.$v.title.minLength &&
@@ -158,7 +158,7 @@ export default {
       return errors;
     },
     contentErrors() {
-      console.log(this.$v.content);
+      
       const errors = [];
       if (!this.$v.content.$dirty) return errors;
       !this.$v.content.minLength &&
@@ -168,7 +168,7 @@ export default {
     },
     dueErrors() {
       const errors = [];
-      console.log(this.$v.date);
+      
       if (!this.$v.date.$dirty) return errors;
       !this.$v.date.required && errors.push("Due is required.");
       return errors;
