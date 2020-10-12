@@ -73,11 +73,33 @@
             </div>
           </v-col>
           <v-col cols="6" sm="2" md="1">
-            <div>
-              <v-btn color="primary" class="my-2">
-                complete
-              </v-btn>
-            </div>
+            <v-dialog v-model="dialog" width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on" class="my-2">
+                  complete
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline"
+                    >Are you sure to set project status to complete?</span
+                  >
+                </v-card-title>
+                <v-card-text>
+                  After you set this project complete you will not to change
+                  this status!
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="green darken-1" text @click="dialog = false">
+                    Yes
+                  </v-btn>
+                  <v-btn color="green darken-1" text @click="dialog = false">
+                    No
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -94,6 +116,7 @@ export default {
   data() {
     return {
       projects: [],
+      dialog: false,
     };
   },
   created() {
