@@ -91,8 +91,13 @@
 <script>
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
+  validations: {
+      name: { required, maxLength: minLength(3) },
+      select: { required },
+      },
   data() {
     return {
       valid: true,
