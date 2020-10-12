@@ -17,12 +17,11 @@
         <v-card-title class="headline grey lighten-3"> </v-card-title>
 
         <v-card-text>
-          <v-form class="px-3" ref="form">
+          <v-form class="px-3">
             <v-text-field
               label="Title"
               v-model="title"
               prepend-icon="mdi mdi-format-title"
-              :rules="inputRules"
               :counter="3"
               required
             >
@@ -31,7 +30,6 @@
               label="Information"
               v-model="content"
               prepend-icon="mdi mdi-grease-pencil"
-              :rules="inputRules"
               :counter="3"
               required
             ></v-textarea>
@@ -56,7 +54,7 @@
                         v-model="date"
                         @click:clear="date = null"
                         prepend-icon="mdi-calendar"
-                        :rules="dateRule"
+                        
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -106,11 +104,6 @@ export default {
       dialog: false,
       title: "",
       content: "",
-      inputRules: [
-        (v) => !!v || "This field is required",
-        (v) => v.length >= 3 || "This field must be more than 3 characters",
-      ],
-      dateRule: [(v) => !!v || "This field is required"],
       loading: false,
     };
   },
