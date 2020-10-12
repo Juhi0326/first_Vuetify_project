@@ -2,13 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="green lighten-2 mb-5"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          @click="openDialog()"
-        >
+        <v-btn color="green lighten-2 mb-5" dark v-bind="attrs" v-on="on">
           Add new project
         </v-btn>
       </template>
@@ -20,10 +14,9 @@
           <v-form class="px-3">
             <v-text-field
               label="Title"
-              :error-messages="nameErrors"
+              :error-messages="titleErrors"
               v-model="title"
               prepend-icon="mdi mdi-format-title"
-              :counter="3"
               required
               @input="$v.title.$touch()"
               @blur="$v.title.$touch()"
@@ -34,7 +27,6 @@
               :error-messages="contentErrors"
               v-model="content"
               prepend-icon="mdi mdi-grease-pencil"
-              :counter="3"
               required
               @input="$v.content.$touch()"
               @blur="$v.content.$touch()"
@@ -98,11 +90,14 @@
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
+import { validationMixin } from "vuelidate";
 
 export default {
+  mixins: [validationMixin],
   validations: {
-    name: { required, maxLength: minLength(3) },
-    select: { required },
+    title: { required, minLength: minLength(3) },
+    content: { required, minLength: minLength(3) },
+    date: { required },
   },
   data() {
     return {
@@ -119,23 +114,28 @@ export default {
     submit() {
       this.$v.$touch();
 
-      const project = {
-        title: this.title,
-        content: this.content,
-        due: this.date.toString(),
-        person: "Juhász István",
-        status: "ongoing",
-      };
+      if (!this.$v.invalid) {
+        const project = {
+          title: this.title,
+          content: this.content,
+          due: this.date.toString(),
+          person: "Juhász István",
+          status: "ongoing",
+        };
 
-      db.collection("projects")
-        .add(project)
-        .then(() => {
-          this.loading = false;
-          this.dialog = false;
-          this.$emit("projectAdded");
-        });
+        db.collection("projects")
+          .add(project)
+          .then(() => {
+            this.loading = false;
+            this.dialog = false;
+            this.$emit("projectAdded");
+            this.clear();
+            
+          });
+      }
     },
     clear() {
+      this.$v.$reset()
       this.title = "";
       this.content = "";
       this.date = null;
@@ -147,15 +147,18 @@ export default {
         ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
     },
+
     titleErrors() {
+      console.log(this.$v.title);
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
       !this.$v.title.minLength &&
-        errors.push("Ttle must be more then 3 characters long");
+        errors.push("Title must be more then 3 characters long");
       !this.$v.title.required && errors.push("Title is required.");
       return errors;
     },
     contentErrors() {
+      console.log(this.$v.content);
       const errors = [];
       if (!this.$v.content.$dirty) return errors;
       !this.$v.content.minLength &&
@@ -165,10 +168,9 @@ export default {
     },
     dueErrors() {
       const errors = [];
-      if (!this.$v.due.$dirty) return errors;
-      !this.$v.due.minLength &&
-        errors.push("Due must be more then 3 characters long");
-      !this.$v.due.required && errors.push("Due is required.");
+      console.log(this.$v.date);
+      if (!this.$v.date.$dirty) return errors;
+      !this.$v.date.required && errors.push("Due is required.");
       return errors;
     },
   },
