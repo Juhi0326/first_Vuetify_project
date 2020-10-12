@@ -65,11 +65,18 @@
               {{ project.due }}
             </div>
           </v-col>
-          <v-col cols="6" sm="4" md="2">
+          <v-col cols="6" sm="2" md="1">
             <div>
               <v-chip :class="`${project.status} white--text caption my-2`">{{
                 project.status
               }}</v-chip>
+            </div>
+          </v-col>
+          <v-col cols="6" sm="2" md="1">
+            <div>
+              <v-btn color="primary" class="my-2">
+                complete
+              </v-btn>
             </div>
           </v-col>
         </v-row>
@@ -105,11 +112,12 @@ export default {
         } else {
           console.log("overdue!");
 
-          let id=change.doc.id;
-          db.collection("projects").doc(id).update({status: "overdue"})
+          let id = change.doc.id;
+          db.collection("projects")
+            .doc(id)
+            .update({ status: "overdue" });
 
           console.log(id);
-       
         }
 
         if (change.type === "added") {
