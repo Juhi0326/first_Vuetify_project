@@ -74,6 +74,7 @@
           </v-col>
           <v-col cols="6" sm="2" md="1">
             <v-btn color="primary" dark @click="dialog = true" class="my-2">
+              <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
               complete
             </v-btn>
           </v-col>
