@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="green">
+    <v-snackbar dark color="primary" v-model="snackbar" :timeout="4000" top>
       <span>You added a new project!</span>
       <v-btn text color="white" @click="snackbar=false">Close</v-btn>
     </v-snackbar>
