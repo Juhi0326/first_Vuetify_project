@@ -1,5 +1,10 @@
 <template>
   <nav>
+    <v-snackbar v-model="snackbar" :timeout="4000" top color="green">
+      <span>You added a new project!</span>
+      <v-btn text color="white" @click="snackbar=false">Close</v-btn>
+    </v-snackbar>
+
     <v-app-bar app flat height="150" class="grey lighten-4 ml-4">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
@@ -16,7 +21,11 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index" :to="item.route" >
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :to="item.route"
+            >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -44,7 +53,7 @@
           >
         </v-list-item>
       </v-list>
-      <Popup/>
+      <Popup @projectAdded="snackbar=true"/>
 
       <v-divider></v-divider>
       <v-list dense>
@@ -76,14 +85,15 @@
 </template>
 
 <script>
-import Popup from './Popup'
+import Popup from "./Popup";
 export default {
   components: {
-    Popup
+    Popup,
   },
   name: "Navbar",
   data() {
     return {
+      snackbar: false,
       drawer: false,
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },

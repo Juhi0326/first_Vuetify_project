@@ -74,7 +74,12 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green lighten-2 mb-5" dark @click="submit">
+          <v-btn
+            color="green lighten-2 mb-5"
+            dark
+            @click="submit"
+            :loading="loading"
+          >
             Add project
           </v-btn>
         </v-card-actions>
@@ -85,48 +90,48 @@
 
 <script>
 import { format, parseISO } from "date-fns";
-import db from '@/fb'
+import db from "@/fb";
 
 export default {
   data() {
     return {
-      
-      valid: false,
+      valid: true,
       date: null,
       menu: false,
       dialog: false,
       title: "",
       content: "",
-      inputRules: 
-      [
+      inputRules: [
         (v) => !!v || "This field is required",
         (v) => v.length >= 3 || "This field must be more than 3 characters",
       ],
       dateRule: [(v) => !!v || "This field is required"],
+      loading: false,
     };
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.dialog = false;
+        this.loading = true;
+
         const project = {
-            title: this.title,
-            content: this.content,
-            due: this.date.toString(),
-            person: 'Juhász István',
-            status: 'ongoing'
-            
-        }
-        db.collection('projects').add(project).then(()=> {
-            console.log('the project added to db!');
-            console.log(project.title);
-            console.log(project.content);
-            console.log(project.person);
-        })
+          title: this.title,
+          content: this.content,
+          due: this.date.toString(),
+          person: "Juhász István",
+          status: "ongoing",
+        };
+
+        db.collection("projects")
+          .add(project)
+          .then(() => {
+            this.loading = false;
+            this.dialog = false;
+            this.$emit('projectAdded');
+          });
       }
     },
     openDialog() {
-      
       this.title = "";
       this.content = "";
       this.date = null;
