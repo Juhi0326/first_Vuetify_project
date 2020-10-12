@@ -82,11 +82,7 @@
         <v-divider></v-divider>
       </v-card>
       <v-dialog v-model="dialog" width="600px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on" class="my-2">
-            complete
-          </v-btn>
-        </template>
+
         <v-card>
           <v-card-title>
             <span class="headline"
