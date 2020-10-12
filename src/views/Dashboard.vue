@@ -24,7 +24,14 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn small text color="grey" @click="sortBy('person')" v-on="on" v-bind="attrs">
+            <v-btn
+              small
+              text
+              color="grey"
+              @click="sortBy('person')"
+              v-on="on"
+              v-bind="attrs"
+            >
               <v-icon left small>
                 mdi mdi-account
               </v-icon>
@@ -34,12 +41,7 @@
           <span>Sorting by person</span>
         </v-tooltip>
       </v-row>
-      <v-card
-        tile
-        class="pa-4"
-        v-for="(project , i ) in projects"
-        :key="i"
-      >
+      <v-card tile class="pa-4" v-for="(project, i) in projects" :key="i">
         <v-row :class="`pa-3 project ${project.status}`">
           <v-col cols="12" md="6">
             <div class="caption grey--text">
@@ -78,7 +80,7 @@
 </template>
 
 <script>
-import db from '@/fb';
+import db from "@/fb";
 
 export default {
   name: "Dashboard",
@@ -88,21 +90,36 @@ export default {
     };
   },
   created() {
-    db.collection("projects").onSnapshot(res=> {
+    db.collection("projects").onSnapshot((res) => {
       const changes = res.docChanges();
-      console.log(changes.data);
 
-    changes.forEach(change => {
-      if (change.type ==='added') {
-        this.projects.push({
-          ...change.doc.data(),
-          id: change.doc.id
-        })
-      }
-    })
+      changes.forEach((change) => {
+        //get overdue dates
+        const d = new Date(change.doc.data().due);
+        d.setHours(0, 0, 0, 0);
+        const actualDate = new Date();
+        actualDate.setHours(0, 0, 0, 0);
 
+        if (actualDate <= d) {
+          console.log("ok");
+        } else {
+          console.log("overdue!");
 
-    })
+          let id=change.doc.id;
+          db.collection("projects").doc(id).update({status: "overdue"})
+
+          console.log(id);
+       
+        }
+
+        if (change.type === "added") {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id,
+          });
+        }
+      });
+    });
   },
   methods: {
     sortBy(prop) {
