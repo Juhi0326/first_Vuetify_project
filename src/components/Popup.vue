@@ -20,18 +20,24 @@
           <v-form class="px-3">
             <v-text-field
               label="Title"
+              :error-messages="nameErrors"
               v-model="title"
               prepend-icon="mdi mdi-format-title"
               :counter="3"
               required
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
             >
             </v-text-field>
             <v-textarea
               label="Information"
+              :error-messages="contentErrors"
               v-model="content"
               prepend-icon="mdi mdi-grease-pencil"
               :counter="3"
               required
+              @input="$v.content.$touch()"
+              @blur="$v.content.$touch()"
             ></v-textarea>
 
             <v-container>
@@ -45,6 +51,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
                         required
+                        :error-messages="dueErrors"
                         :value="computedDateFormattedDatefns"
                         clearable
                         label="Due date"
@@ -54,7 +61,8 @@
                         v-model="date"
                         @click:clear="date = null"
                         prepend-icon="mdi-calendar"
-                        
+                        @input="$v.date.$touch()"
+                        @blur="$v.date.$touch()"
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -89,13 +97,13 @@
 <script>
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   validations: {
-      name: { required, maxLength: minLength(3) },
-      select: { required },
-      },
+    name: { required, maxLength: minLength(3) },
+    select: { required },
+  },
   data() {
     return {
       valid: true,
@@ -109,27 +117,25 @@ export default {
   },
   methods: {
     submit() {
-      if (this.$refs.form.validate()) {
-        this.loading = true;
+      this.$v.$touch();
 
-        const project = {
-          title: this.title,
-          content: this.content,
-          due: this.date.toString(),
-          person: "Juhász István",
-          status: "ongoing",
-        };
+      const project = {
+        title: this.title,
+        content: this.content,
+        due: this.date.toString(),
+        person: "Juhász István",
+        status: "ongoing",
+      };
 
-        db.collection("projects")
-          .add(project)
-          .then(() => {
-            this.loading = false;
-            this.dialog = false;
-            this.$emit('projectAdded');
-          });
-      }
+      db.collection("projects")
+        .add(project)
+        .then(() => {
+          this.loading = false;
+          this.dialog = false;
+          this.$emit("projectAdded");
+        });
     },
-    openDialog() {
+    clear() {
       this.title = "";
       this.content = "";
       this.date = null;
@@ -140,6 +146,30 @@ export default {
       return this.date
         ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
+    },
+    titleErrors() {
+      const errors = [];
+      if (!this.$v.title.$dirty) return errors;
+      !this.$v.title.minLength &&
+        errors.push("Ttle must be more then 3 characters long");
+      !this.$v.title.required && errors.push("Title is required.");
+      return errors;
+    },
+    contentErrors() {
+      const errors = [];
+      if (!this.$v.content.$dirty) return errors;
+      !this.$v.content.minLength &&
+        errors.push("Content must be more then 3 characters long");
+      !this.$v.content.required && errors.push("Content is required.");
+      return errors;
+    },
+    dueErrors() {
+      const errors = [];
+      if (!this.$v.due.$dirty) return errors;
+      !this.$v.due.minLength &&
+        errors.push("Due must be more then 3 characters long");
+      !this.$v.due.required && errors.push("Due is required.");
+      return errors;
     },
   },
 };
