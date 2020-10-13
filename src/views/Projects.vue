@@ -37,7 +37,7 @@ export default {
     },
   },
   created() {
-    db.collection("projects").onSnapshot(res=> {
+    db.collection("projects2").onSnapshot(res=> {
       const changes = res.docChanges();
 
     changes.forEach(change => {
