@@ -43,11 +43,11 @@
       </v-row>
       <v-card tile class="pa-4" v-for="(project, i) in projects" :key="i">
         <v-row :class="`pa-3 project ${project.status}`">
-          <v-col cols="12" md="6">
+          <v-col cols="12" sm="3" md="4">
             <div class="caption grey--text">
               Project title
             </div>
-            <div>{{ project.title }} {{ project.id }}</div>
+            <div>{{ project.title }} </div>
           </v-col>
           <v-col cols="6" sm="4" md="2">
             <div class="caption grey--text">
@@ -65,17 +65,17 @@
               {{ project.due }}
             </div>
           </v-col>
-          <v-col cols="6" sm="2" md="1">
+          <v-col cols="6" md="2">
             <div>
               <v-chip :class="`${project.status} white--text caption my-2`">{{
                 project.status
               }}</v-chip>
             </div>
           </v-col>
-          <v-col cols="6" sm="2" md="1">
-            <v-btn color="primary" dark @click="dialog = true" class="my-2">
+          <v-col cols="6" md="2">
+            <v-btn  color="primary" dark @click="dialog = true" class="my-2">
               <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
-              complete
+              <span>Done</span>
             </v-btn>
           </v-col>
         </v-row>
