@@ -47,7 +47,7 @@
             <div class="caption grey--text">
               Project title
             </div>
-            <div>{{ project.title }} </div>
+            <div>{{ project.title }}</div>
           </v-col>
           <v-col cols="6" sm="4" md="2">
             <div class="caption grey--text">
@@ -73,7 +73,12 @@
             </div>
           </v-col>
           <v-col cols="6" md="2">
-            <v-btn  color="primary" dark @click="dialog = true" class="my-2">
+            <v-btn
+              color="primary"
+              dark
+              @click="changeId(project.id)"
+              class="my-2"
+            >
               <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
               <span>Done</span>
             </v-btn>
@@ -82,7 +87,6 @@
         <v-divider></v-divider>
       </v-card>
       <v-dialog v-model="dialog" width="600px">
-
         <v-card>
           <v-card-title>
             <span class="headline"
@@ -95,10 +99,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="dialog = false">
+            <v-btn color="green darken-1" text @click="setComplete()">
               Yes
             </v-btn>
-            <v-btn color="green darken-1" text @click="dialog = false">
+            <v-btn color="green darken-1" text @click="clearId()">
               No
             </v-btn>
           </v-card-actions>
@@ -117,6 +121,7 @@ export default {
     return {
       projects: [],
       dialog: false,
+      id: null,
     };
   },
   created() {
@@ -130,7 +135,7 @@ export default {
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
 
-        if (actualDate <= d || change.doc.data().status === 'complete') {
+        if (actualDate <= d || change.doc.data().status === "complete") {
           console.log("ok");
         } else {
           console.log("overdue!");
@@ -152,10 +157,43 @@ export default {
       });
     });
   },
-  updated() {},
+  
   methods: {
     sortBy(prop) {
       this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+    },
+    changeId(id) {
+      this.id = id;
+      this.dialog = true;
+    },
+    clearId() {
+      this.dialog = false;
+      this.id = null;
+    },
+    setComplete() {
+      this.dialog = false;
+      db.collection("projects")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (doc.id === this.id) {
+              db.collection("projects")
+                .doc(doc.id)
+                .update({ status: "complete" })
+                .then(() => {
+                  console.log("sikerült");
+                });
+                for (let i = 0; i < this.projects.length; i++) {
+                  if (this.projects[i].id===this.id) {
+                    this.projects[i].status='complete'
+                    
+                  }
+                  
+                }
+     
+            }
+          });
+        });
     },
   },
   components: {},
