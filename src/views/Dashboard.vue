@@ -130,7 +130,7 @@ export default {
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
 
-        if (actualDate <= d) {
+        if (actualDate <= d || change.doc.data().status === 'complete') {
           console.log("ok");
         } else {
           console.log("overdue!");
