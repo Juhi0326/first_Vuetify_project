@@ -73,7 +73,7 @@
             </div>
           </v-col>
           <v-col cols="6" md="2">
-            <v-btn
+            <v-btn v-if="project.status!=='complete'"
               color="primary"
               dark
               @click="changeId(project.id)"
