@@ -123,7 +123,7 @@ export default {
           status: "ongoing",
         };
 
-        db.collection("projects")
+        db.collection("projects2")
           .add(project)
           .then(() => {
             this.loading = false;

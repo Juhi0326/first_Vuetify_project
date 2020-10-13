@@ -125,7 +125,7 @@ export default {
     };
   },
   created() {
-    db.collection("projects").onSnapshot((res) => {
+    db.collection("projects2").onSnapshot((res) => {
       const changes = res.docChanges();
 
       changes.forEach((change) => {
@@ -141,7 +141,7 @@ export default {
           console.log("overdue!");
 
           let id = change.doc.id;
-          db.collection("projects")
+          db.collection("projects2")
             .doc(id)
             .update({ status: "overdue" });
 
@@ -172,12 +172,12 @@ export default {
     },
     setComplete() {
       this.dialog = false;
-      db.collection("projects")
+      db.collection("projects2")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             if (doc.id === this.id) {
-              db.collection("projects")
+              db.collection("projects2")
                 .doc(doc.id)
                 .update({ status: "complete" })
                 .then(() => {
@@ -186,7 +186,7 @@ export default {
                 for (let i = 0; i < this.projects.length; i++) {
                   if (this.projects[i].id===this.id) {
                     this.projects[i].status='complete'
-                    
+                    break;
                   }
                   
                 }
