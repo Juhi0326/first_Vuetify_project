@@ -127,12 +127,12 @@
               </v-text-field>
               <v-textarea
                 label="Information"
-                :error-messages="contentErrors"
+                :error-messages="contentTextErrors"
                 v-model="contentText"
                 prepend-icon="mdi mdi-grease-pencil"
                 required
-                @input="$v.content.$touch()"
-                @blur="$v.content.$touch()"
+                @input="$v.contentText.$touch()"
+                @blur="$v.contentText.$touch()"
               ></v-textarea>
 
               <v-container>
@@ -198,7 +198,7 @@ export default {
   name: "Projects",
   validations: {
     title: { required, minLength: minLength(3) },
-    content: { required, minLength: minLength(3) },
+    contentText: { required, minLength: minLength(3) },
     date: { required },
   },
   data() {
@@ -235,12 +235,12 @@ export default {
       !this.$v.title.required && errors.push("Title is required.");
       return errors;
     },
-    contentErrors() {
+    contentTextErrors() {
       const errors = [];
-      if (!this.$v.content.$dirty) return errors;
-      !this.$v.content.minLength &&
+      if (!this.$v.contentText.$dirty) return errors;
+      !this.$v.contentText.minLength &&
         errors.push("Content must be more then 3 characters long");
-      !this.$v.content.required && errors.push("Content is required.");
+      !this.$v.contentText.required && errors.push("Content is required.");
       return errors;
     },
     dueErrors() {
@@ -347,6 +347,17 @@ export default {
     },
     changeContent() {
       this.dialog3 = false;
+      this.$v.$touch();
+
+      for (let i = 0; i < this.projects.length; i++) {
+        if (this.projects[i].id === this.id) {
+          this.projects[i].title = this.title;
+          this.projects[i].content = this.contentText;
+          this.projects[i].due = this.date;
+
+          break;
+        }
+      }
       //change title
       db.collection("projects2")
         .get()
@@ -357,6 +368,7 @@ export default {
                 .doc(doc.id)
                 .update({ title: this.title })
                 .then(() => {
+                  this.title="";
                   console.log("sikerült átírni a title-t!");
                 });
 
@@ -364,6 +376,7 @@ export default {
                 .doc(doc.id)
                 .update({ content: this.contentText })
                 .then(() => {
+                  this.contentText="";
                   console.log("sikerült átírni a tartalmat!");
                 });
 
@@ -371,18 +384,9 @@ export default {
                 .doc(doc.id)
                 .update({ due: this.date })
                 .then(() => {
+                  this.date=null;
                   console.log("sikerült átírni a dátumot!");
                 });
-
-              for (let i = 0; i < this.projects.length; i++) {
-                if (this.projects[i].id === this.id) {
-                  this.projects[i].title = this.title;
-                  this.projects[i].content = this.contentText;
-                  this.projects[i].due = this.date;
-
-                  break;
-                }
-              }
             }
           });
         });
