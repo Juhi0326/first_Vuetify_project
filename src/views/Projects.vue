@@ -19,11 +19,10 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" md="1">
+                    <v-col cols="12" sm="4" >
                       <v-btn
                         small
                         color="error"
-                        class="mr-6"
                         @click="changeIdDelete(project.id)"
                       >
                         <v-icon left>mdi mdi-xamarin-outline</v-icon
@@ -31,14 +30,14 @@
                       >
                     </v-col>
 
-                    <v-col cols="12" md="1">
+                    <v-col cols="12"  sm="4">
                       <v-btn small color="secondary" class="mr-6">
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Edit</v-btn
                       >
                     </v-col>
 
-                    <v-col cols="12" md="1">
+                    <v-col cols="12" sm="4">
                       <v-btn
                         small
                         v-if="project.status !== 'completed'"
