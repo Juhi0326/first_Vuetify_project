@@ -14,10 +14,24 @@
                   <div class="font-weight-bold">{{ project.due }}</div>
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
-                  <div class="mt-6 d-flex justify-space-between" >
-                    <v-btn small>Delete</v-btn>
-                    <v-btn small> Edit</v-btn>
-                    <v-btn small> Done</v-btn>
+                  <div class="mt-6 d-flex justify-space-between">
+                    <v-btn small color="error">
+                      <v-icon left>mdi mdi-xamarin-outline</v-icon
+                      >Delete</v-btn
+                    >
+                    <v-btn small color="secondary">
+                      <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
+                      Edit</v-btn
+                    >
+                    <v-btn
+                      small
+                      v-if="project.status !== 'complete'"
+                      color="primary"
+                      dark
+                    >
+                      <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
+                      Done
+                    </v-btn>
                   </div>
                 </v-expansion-panel-content>
               </v-expansion-panel>
