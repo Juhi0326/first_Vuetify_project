@@ -26,7 +26,7 @@
                     >
                     <v-btn
                       small
-                      v-if="project.status !== 'complete'"
+                      v-if="project.status !== 'completed'"
                       color="primary"
                       dark
                     >

@@ -73,7 +73,8 @@
             </div>
           </v-col>
           <v-col cols="6" md="2">
-            <v-btn v-if="project.status!=='complete'"
+            <v-btn
+              v-if="project.status !== 'completed'"
               color="primary"
               dark
               @click="changeId(project.id)"
@@ -90,12 +91,12 @@
         <v-card>
           <v-card-title>
             <span class="headline"
-              >Are you sure to set project status to complete?</span
+              >Are you sure to set project status to completed?</span
             >
           </v-card-title>
           <v-card-text>
-            After you set this project complete you will not to change this
-            status!
+            After you set this project for completed status you will no longer
+            be able to change the status!
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -135,7 +136,7 @@ export default {
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
 
-        if (actualDate <= d || change.doc.data().status === "complete") {
+        if (actualDate <= d || change.doc.data().status === "completed") {
           console.log("ok");
         } else {
           console.log("overdue!");
@@ -157,7 +158,7 @@ export default {
       });
     });
   },
-  
+
   methods: {
     sortBy(prop) {
       this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
@@ -179,18 +180,16 @@ export default {
             if (doc.id === this.id) {
               db.collection("projects2")
                 .doc(doc.id)
-                .update({ status: "complete" })
+                .update({ status: "completed" })
                 .then(() => {
                   console.log("sikerült");
                 });
-                for (let i = 0; i < this.projects.length; i++) {
-                  if (this.projects[i].id===this.id) {
-                    this.projects[i].status='complete'
-                    break;
-                  }
-                  
+              for (let i = 0; i < this.projects.length; i++) {
+                if (this.projects[i].id === this.id) {
+                  this.projects[i].status = "completed";
+                  break;
                 }
-     
+              }
             }
           });
         });
@@ -201,7 +200,7 @@ export default {
 </script>
 
 <style>
-.project.complete {
+.project.completed {
   border-left: 4px solid rgb(0, 255, 0);
 }
 .project.ongoing {
@@ -210,7 +209,7 @@ export default {
 .project.overdue {
   border-left: 4px solid rgb(255, 0, 0);
 }
-.theme--light.v-chip:not(.v-chip--active).complete {
+.theme--light.v-chip:not(.v-chip--active).completed {
   background: rgb(0, 255, 0);
 }
 .theme--light.v-chip:not(.v-chip--active).ongoing {
