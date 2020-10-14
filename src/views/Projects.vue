@@ -3,7 +3,7 @@
     <h1 class="subheading grey--text ml-12">Own projects</h1>
     <v-container class="my-5">
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col>
           <template>
             <v-expansion-panels v-for="(project, i) in myProjects" :key="i">
               <v-expansion-panel>
@@ -14,12 +14,13 @@
                   <div class="font-weight-bold">{{ project.due }}</div>
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
-                  <div class="mt-6 d-flex justify-space-between">
-                    <v-btn small color="error">
+                  <div class="mt-6 d-flex justify-start">
+                    <v-btn small color="error" class="mr-6">
                       <v-icon left>mdi mdi-xamarin-outline</v-icon
                       >Delete</v-btn
                     >
-                    <v-btn small color="secondary">
+                    
+                    <v-btn small color="secondary" class="mr-6">
                       <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                       Edit</v-btn
                     >
