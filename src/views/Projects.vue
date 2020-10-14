@@ -101,7 +101,7 @@
             <v-btn color="green darken-1" text @click="deleteProject()">
               Yes
             </v-btn>
-            <v-btn color="green darken-1" text @click="clearId()">
+            <v-btn color="green darken-1" text @click="clearId2()">
               No
             </v-btn>
           </v-card-actions>
@@ -300,6 +300,10 @@ export default {
     },
     clearId() {
       this.dialog = false;
+      this.id = null;
+    },
+       clearId2() {
+      this.dialog2 = false;
       this.id = null;
     },
     setComplete() {
