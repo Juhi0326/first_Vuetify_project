@@ -2,10 +2,14 @@
   <div class="Projects">
     <h1 class="subheading grey--text ml-12">Own projects</h1>
     <v-container class="my-5">
-      <v-row >
+      <v-row>
         <v-col>
           <template>
-            <v-expansion-panels v-for="(project, i) in myProjects" :key="i" :class="`pa-2 project ${project.status}`">
+            <v-expansion-panels
+              v-for="(project, i) in myProjects"
+              :key="i"
+              :class="`pa-2 project ${project.status}`"
+            >
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   {{ project.title }}
@@ -16,32 +20,30 @@
                   <v-divider></v-divider>
                   <v-row class="mt-6">
                     <v-col cols="12" md="2">
-
-                    <v-btn small color="error" class="mr-6">
-                      <v-icon left>mdi mdi-xamarin-outline</v-icon
-                      >Delete</v-btn
-                    >
+                      <v-btn small color="error" class="mr-6">
+                        <v-icon left>mdi mdi-xamarin-outline</v-icon
+                        >Delete</v-btn
+                      >
                     </v-col>
 
                     <v-col cols="12" md="2">
-                    
-                    <v-btn small color="secondary" class="mr-6">
-                      <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
-                      Edit</v-btn
-                    >
+                      <v-btn small color="secondary" class="mr-6">
+                        <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
+                        Edit</v-btn
+                      >
                     </v-col>
 
                     <v-col cols="12" md="2">
-                    <v-btn
-                      small
-                      v-if="project.status !== 'completed'"
-                      color="primary"
-                      dark
-                      @click="changeId(project.id)"
-                    >
-                      <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
-                      Done
-                    </v-btn>
+                      <v-btn
+                        small
+                        v-if="project.status !== 'completed'"
+                        color="primary"
+                        dark
+                        @click="changeId(project.id)"
+                      >
+                        <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
+                        Done
+                      </v-btn>
                     </v-col>
                   </v-row>
                 </v-expansion-panel-content>
@@ -50,7 +52,7 @@
           </template>
         </v-col>
       </v-row>
-       <v-dialog v-model="dialog" width="600px">
+      <v-dialog v-model="dialog" width="600px">
         <v-card>
           <v-card-title>
             <span class="headline"
@@ -108,7 +110,7 @@ export default {
       });
     });
   },
-  methods : {
+  methods: {
     changeId(id) {
       this.id = id;
       this.dialog = true;
@@ -140,7 +142,7 @@ export default {
           });
         });
     },
-  }
+  },
 };
 </script>
 
