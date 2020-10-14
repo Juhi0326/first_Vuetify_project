@@ -20,7 +20,12 @@
                   <v-divider></v-divider>
                   <v-row class="mt-6">
                     <v-col cols="12" md="1">
-                      <v-btn small color="error" class="mr-6">
+                      <v-btn
+                        small
+                        color="error"
+                        class="mr-6"
+                        @click="changeIdDelete(project.id)"
+                      >
                         <v-icon left>mdi mdi-xamarin-outline</v-icon
                         >Delete</v-btn
                       >
@@ -39,7 +44,7 @@
                         v-if="project.status !== 'completed'"
                         color="primary"
                         dark
-                        @click="changeId(project.id)"
+                        @click="changeIdStatus(project.id)"
                       >
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Done
@@ -52,6 +57,9 @@
           </template>
         </v-col>
       </v-row>
+
+      <!-- dialog for completed status -->
+    
       <v-dialog v-model="dialog" width="600px">
         <v-card>
           <v-card-title>
@@ -74,6 +82,27 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <!-- dialog for delete project -->
+      <v-dialog v-model="dialog2" width="600px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Are you sure to delete this project?</span>
+          </v-card-title>
+          <v-card-text>
+            After you delete this project you will no longer be able to access
+            it!
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="deleteProject()">
+              Yes
+            </v-btn>
+            <v-btn color="green darken-1" text @click="clearId()">
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -86,6 +115,7 @@ export default {
     return {
       projects: [],
       dialog: false,
+      dialog2: false,
       id: null,
     };
   },
@@ -111,9 +141,13 @@ export default {
     });
   },
   methods: {
-    changeId(id) {
+    changeIdStatus(id) {
       this.id = id;
       this.dialog = true;
+    },
+        changeIdDelete(id) {
+      this.id = id;
+      this.dialog2 = true;
     },
     clearId() {
       this.dialog = false;
@@ -135,6 +169,30 @@ export default {
               for (let i = 0; i < this.projects.length; i++) {
                 if (this.projects[i].id === this.id) {
                   this.projects[i].status = "completed";
+                  break;
+                }
+              }
+            }
+          });
+        });
+    },
+    deleteProject() {
+      this.dialog2 = false;
+
+      db.collection("projects2")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (doc.id === this.id) {
+              db.collection("projects2")
+                .doc(doc.id)
+                .delete()
+                .then(() => {
+                  console.log("sikerült a törlés");
+                });
+              for (let i = 0; i < this.projects.length; i++) {
+                if (this.projects[i].id === this.id) {
+                  this.projects.splice(i, 1);
                   break;
                 }
               }
