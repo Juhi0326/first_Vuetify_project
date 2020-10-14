@@ -280,8 +280,6 @@ export default {
       this.getContentById();
     },
     getContentById() {
-      console.log(this.id);
-
       db.collection("projects2")
         .get()
         .then((snapshot) => {
@@ -308,9 +306,7 @@ export default {
               db.collection("projects2")
                 .doc(doc.id)
                 .update({ status: "completed" })
-                .then(() => {
-                  console.log("sikerült");
-                });
+                .then(() => {});
               for (let i = 0; i < this.projects.length; i++) {
                 if (this.projects[i].id === this.id) {
                   this.projects[i].status = "completed";
@@ -332,9 +328,7 @@ export default {
               db.collection("projects2")
                 .doc(doc.id)
                 .delete()
-                .then(() => {
-                  console.log("sikerült a törlés");
-                });
+                .then(() => {});
               for (let i = 0; i < this.projects.length; i++) {
                 if (this.projects[i].id === this.id) {
                   this.projects.splice(i, 1);
@@ -368,24 +362,21 @@ export default {
                 .doc(doc.id)
                 .update({ title: this.title })
                 .then(() => {
-                  this.title="";
-                  console.log("sikerült átírni a title-t!");
+                  this.title = "";
                 });
 
               db.collection("projects2")
                 .doc(doc.id)
                 .update({ content: this.contentText })
                 .then(() => {
-                  this.contentText="";
-                  console.log("sikerült átírni a tartalmat!");
+                  this.contentText = "";
                 });
 
               db.collection("projects2")
                 .doc(doc.id)
                 .update({ due: this.date })
                 .then(() => {
-                  this.date=null;
-                  console.log("sikerült átírni a dátumot!");
+                  this.date = null;
                 });
             }
           });
