@@ -19,7 +19,7 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" sm="4" >
+                    <v-col cols="12" sm="4">
                       <v-btn
                         small
                         color="error"
@@ -30,8 +30,8 @@
                       >
                     </v-col>
 
-                    <v-col cols="12"  sm="4">
-                      <v-btn small color="secondary" class="mr-6">
+                    <v-col cols="12" sm="4">
+                      <v-btn small color="secondary" class="mr-6" @click="changeIdContent(project.id)">
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Edit</v-btn
                       >
@@ -58,7 +58,7 @@
       </v-row>
 
       <!-- dialog for completed status -->
-    
+
       <v-dialog v-model="dialog" width="600px">
         <v-card>
           <v-card-title>
@@ -102,20 +102,110 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- dialog for change project content -->
+      <v-dialog v-model="dialog3" max-width="600px">
+      <v-card>
+        <v-card-title class="headline grey lighten-3"> </v-card-title>
+
+        <v-card-text>
+          <v-form class="px-3">
+            <v-text-field
+              label="Title"
+              :error-messages="titleErrors"
+              v-model="title"
+              prepend-icon="mdi mdi-format-title"
+              required
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            >
+            </v-text-field>
+            <v-textarea
+              label="Information"
+              :error-messages="contentErrors"
+              v-model="contentText"
+              prepend-icon="mdi mdi-grease-pencil"
+              required
+              @input="$v.content.$touch()"
+              @blur="$v.content.$touch()"
+            ></v-textarea>
+
+            <v-container>
+              <v-row>
+                <v-col cols="12" lg="6">
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    max-width="290"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        required
+                        :error-messages="dueErrors"
+                        :value="computedDateFormattedDatefns"
+                        clearable
+                        label="Due date"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        v-model="date"
+                        @click:clear="date = null"
+                        prepend-icon="mdi-calendar"
+                        @input="$v.date.$touch()"
+                        @blur="$v.date.$touch()"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="date"
+                      @change="menu = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green lighten-2 mb-5"
+            dark
+            @click="submit"
+            :loading="loading"
+          >
+            Add project
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-container>
   </div>
 </template>
 
 <script>
+import { format, parseISO } from "date-fns";
 import db from "@/fb";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   name: "Projects",
+  validations: {
+    title: { required, minLength: minLength(3) },
+    content: { required, minLength: minLength(3) },
+    date: { required },
+  },
   data() {
     return {
       projects: [],
       dialog: false,
       dialog2: false,
+      dialog3: false,
       id: null,
+      title: "",
+      contentText: "",
+      du: "",
     };
   },
   computed: {
@@ -123,6 +213,37 @@ export default {
       return this.projects.filter((project) => {
         return project.person === "Juhász István";
       });
+    },
+     computedDateFormattedDatefns() {
+      return this.date
+        ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
+        : "";
+    },
+
+    titleErrors() {
+    
+      const errors = [];
+      if (!this.$v.title.$dirty) return errors;
+      !this.$v.title.minLength &&
+        errors.push("Title must be more then 3 characters long");
+      !this.$v.title.required && errors.push("Title is required.");
+      return errors;
+    },
+    contentErrors() {
+      
+      const errors = [];
+      if (!this.$v.content.$dirty) return errors;
+      !this.$v.content.minLength &&
+        errors.push("Content must be more then 3 characters long");
+      !this.$v.content.required && errors.push("Content is required.");
+      return errors;
+    },
+    dueErrors() {
+      const errors = [];
+      
+      if (!this.$v.date.$dirty) return errors;
+      !this.$v.date.required && errors.push("Due is required.");
+      return errors;
     },
   },
   created() {
@@ -144,9 +265,32 @@ export default {
       this.id = id;
       this.dialog = true;
     },
-        changeIdDelete(id) {
+    changeIdDelete(id) {
       this.id = id;
       this.dialog2 = true;
+    },
+    changeIdContent(id) {
+      this.id = id;
+      this.dialog3 = true;
+      this.getContentById();
+    },
+    getContentById() {
+
+      console.log(this.id);
+      
+      db.collection("projects2")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (doc.id === this.id) {
+              this.title=doc.data().title;
+              this.contentText=doc.data().content;
+              console.log(this.title);
+              console.log(this.contentText);
+
+            }
+          });
+        });
     },
     clearId() {
       this.dialog = false;
@@ -198,6 +342,9 @@ export default {
             }
           });
         });
+    },
+    changeContent() {
+      this.dialog3 = false;
     },
   },
 };

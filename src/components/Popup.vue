@@ -90,10 +90,10 @@
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
-import { validationMixin } from "vuelidate";
+
 
 export default {
-  mixins: [validationMixin],
+
   validations: {
     title: { required, minLength: minLength(3) },
     content: { required, minLength: minLength(3) },
