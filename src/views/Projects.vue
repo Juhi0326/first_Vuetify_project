@@ -1,27 +1,36 @@
 <template>
   <div class="Projects">
-    <h1 class="subheading grey--text">This is projects page</h1>
+    <h1 class="subheading grey--text ml-12">Own projects</h1>
     <v-container class="my-5">
-      <template>
-        <v-expansion-panels>
-          <v-expansion-panel v-for="(project, i) in myProjects" :key="i">
-            <v-expansion-panel-header>
-              {{ project.title }}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content class="px-4 grey--text">
-              <div class="font-weight-bold">{{ project.due }}</div>
-              <div>{{ project.content }}</div>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </template>
+      <v-row>
+        <v-col cols="12" md="6">
+          <template>
+            <v-expansion-panels v-for="(project, i) in myProjects" :key="i">
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  {{ project.title }}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content class="px-4 grey--text">
+                  <div class="font-weight-bold">{{ project.due }}</div>
+                  <div>{{ project.content }}</div>
+                  <v-divider></v-divider>
+                  <div class="mt-6 d-flex justify-space-between" >
+                    <v-btn small>Delete</v-btn>
+                    <v-btn small> Edit</v-btn>
+                    <v-btn small> Done</v-btn>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </template>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
-
-import db from '@/fb';
+import db from "@/fb";
 export default {
   name: "Projects",
   data() {
@@ -37,21 +46,18 @@ export default {
     },
   },
   created() {
-    db.collection("projects2").onSnapshot(res=> {
+    db.collection("projects2").onSnapshot((res) => {
       const changes = res.docChanges();
 
-    changes.forEach(change => {
-      if (change.type ==='added') {
-        this.projects.push({
-          ...change.doc.data(),
-          id: change.doc.id
-        })
-      }
-    })
-
-
-    })
-  }
-  
+      changes.forEach((change) => {
+        if (change.type === "added") {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id,
+          });
+        }
+      });
+    });
+  },
 };
 </script>

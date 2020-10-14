@@ -1,6 +1,6 @@
 <template>
   <div class="Team">
-    <h1 class="subheading grey--text">This is the Team page</h1>
+    <h1 class="subheading grey--text ml-12">Our Team</h1>
     <v-container class="my-5">
       <v-row>
         <v-col

@@ -1,6 +1,6 @@
 <template>
   <div class="Dashboard">
-    <h1 class="subheading grey--text">This is the Dashboard page</h1>
+    <h1 class="subheading grey--text ml-12">Dashboard</h1>
     <v-container class="my-5">
       <v-row class="mb-3">
         <v-tooltip top>
