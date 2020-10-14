@@ -12,7 +12,9 @@
 
         <v-card-text>
           <v-form class="px-3">
-            <v-text-field
+            <v-textarea
+              auto-grow
+              rows="1"
               label="Title"
               :error-messages="titleErrors"
               v-model="title"
@@ -21,7 +23,7 @@
               @input="$v.title.$touch()"
               @blur="$v.title.$touch()"
             >
-            </v-text-field>
+            </v-textarea>
             <v-textarea
               label="Information"
               :error-messages="contentErrors"
@@ -91,9 +93,7 @@ import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
 
-
 export default {
-
   validations: {
     title: { required, minLength: minLength(3) },
     content: { required, minLength: minLength(3) },
@@ -130,12 +130,11 @@ export default {
             this.dialog = false;
             this.$emit("projectAdded");
             this.clear();
-            
           });
       }
     },
     clear() {
-      this.$v.$reset()
+      this.$v.$reset();
       this.title = "";
       this.content = "";
       this.date = null;
@@ -149,7 +148,6 @@ export default {
     },
 
     titleErrors() {
-    
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
       !this.$v.title.minLength &&
@@ -158,7 +156,6 @@ export default {
       return errors;
     },
     contentErrors() {
-      
       const errors = [];
       if (!this.$v.content.$dirty) return errors;
       !this.$v.content.minLength &&
@@ -168,7 +165,7 @@ export default {
     },
     dueErrors() {
       const errors = [];
-      
+
       if (!this.$v.date.$dirty) return errors;
       !this.$v.date.required && errors.push("Due is required.");
       return errors;

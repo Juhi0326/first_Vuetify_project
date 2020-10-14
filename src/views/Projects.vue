@@ -64,7 +64,7 @@
 
       <!-- dialog for completed status -->
 
-      <v-dialog v-model="dialog" width="600px">
+      <v-dialog v-model="dialog" max-width="600px">
         <v-card>
           <v-card-title>
             <span class="headline"
@@ -87,7 +87,7 @@
         </v-card>
       </v-dialog>
       <!-- dialog for delete project -->
-      <v-dialog v-model="dialog2" width="600px">
+      <v-dialog v-model="dialog2" max-width="600px">
         <v-card>
           <v-card-title>
             <span class="headline">Are you sure to delete this project?</span>
@@ -109,22 +109,26 @@
       </v-dialog>
 
       <!-- dialog for change project content -->
+      <template>
+      <div class="text-center">
       <v-dialog v-model="dialog3" max-width="600px">
         <v-card>
           <v-card-title class="headline grey lighten-3"> </v-card-title>
 
           <v-card-text>
             <v-form class="px-3">
-              <v-text-field
-                label="Title"
-                :error-messages="titleErrors"
-                v-model="title"
-                prepend-icon="mdi mdi-format-title"
-                required
-                @input="$v.title.$touch()"
-                @blur="$v.title.$touch()"
-              >
-              </v-text-field>
+            <v-textarea
+              auto-grow
+              rows="1"
+              label="Title"
+              :error-messages="titleErrors"
+              v-model="title"
+              prepend-icon="mdi mdi-format-title"
+              required
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            >
+            </v-textarea>
               <v-textarea
                 label="Information"
                 :error-messages="contentTextErrors"
@@ -186,6 +190,8 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      </div>
+      </template>
     </v-container>
   </div>
 </template>
