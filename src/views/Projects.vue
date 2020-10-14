@@ -176,7 +176,7 @@
             @click="submit"
             :loading="loading"
           >
-            Add project
+            Save
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -205,7 +205,9 @@ export default {
       id: null,
       title: "",
       contentText: "",
-      du: "",
+      date: "",
+      menu: false,
+      loading: false
     };
   },
   computed: {
@@ -285,8 +287,8 @@ export default {
             if (doc.id === this.id) {
               this.title=doc.data().title;
               this.contentText=doc.data().content;
-              console.log(this.title);
-              console.log(this.contentText);
+              this.date=doc.data().due;
+
 
             }
           });
