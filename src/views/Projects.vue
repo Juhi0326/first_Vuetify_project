@@ -31,7 +31,12 @@
                     </v-col>
 
                     <v-col cols="12" sm="4">
-                      <v-btn small color="secondary" class="mr-6" @click="changeIdContent(project.id)">
+                      <v-btn
+                        small
+                        color="secondary"
+                        class="mr-6"
+                        @click="changeIdContent(project.id)"
+                      >
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Edit</v-btn
                       >
@@ -105,82 +110,82 @@
 
       <!-- dialog for change project content -->
       <v-dialog v-model="dialog3" max-width="600px">
-      <v-card>
-        <v-card-title class="headline grey lighten-3"> </v-card-title>
+        <v-card>
+          <v-card-title class="headline grey lighten-3"> </v-card-title>
 
-        <v-card-text>
-          <v-form class="px-3">
-            <v-text-field
-              label="Title"
-              :error-messages="titleErrors"
-              v-model="title"
-              prepend-icon="mdi mdi-format-title"
-              required
-              @input="$v.title.$touch()"
-              @blur="$v.title.$touch()"
-            >
-            </v-text-field>
-            <v-textarea
-              label="Information"
-              :error-messages="contentErrors"
-              v-model="contentText"
-              prepend-icon="mdi mdi-grease-pencil"
-              required
-              @input="$v.content.$touch()"
-              @blur="$v.content.$touch()"
-            ></v-textarea>
+          <v-card-text>
+            <v-form class="px-3">
+              <v-text-field
+                label="Title"
+                :error-messages="titleErrors"
+                v-model="title"
+                prepend-icon="mdi mdi-format-title"
+                required
+                @input="$v.title.$touch()"
+                @blur="$v.title.$touch()"
+              >
+              </v-text-field>
+              <v-textarea
+                label="Information"
+                :error-messages="contentErrors"
+                v-model="contentText"
+                prepend-icon="mdi mdi-grease-pencil"
+                required
+                @input="$v.content.$touch()"
+                @blur="$v.content.$touch()"
+              ></v-textarea>
 
-            <v-container>
-              <v-row>
-                <v-col cols="12" lg="6">
-                  <v-menu
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    max-width="290"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        required
-                        :error-messages="dueErrors"
-                        :value="computedDateFormattedDatefns"
-                        clearable
-                        label="Due date"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
+              <v-container>
+                <v-row>
+                  <v-col cols="12" lg="6">
+                    <v-menu
+                      v-model="menu"
+                      :close-on-content-click="false"
+                      max-width="290"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          required
+                          :error-messages="dueErrors"
+                          :value="computedDateFormattedDatefns"
+                          clearable
+                          label="Due date"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                          v-model="date"
+                          @click:clear="date = null"
+                          prepend-icon="mdi-calendar"
+                          @input="$v.date.$touch()"
+                          @blur="$v.date.$touch()"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
                         v-model="date"
-                        @click:clear="date = null"
-                        prepend-icon="mdi-calendar"
-                        @input="$v.date.$touch()"
-                        @blur="$v.date.$touch()"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      v-model="date"
-                      @change="menu = false"
-                    ></v-date-picker>
-                  </v-menu>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-card-text>
+                        @change="menu = false"
+                      ></v-date-picker>
+                    </v-menu>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-card-text>
 
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green lighten-2 mb-5"
-            dark
-            @click="submit"
-            :loading="loading"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green lighten-2 mb-5"
+              dark
+              @click="changeContent()"
+              :loading="loading"
+            >
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -207,7 +212,7 @@ export default {
       contentText: "",
       date: "",
       menu: false,
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -216,14 +221,13 @@ export default {
         return project.person === "Juhász István";
       });
     },
-     computedDateFormattedDatefns() {
+    computedDateFormattedDatefns() {
       return this.date
         ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
     },
 
     titleErrors() {
-    
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
       !this.$v.title.minLength &&
@@ -232,7 +236,6 @@ export default {
       return errors;
     },
     contentErrors() {
-      
       const errors = [];
       if (!this.$v.content.$dirty) return errors;
       !this.$v.content.minLength &&
@@ -242,7 +245,7 @@ export default {
     },
     dueErrors() {
       const errors = [];
-      
+
       if (!this.$v.date.$dirty) return errors;
       !this.$v.date.required && errors.push("Due is required.");
       return errors;
@@ -277,19 +280,16 @@ export default {
       this.getContentById();
     },
     getContentById() {
-
       console.log(this.id);
-      
+
       db.collection("projects2")
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             if (doc.id === this.id) {
-              this.title=doc.data().title;
-              this.contentText=doc.data().content;
-              this.date=doc.data().due;
-
-
+              this.title = doc.data().title;
+              this.contentText = doc.data().content;
+              this.date = doc.data().due;
             }
           });
         });
@@ -347,6 +347,45 @@ export default {
     },
     changeContent() {
       this.dialog3 = false;
+      //change title
+      db.collection("projects2")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (doc.id === this.id) {
+              db.collection("projects2")
+                .doc(doc.id)
+                .update({ title: this.title })
+                .then(() => {
+                  console.log("sikerült átírni a title-t!");
+                });
+
+              db.collection("projects2")
+                .doc(doc.id)
+                .update({ content: this.contentText })
+                .then(() => {
+                  console.log("sikerült átírni a tartalmat!");
+                });
+
+              db.collection("projects2")
+                .doc(doc.id)
+                .update({ due: this.date })
+                .then(() => {
+                  console.log("sikerült átírni a dátumot!");
+                });
+
+              for (let i = 0; i < this.projects.length; i++) {
+                if (this.projects[i].id === this.id) {
+                  this.projects[i].title = this.title;
+                  this.projects[i].content = this.contentText;
+                  this.projects[i].due = this.date;
+
+                  break;
+                }
+              }
+            }
+          });
+        });
     },
   },
 };
