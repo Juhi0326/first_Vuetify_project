@@ -97,7 +97,7 @@ export default {
       drawer: false,
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
-        { title: "Projects", icon: "mdi-forum", route: "/projects" },
+        { title: "My Projects", icon: "mdi-forum", route: "/projects" },
         { title: "Team", icon: "mdi-forum", route: "/team" },
       ],
     };
