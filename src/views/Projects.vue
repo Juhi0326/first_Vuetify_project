@@ -110,87 +110,87 @@
 
       <!-- dialog for change project content -->
       <template>
-      <div class="text-center">
-      <v-dialog v-model="dialog3" max-width="600px">
-        <v-card>
-          <v-card-title class="headline grey lighten-3"> </v-card-title>
+        <div class="text-center">
+          <v-dialog v-model="dialog3" max-width="600px">
+            <v-card>
+              <v-card-title class="headline grey lighten-3"> </v-card-title>
 
-          <v-card-text>
-            <v-form class="px-3">
-            <v-textarea
-              auto-grow
-              rows="1"
-              label="Title"
-              :error-messages="titleErrors"
-              v-model="title"
-              prepend-icon="mdi mdi-format-title"
-              required
-              @input="$v.title.$touch()"
-              @blur="$v.title.$touch()"
-            >
-            </v-textarea>
-              <v-textarea
-                label="Information"
-                :error-messages="contentTextErrors"
-                v-model="contentText"
-                prepend-icon="mdi mdi-grease-pencil"
-                required
-                @input="$v.contentText.$touch()"
-                @blur="$v.contentText.$touch()"
-              ></v-textarea>
+              <v-card-text>
+                <v-form class="px-3">
+                  <v-textarea
+                    auto-grow
+                    rows="1"
+                    label="Title"
+                    :error-messages="titleErrors"
+                    v-model="title"
+                    prepend-icon="mdi mdi-format-title"
+                    required
+                    @input="$v.title.$touch()"
+                    @blur="$v.title.$touch()"
+                  >
+                  </v-textarea>
+                  <v-textarea
+                    label="Information"
+                    :error-messages="contentTextErrors"
+                    v-model="contentText"
+                    prepend-icon="mdi mdi-grease-pencil"
+                    required
+                    @input="$v.contentText.$touch()"
+                    @blur="$v.contentText.$touch()"
+                  ></v-textarea>
 
-              <v-container>
-                <v-row>
-                  <v-col cols="12" lg="6">
-                    <v-menu
-                      v-model="menu"
-                      :close-on-content-click="false"
-                      max-width="290"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          required
-                          :error-messages="dueErrors"
-                          :value="computedDateFormattedDatefns"
-                          clearable
-                          label="Due date"
-                          readonly
-                          v-bind="attrs"
-                          v-on="on"
-                          v-model="date"
-                          @click:clear="date = null"
-                          prepend-icon="mdi-calendar"
-                          @input="$v.date.$touch()"
-                          @blur="$v.date.$touch()"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker
-                        v-model="date"
-                        @change="menu = false"
-                      ></v-date-picker>
-                    </v-menu>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-form>
-          </v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" lg="6">
+                        <v-menu
+                          v-model="menu"
+                          :close-on-content-click="false"
+                          max-width="290"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                              required
+                              :error-messages="dueErrors"
+                              :value="computedDateFormattedDatefns"
+                              clearable
+                              label="Due date"
+                              readonly
+                              v-bind="attrs"
+                              v-on="on"
+                              v-model="date"
+                              @click:clear="date = null"
+                              prepend-icon="mdi-calendar"
+                              @input="$v.date.$touch()"
+                              @blur="$v.date.$touch()"
+                            ></v-text-field>
+                          </template>
+                          <v-date-picker
+                            v-model="date"
+                            @change="menu = false"
+                          ></v-date-picker>
+                        </v-menu>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-card-text>
 
-          <v-divider></v-divider>
+              <v-divider></v-divider>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="green lighten-2 mb-5"
-              dark
-              @click="changeContent()"
-              :loading="loading"
-            >
-              Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="green lighten-2 mb-5"
+                  dark
+                  @click="changeContent()"
+                  :loading="loading"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
       </template>
     </v-container>
   </div>
@@ -200,10 +200,13 @@
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
+// title cannot contain new line character
+const enter = (value) => value.indexOf("\n") <1;
+
 export default {
   name: "Projects",
   validations: {
-    title: { required, minLength: minLength(3) },
+    title: { required, minLength: minLength(3), enter },
     contentText: { required, minLength: minLength(3) },
     date: { required },
   },
@@ -239,6 +242,7 @@ export default {
       !this.$v.title.minLength &&
         errors.push("Title must be more then 3 characters long");
       !this.$v.title.required && errors.push("Title is required.");
+      !this.$v.title.enter && errors.push('title cannot contain new line character!');
       return errors;
     },
     contentTextErrors() {
@@ -302,7 +306,7 @@ export default {
       this.dialog = false;
       this.id = null;
     },
-       clearId2() {
+    clearId2() {
       this.dialog2 = false;
       this.id = null;
     },

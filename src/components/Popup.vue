@@ -93,9 +93,12 @@ import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
 
+// title cannot contain new line character
+const enter = (value) => value.indexOf("\n") <1;
+
 export default {
   validations: {
-    title: { required, minLength: minLength(3) },
+    title: { required, minLength: minLength(3), enter },
     content: { required, minLength: minLength(3) },
     date: { required },
   },
@@ -153,6 +156,7 @@ export default {
       !this.$v.title.minLength &&
         errors.push("Title must be more then 3 characters long");
       !this.$v.title.required && errors.push("Title is required.");
+      !this.$v.title.enter && errors.push('title cannot contain new line character!');
       return errors;
     },
     contentErrors() {
