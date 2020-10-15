@@ -17,7 +17,7 @@
               :class="`pa-2 project ${project.status}`"
             >
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header @click="id = project.id">
                   {{ project.title }}
                 </v-expansion-panel-header>
                 <v-expansion-panel-content class="px-4 grey--text">
@@ -26,14 +26,7 @@
                   <v-divider></v-divider>
                   <v-row class="mt-6">
                     <v-col cols="12" sm="3">
-                      <v-btn
-                        small
-                        color="error"
-                        @click="changeIdDelete(project.id)"
-                      >
-                        <v-icon left>mdi mdi-xamarin-outline</v-icon
-                        >Delete</v-btn
-                      >
+                      <DeleteProjectDialog @projectDeleted="deleteProject()" />
                     </v-col>
 
                     <v-col cols="12" sm="3">
@@ -59,9 +52,6 @@
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Done
                       </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="3">
-                      <Proba @projectDeleted="deleteProjec2()"/>
                     </v-col>
                   </v-row>
                 </v-expansion-panel-content>
@@ -90,27 +80,6 @@
               Yes
             </v-btn>
             <v-btn color="green darken-1" text @click="clearId()">
-              No
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <!-- dialog for delete project -->
-      <v-dialog v-model="dialog2" max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Are you sure to delete this project?</span>
-          </v-card-title>
-          <v-card-text>
-            After you delete this project you will no longer be able to access
-            it!
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="deleteProject()">
-              Yes
-            </v-btn>
-            <v-btn color="green darken-1" text @click="clearId2()">
               No
             </v-btn>
           </v-card-actions>
@@ -209,14 +178,14 @@
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
-import Proba from "../components/Proba";
+import DeleteProjectDialog from "../components/DeleteProjectDialog";
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
 
 export default {
   name: "Projects",
   components: {
-    Proba,
+    DeleteProjectDialog,
   },
   validations: {
     title: { required, minLength: minLength(3), enter },
@@ -236,7 +205,7 @@ export default {
       menu: false,
       loading: false,
       snackbar2: false,
-      
+      valami: "valami",
     };
   },
   computed: {
@@ -292,6 +261,10 @@ export default {
     });
   },
   methods: {
+    proba(id) {
+      this.id = id;
+    },
+
     changeIdStatus(id) {
       this.id = id;
       this.dialog = true;
@@ -347,10 +320,7 @@ export default {
           });
         });
     },
-    deleteProjec2() {
-      this.snackbar2 = true;
 
-    },
     deleteProject() {
       this.dialog2 = false;
 
@@ -372,6 +342,7 @@ export default {
             }
           });
         });
+      this.snackbar2 = true;
     },
     changeContent() {
       this.dialog3 = false;
