@@ -2,7 +2,7 @@
   <nav>
     <v-snackbar dark color="primary" v-model="snackbar" :timeout="4000" top>
       <span>You added a new project!</span>
-      <v-btn text color="white" @click="snackbar=false">Close</v-btn>
+      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
     <v-app-bar app flat height="150" class="grey lighten-4 ml-4">
@@ -53,7 +53,8 @@
           >
         </v-list-item>
       </v-list>
-      <Popup @projectAdded="snackbar=true"/>
+      <Popup @projectAdded="snackbar = true" />
+      
 
       <v-divider></v-divider>
       <v-list dense>
@@ -94,6 +95,7 @@ export default {
   data() {
     return {
       snackbar: false,
+      snackbar2: false,
       drawer: false,
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },

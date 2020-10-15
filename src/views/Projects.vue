@@ -1,5 +1,11 @@
 <template>
   <div class="Projects">
+    <div class="text-center">
+      <v-snackbar dark color="primary" v-model="snackbar2" :timeout="4000" top>
+        <span>You have deleted the project!</span>
+        <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+      </v-snackbar>
+    </div>
     <h1 class="subheading grey--text ml-12">Own projects</h1>
     <v-container class="my-5">
       <v-row>
@@ -19,7 +25,7 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="3">
                       <v-btn
                         small
                         color="error"
@@ -30,7 +36,7 @@
                       >
                     </v-col>
 
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="3">
                       <v-btn
                         small
                         color="secondary"
@@ -42,7 +48,7 @@
                       >
                     </v-col>
 
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="3">
                       <v-btn
                         small
                         v-if="project.status !== 'completed'"
@@ -53,6 +59,9 @@
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Done
                       </v-btn>
+                    </v-col>
+                    <v-col cols="12" sm="3">
+                      <Proba @projectDeleted="deleteProjec2()"/>
                     </v-col>
                   </v-row>
                 </v-expansion-panel-content>
@@ -200,11 +209,15 @@
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
+import Proba from "../components/Proba";
 // title cannot contain new line character
-const enter = (value) => value.indexOf("\n") <1;
+const enter = (value) => value.indexOf("\n") < 1;
 
 export default {
   name: "Projects",
+  components: {
+    Proba,
+  },
   validations: {
     title: { required, minLength: minLength(3), enter },
     contentText: { required, minLength: minLength(3) },
@@ -222,6 +235,8 @@ export default {
       date: "",
       menu: false,
       loading: false,
+      snackbar2: false,
+      
     };
   },
   computed: {
@@ -242,7 +257,8 @@ export default {
       !this.$v.title.minLength &&
         errors.push("Title must be more then 3 characters long");
       !this.$v.title.required && errors.push("Title is required.");
-      !this.$v.title.enter && errors.push('title cannot contain new line character!');
+      !this.$v.title.enter &&
+        errors.push("title cannot contain new line character!");
       return errors;
     },
     contentTextErrors() {
@@ -330,6 +346,10 @@ export default {
             }
           });
         });
+    },
+    deleteProjec2() {
+      this.snackbar2 = true;
+
     },
     deleteProject() {
       this.dialog2 = false;
