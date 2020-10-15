@@ -1,9 +1,14 @@
 <template>
   <div class="Projects">
     <div class="text-center">
-      <v-snackbar dark color="primary" v-model="snackbar2" :timeout="4000" top>
+      <v-snackbar dark color="primary" v-model="snackbarDelete" :timeout="4000" top>
         <span>You have deleted the project!</span>
-        <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+        <v-btn text color="white" @click="snackbarDelete = false">Close</v-btn>
+      </v-snackbar>
+
+      <v-snackbar dark color="primary" v-model="snackbarCompleted" :timeout="4000" top>
+        <span>You have set this project to completed!</span>
+        <v-btn text color="white" @click="snackbarCompleted = false">Close</v-btn>
       </v-snackbar>
     </div>
     <h1 class="subheading grey--text ml-12">Own projects</h1>
@@ -25,11 +30,15 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" sm="3">
-                      <DeleteProjectDialog @projectDeleted="deleteProject()" />
+                    <v-col cols="12" sm="4" >
+                      <DeleteProjectDialog @projectDeleted="deleteProject()" @cancel="clearId()" />
                     </v-col>
 
-                    <v-col cols="12" sm="3">
+                    <v-col cols="12" sm="4" v-if="project.status !== 'completed'">
+                      <SetCompletedDialog @setCompleted="setComplete()" @cancel="clearId()"/>
+                    </v-col>
+
+                    <v-col cols="12" sm="4">
                       <v-btn
                         small
                         color="secondary"
@@ -40,19 +49,6 @@
                         Edit</v-btn
                       >
                     </v-col>
-
-                    <v-col cols="12" sm="3">
-                      <v-btn
-                        small
-                        v-if="project.status !== 'completed'"
-                        color="primary"
-                        dark
-                        @click="changeIdStatus(project.id)"
-                      >
-                        <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
-                        Done
-                      </v-btn>
-                    </v-col>
                   </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -60,32 +56,6 @@
           </template>
         </v-col>
       </v-row>
-
-      <!-- dialog for completed status -->
-
-      <v-dialog v-model="dialog" max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="headline"
-              >Are you sure to set project status to completed?</span
-            >
-          </v-card-title>
-          <v-card-text>
-            After you set this project for completed status you will no longer
-            be able to change the status!
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="setComplete()">
-              Yes
-            </v-btn>
-            <v-btn color="green darken-1" text @click="clearId()">
-              No
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
       <!-- dialog for change project content -->
       <template>
         <div class="text-center">
@@ -179,6 +149,8 @@ import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
 import DeleteProjectDialog from "../components/DeleteProjectDialog";
+import SetCompletedDialog from "../components/SetCompletedDialog"
+
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
 
@@ -186,6 +158,7 @@ export default {
   name: "Projects",
   components: {
     DeleteProjectDialog,
+    SetCompletedDialog
   },
   validations: {
     title: { required, minLength: minLength(3), enter },
@@ -204,8 +177,8 @@ export default {
       date: "",
       menu: false,
       loading: false,
-      snackbar2: false,
-      valami: "valami",
+      snackbarDelete: false,
+      snackbarCompleted: false,
     };
   },
   computed: {
@@ -292,7 +265,6 @@ export default {
         });
     },
     clearId() {
-      this.dialog = false;
       this.id = null;
     },
     clearId2() {
@@ -319,6 +291,7 @@ export default {
             }
           });
         });
+        this.snackbarCompleted=true
     },
 
     deleteProject() {
@@ -342,7 +315,7 @@ export default {
             }
           });
         });
-      this.snackbar2 = true;
+      this.snackbarDelete = true;
     },
     changeContent() {
       this.dialog3 = false;
