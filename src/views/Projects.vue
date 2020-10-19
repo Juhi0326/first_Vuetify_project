@@ -1,14 +1,28 @@
 <template>
   <div class="Projects">
     <div class="text-center">
-      <v-snackbar dark color="primary" v-model="snackbarDelete" :timeout="4000" top>
+      <v-snackbar
+        dark
+        color="primary"
+        v-model="snackbarDelete"
+        :timeout="4000"
+        top
+      >
         <span>You have deleted the project!</span>
         <v-btn text color="white" @click="snackbarDelete = false">Close</v-btn>
       </v-snackbar>
 
-      <v-snackbar dark color="primary" v-model="snackbarCompleted" :timeout="4000" top>
+      <v-snackbar
+        dark
+        color="primary"
+        v-model="snackbarCompleted"
+        :timeout="4000"
+        top
+      >
         <span>You have set this project to completed!</span>
-        <v-btn text color="white" @click="snackbarCompleted = false">Close</v-btn>
+        <v-btn text color="white" @click="snackbarCompleted = false"
+          >Close</v-btn
+        >
       </v-snackbar>
     </div>
     <h1 class="subheading grey--text ml-12">Own projects</h1>
@@ -30,12 +44,33 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" sm="4" >
-                      <DeleteProjectDialog @projectDeleted="deleteProject()" @cancel="clearId()" />
+                    <v-col cols="12" sm="4">
+                      <DeleteProjectDialog
+                        @projectDeleted="deleteProject()"
+                        @cancel="clearId()"
+                      />
                     </v-col>
 
-                    <v-col cols="12" sm="4" v-if="project.status !== 'completed'">
-                      <SetCompletedDialog @setCompleted="setComplete()" @cancel="clearId()"/>
+                    <v-col cols="12" sm="4">
+                      <ModifyProjectDialog
+                        :title.sync="title"
+                        :contentText="contentText"
+                        :date="date"
+                        @getContent="getContentById()"
+                        @modifyContent="changeContent()"
+ 
+                      />
+                    </v-col>
+
+                    <v-col
+                      cols="12"
+                      sm="4"
+                      v-if="project.status !== 'completed'"
+                    >
+                      <SetCompletedDialog
+                        @setCompleted="setComplete()"
+                        @cancel="clearId()"
+                      />
                     </v-col>
 
                     <v-col cols="12" sm="4">
@@ -43,7 +78,7 @@
                         small
                         color="secondary"
                         class="mr-6"
-                        @click="changeIdContent(project.id)"
+                        @click="getContentById()"
                       >
                         <v-icon left>mdi mdi-checkbox-marked-circle</v-icon>
                         Edit</v-btn
@@ -149,7 +184,8 @@ import { format, parseISO } from "date-fns";
 import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
 import DeleteProjectDialog from "../components/DeleteProjectDialog";
-import SetCompletedDialog from "../components/SetCompletedDialog"
+import SetCompletedDialog from "../components/SetCompletedDialog";
+import ModifyProjectDialog from "../components/ModifyProjectDialog";
 
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
@@ -158,7 +194,8 @@ export default {
   name: "Projects",
   components: {
     DeleteProjectDialog,
-    SetCompletedDialog
+    SetCompletedDialog,
+    ModifyProjectDialog,
   },
   validations: {
     title: { required, minLength: minLength(3), enter },
@@ -234,24 +271,9 @@ export default {
     });
   },
   methods: {
-    proba(id) {
-      this.id = id;
-    },
 
-    changeIdStatus(id) {
-      this.id = id;
-      this.dialog = true;
-    },
-    changeIdDelete(id) {
-      this.id = id;
-      this.dialog2 = true;
-    },
-    changeIdContent(id) {
-      this.id = id;
-      this.dialog3 = true;
-      this.getContentById();
-    },
     getContentById() {
+      this.dialog3 = true;
       db.collection("projects2")
         .get()
         .then((snapshot) => {
@@ -291,7 +313,7 @@ export default {
             }
           });
         });
-        this.snackbarCompleted=true
+      this.snackbarCompleted = true;
     },
 
     deleteProject() {
