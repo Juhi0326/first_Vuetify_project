@@ -1,6 +1,7 @@
 <template>
   <div class="Team">
     <h1 class="subheading grey--text ml-12">Our Team</h1>
+    {{projects}}
     <v-container class="my-5">
       <v-row>
         <v-col
@@ -65,5 +66,11 @@ export default {
     };
   },
   components: {},
+  computed: {
+    projects: function () {
+      return this.$store.state.projects
+
+    }
+  }
 };
 </script>
