@@ -54,8 +54,6 @@
                     <v-col cols="12" sm="4">
                       <ModifyProjectDialog
                         :id="id"
-                        @getContent="getContentById()"
-                        @modifyContent="changeContent()"
                       />
                     </v-col>
 
@@ -83,7 +81,7 @@
 
 <script>
 import { format, parseISO } from "date-fns";
-import db from "@/fb";
+//import db from "@/fb";
 import { required, minLength } from "vuelidate/lib/validators";
 import DeleteProjectDialog from "../components/DeleteProjectDialog";
 import SetCompletedDialog from "../components/SetCompletedDialog";
@@ -129,46 +127,10 @@ export default {
         ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
     },
-
-    titleErrors() {
-      const errors = [];
-      if (!this.$v.title.$dirty) return errors;
-      !this.$v.title.minLength &&
-        errors.push("Title must be more then 3 characters long");
-      !this.$v.title.required && errors.push("Title is required.");
-      !this.$v.title.enter &&
-        errors.push("title cannot contain new line character!");
-      return errors;
-    },
-    contentTextErrors() {
-      const errors = [];
-      if (!this.$v.contentText.$dirty) return errors;
-      !this.$v.contentText.minLength &&
-        errors.push("Content must be more then 3 characters long");
-      !this.$v.contentText.required && errors.push("Content is required.");
-      return errors;
-    },
-    dueErrors() {
-      const errors = [];
-
-      if (!this.$v.date.$dirty) return errors;
-      !this.$v.date.required && errors.push("Due is required.");
-      return errors;
-    },
   },
 
   methods: {
-    getContentById() {
-      this.dialog3 = true;
-
-      this.myProjects.forEach((doc) => {
-        if (doc.id === this.id) {
-          this.title = doc.title;
-          this.contentText = doc.content;
-          this.date = doc.due;
-        }
-      });
-    },
+    
     clearId() {
       this.id = null;
     },
@@ -199,44 +161,7 @@ export default {
 
       this.snackbarDelete = true;
     },
-    changeContent() {
-      this.dialog3 = false;
-      this.$v.$touch();
 
-      for (let i = 0; i < this.myProjects.length; i++) {
-        if (this.myProjects[i].id === this.id) {
-          this.myProjects[i].title = this.title;
-          this.myProjects[i].content = this.contentText;
-          this.myProjects[i].due = this.date;
-
-          break;
-        }
-      }
-      this.myProjects.forEach((doc) => {
-        if (doc.id === this.id) {
-          db.collection("projects2")
-            .doc(doc.id)
-            .update({ title: this.title })
-            .then(() => {
-              this.title = "";
-            });
-
-          db.collection("projects2")
-            .doc(doc.id)
-            .update({ content: this.contentText })
-            .then(() => {
-              this.contentText = "";
-            });
-
-          db.collection("projects2")
-            .doc(doc.id)
-            .update({ due: this.date })
-            .then(() => {
-              this.date = null;
-            });
-        }
-      });
-    },
   },
 };
 </script>
