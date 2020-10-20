@@ -88,7 +88,7 @@ import ModifyProjectDialog from "../components/ModifyProjectDialog";
 
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
-
+import db from "@/fb";
 export default {
   name: "Projects",
   components: {
@@ -118,6 +118,18 @@ export default {
   },
   computed: {
     myProjects: function() {
+      this.$store.state.projects.forEach((project) => {
+        const d = new Date(project.due);
+        d.setHours(0, 0, 0, 0);
+        const actualDate = new Date();
+        actualDate.setHours(0, 0, 0, 0);
+        if (actualDate > d || project.status === "completed") {
+          let id = project.id;
+          db.collection("projects2")
+            .doc(id)
+            .update({ status: "overdue" });
+        }
+      });
       return this.$store.getters.filteredProjects;
     },
 

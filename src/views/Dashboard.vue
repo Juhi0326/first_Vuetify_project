@@ -131,11 +131,7 @@ export default {
         d.setHours(0, 0, 0, 0);
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
-        if (actualDate <= d || project.status === "completed") {
-          console.log(`ok`);
-        } else {
-          console.log("overdue!");
-
+        if (actualDate > d || project.status === "completed") {
           let id = project.id;
           db.collection("projects2")
             .doc(id)
