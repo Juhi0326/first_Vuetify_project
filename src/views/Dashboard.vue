@@ -125,7 +125,6 @@ export default {
     };
   },
   computed: {
-
     projects: function() {
       this.$store.state.projects.forEach((project) => {
         const d = new Date(project.due);
@@ -143,7 +142,7 @@ export default {
             .update({ status: "overdue" });
         }
       });
-      return this.$store.state.projects
+      return this.$store.state.projects;
     },
   },
 
@@ -161,26 +160,12 @@ export default {
     },
     setComplete() {
       this.dialog = false;
-      db.collection("projects2")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === this.id) {
-              db.collection("projects2")
-                .doc(doc.id)
-                .update({ status: "completed" })
-                .then(() => {
-                  console.log("sikerült");
-                });
-              for (let i = 0; i < this.projects.length; i++) {
-                if (this.projects[i].id === this.id) {
-                  this.projects[i].status = "completed";
-                  break;
-                }
-              }
-            }
-          });
-        });
+      for (let i = 0; i < this.projects.length; i++) {
+        if (this.projects[i].id === this.id) {
+          this.projects[i].status = "completed";
+          break;
+        }
+      }
     },
   },
   components: {},
