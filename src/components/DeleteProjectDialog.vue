@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import db from "@/fb";
 export default {
   data() {
     return {
@@ -48,6 +49,15 @@ export default {
 
   methods: {
     deleteProject() {
+      for (let i = 0; i < this.$store.getters.allProjects.length; i++) {
+        const element=this.$store.getters.allProjects[i]
+        if (element.id === this.id) {
+          db.collection("projects2")
+            .doc(this.id)
+            .delete()
+          break;
+        }
+      }
       this.$emit("projectDeleted");
       this.dialog = false;
     },

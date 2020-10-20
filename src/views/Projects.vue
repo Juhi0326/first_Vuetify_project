@@ -46,15 +46,14 @@
                   <v-row class="mt-6">
                     <v-col cols="12" sm="4">
                       <DeleteProjectDialog
+                        :id="id"
                         @projectDeleted="deleteProject()"
                         @cancel="clearId()"
                       />
                     </v-col>
 
                     <v-col cols="12" sm="4">
-                      <ModifyProjectDialog
-                        :id="id"
-                      />
+                      <ModifyProjectDialog :id="id" />
                     </v-col>
 
                     <v-col
@@ -74,7 +73,6 @@
           </template>
         </v-col>
       </v-row>
-     
     </v-container>
   </div>
 </template>
@@ -130,7 +128,6 @@ export default {
   },
 
   methods: {
-    
     clearId() {
       this.id = null;
     },
@@ -150,18 +147,8 @@ export default {
     },
 
     deleteProject() {
-      this.dialog2 = false;
-
-      for (let i = 0; i < this.myProjects.length; i++) {
-        if (this.myProjects[i].id === this.id) {
-          this.myProjects.splice(i, 1);
-          break;
-        }
-      }
-
       this.snackbarDelete = true;
     },
-
   },
 };
 </script>
