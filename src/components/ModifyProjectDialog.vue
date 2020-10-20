@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           small
-          @click="getContent()"
+          @click="getContentById()"
           color="secondary mb-5"
           dark
           v-bind="attrs"
@@ -16,7 +16,6 @@
       </template>
       <v-card>
         <v-card-title class="headline grey lighten-3"> </v-card-title>
-
         <v-card-text>
           <v-form class="px-3">
             <v-textarea
@@ -24,7 +23,7 @@
               rows="1"
               label="Title"
               :error-messages="titleErrors"
-              v-model="thisTitle"
+              v-model="title"
               prepend-icon="mdi mdi-format-title"
               required
               @input="$v.title.$touch()"
@@ -87,7 +86,7 @@
             @click="ModifyContent()"
             :loading="loading"
           >
-            Save {{ title }}
+            Save
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -102,13 +101,15 @@ import { required, minLength } from "vuelidate/lib/validators";
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
 export default {
-  props: ["title", "contentText", "date"],
+  props: ["id"],
   data() {
     return {
       dialog: false,
       menu: false,
       loading: false,
-      thisTitle:""
+      title: "",
+      contentText: "",
+      date: "",
     };
   },
   validations: {
@@ -122,14 +123,6 @@ export default {
       return this.date
         ? format(parseISO(new Date().toISOString()), "yyyy-MM-dd")
         : "";
-    },
-    computedTitle: {
-      get() {
-        return this.thisTitle;
-      },
-      set(title) {
-        this.thisTitle = title;
-      },
     },
 
     titleErrors() {
@@ -160,12 +153,27 @@ export default {
   },
 
   methods: {
-    getContent() {
+    getContentById() {
       this.dialog = true;
-      this.$emit("getContent");
+      this.$store.getters.allProjects.forEach((doc) => {
+        if (doc.id === this.id) {
+          this.title = doc.title;
+          this.contentText = doc.content;
+          this.date = doc.due;
+        }
+      });
     },
+
     ModifyContent() {
-      this.$emit("modifyContent");
+      for (let i = 0; i < this.$store.getters.allProjects.length; i++) {
+        const element = this.$store.getters.allProjects[i];
+        if (element.id === this.id) {
+          element.content = this.contentText;
+          element.due = this.date;
+          element.title = this.title;
+        }
+      }
+
       this.dialog = false;
     },
     cancel() {

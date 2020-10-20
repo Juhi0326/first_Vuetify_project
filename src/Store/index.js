@@ -17,7 +17,12 @@ export default new Vuex.Store({
         return state.projects.filter((project) => {
             return project.person === "Juhász István";
         })
-    }
+    },
+    filteredProject : (state, id)=> {
+      return state.projects.filter((project) => {
+          return project.id === id;
+      })
+  },
   },
   mutations: {
     ...vuexfireMutations,
