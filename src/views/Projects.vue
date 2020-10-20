@@ -295,24 +295,13 @@ export default {
     deleteProject() {
       this.dialog2 = false;
 
-      db.collection("projects2")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === this.id) {
-              db.collection("projects2")
-                .doc(doc.id)
-                .delete()
-                .then(() => {});
-              for (let i = 0; i < this.projects.length; i++) {
-                if (this.projects[i].id === this.id) {
-                  this.projects.splice(i, 1);
+              for (let i = 0; i < this.myProjects.length; i++) {
+                if (this.myProjects[i].id === this.id) {
+                  this.myProjects.splice(i, 1);
                   break;
                 }
               }
-            }
-          });
-        });
+    
       this.snackbarDelete = true;
     },
     changeContent() {
