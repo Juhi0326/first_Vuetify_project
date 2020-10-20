@@ -217,9 +217,6 @@ export default {
     };
   },
   computed: {
-    // projects: function() {
-    //   return this.$store.state.projects;
-    // },
     myProjects: function() {
       return this.$store.getters.filteredProjects;
     },
@@ -311,35 +308,30 @@ export default {
           break;
         }
       }
-      //change title
-      db.collection("projects2")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === this.id) {
-              db.collection("projects2")
-                .doc(doc.id)
-                .update({ title: this.title })
-                .then(() => {
-                  this.title = "";
-                });
+      this.myProjects.forEach((doc) => {
+        if (doc.id === this.id) {
+          db.collection("projects2")
+            .doc(doc.id)
+            .update({ title: this.title })
+            .then(() => {
+              this.title = "";
+            });
 
-              db.collection("projects2")
-                .doc(doc.id)
-                .update({ content: this.contentText })
-                .then(() => {
-                  this.contentText = "";
-                });
+          db.collection("projects2")
+            .doc(doc.id)
+            .update({ content: this.contentText })
+            .then(() => {
+              this.contentText = "";
+            });
 
-              db.collection("projects2")
-                .doc(doc.id)
-                .update({ due: this.date })
-                .then(() => {
-                  this.date = null;
-                });
-            }
-          });
-        });
+          db.collection("projects2")
+            .doc(doc.id)
+            .update({ due: this.date })
+            .then(() => {
+              this.date = null;
+            });
+        }
+      });
     },
   },
 };
