@@ -124,44 +124,28 @@ export default {
       id: null,
     };
   },
-  computed :{
-        projects: function() {
-      return this.$store.state.projects;
+  computed: {
+
+    projects: function() {
+      this.$store.state.projects.forEach((project) => {
+        const d = new Date(project.due);
+        d.setHours(0, 0, 0, 0);
+        const actualDate = new Date();
+        actualDate.setHours(0, 0, 0, 0);
+        if (actualDate <= d || project.status === "completed") {
+          console.log(`ok`);
+        } else {
+          console.log("overdue!");
+
+          let id = project.id;
+          db.collection("projects2")
+            .doc(id)
+            .update({ status: "overdue" });
+        }
+      });
+      return this.$store.state.projects
     },
   },
-  // created() {
-  //   db.collection("projects2").onSnapshot((res) => {
-  //     const changes = res.docChanges();
-
-  //     changes.forEach((change) => {
-  //       //get overdue dates
-  //       const d = new Date(change.doc.data().due);
-  //       d.setHours(0, 0, 0, 0);
-  //       const actualDate = new Date();
-  //       actualDate.setHours(0, 0, 0, 0);
-
-  //       if (actualDate <= d || change.doc.data().status === "completed") {
-  //         console.log("ok");
-  //       } else {
-  //         console.log("overdue!");
-
-  //         let id = change.doc.id;
-  //         db.collection("projects2")
-  //           .doc(id)
-  //           .update({ status: "overdue" });
-
-  //         console.log(id);
-  //       }
-
-  //       if (change.type === "added") {
-  //         this.projects.push({
-  //           ...change.doc.data(),
-  //           id: change.doc.id,
-  //         });
-  //       }
-  //     });
-  //   });
-  // },
 
   methods: {
     sortBy(prop) {
