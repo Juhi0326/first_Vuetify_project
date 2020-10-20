@@ -58,7 +58,6 @@
                         :date="date"
                         @getContent="getContentById()"
                         @modifyContent="changeContent()"
- 
                       />
                     </v-col>
 
@@ -204,7 +203,6 @@ export default {
   },
   data() {
     return {
-     
       dialog: false,
       dialog2: false,
       dialog3: false,
@@ -222,8 +220,8 @@ export default {
     // projects: function() {
     //   return this.$store.state.projects;
     // },
-    myProjects: function () {
-      return this.$store.getters.filteredProjects
+    myProjects: function() {
+      return this.$store.getters.filteredProjects;
     },
     computedDateFormattedDatefns() {
       return this.date
@@ -257,22 +255,18 @@ export default {
       return errors;
     },
   },
- 
-  methods: {
 
+  methods: {
     getContentById() {
       this.dialog3 = true;
-      db.collection("projects2")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if (doc.id === this.id) {
-              this.title = doc.data().title;
-              this.contentText = doc.data().content;
-              this.date = doc.data().due;
-            }
-          });
-        });
+
+      this.myProjects.forEach((doc) => {
+        if (doc.id === this.id) {
+          this.title = doc.title;
+          this.contentText = doc.content;
+          this.date = doc.due;
+        }
+      });
     },
     clearId() {
       this.id = null;
@@ -295,24 +289,24 @@ export default {
     deleteProject() {
       this.dialog2 = false;
 
-              for (let i = 0; i < this.myProjects.length; i++) {
-                if (this.myProjects[i].id === this.id) {
-                  this.myProjects.splice(i, 1);
-                  break;
-                }
-              }
-    
+      for (let i = 0; i < this.myProjects.length; i++) {
+        if (this.myProjects[i].id === this.id) {
+          this.myProjects.splice(i, 1);
+          break;
+        }
+      }
+
       this.snackbarDelete = true;
     },
     changeContent() {
       this.dialog3 = false;
       this.$v.$touch();
 
-      for (let i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].id === this.id) {
-          this.projects[i].title = this.title;
-          this.projects[i].content = this.contentText;
-          this.projects[i].due = this.date;
+      for (let i = 0; i < this.myProjects.length; i++) {
+        if (this.myProjects[i].id === this.id) {
+          this.myProjects[i].title = this.title;
+          this.myProjects[i].content = this.contentText;
+          this.myProjects[i].due = this.date;
 
           break;
         }
