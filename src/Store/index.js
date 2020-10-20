@@ -15,7 +15,6 @@ export default new Vuex.Store({
     },
     filteredProjects : state=> {
         return state.projects.filter((project) => {
-            console.log(state.projects);
             return project.person === "Juhász István";
         })
     }
