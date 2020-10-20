@@ -114,8 +114,6 @@
 </template>
 
 <script>
-import db from "@/fb";
-
 export default {
   name: "Dashboard",
   data() {
@@ -132,10 +130,7 @@ export default {
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
         if (actualDate > d || project.status === "completed") {
-          let id = project.id;
-          db.collection("projects2")
-            .doc(id)
-            .update({ status: "overdue" });
+          project.status = "overdue";
         }
       });
       return this.$store.state.projects;
