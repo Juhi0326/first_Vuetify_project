@@ -2,7 +2,6 @@
   <div class="Team">
     <h1 class="subheading grey--text ml-12">Our Team</h1>
   
-    <v-btn @click="filterByName()">update</v-btn>
     <v-container class="my-5">
       <v-row>
         <v-col
