@@ -44,7 +44,7 @@
                   <div>{{ project.content }}</div>
                   <v-divider></v-divider>
                   <v-row class="mt-6">
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="4" md="2">
                       <DeleteProjectDialog
                         :id="id"
                         @projectDeleted="deleteProject()"
@@ -52,13 +52,14 @@
                       />
                     </v-col>
 
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="4" md="2">
                       <ModifyProjectDialog :id="id" />
                     </v-col>
 
                     <v-col
                       cols="12"
                       sm="4"
+                      md="2"
                       v-if="project.status !== 'completed'"
                     >
                       <SetCompletedDialog
