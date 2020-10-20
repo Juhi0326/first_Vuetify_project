@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import db from "../fb";
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { vuexfireMutations, firestoreAction } from "vuexfire";
 
 Vue.use(Vuex);
 
@@ -9,15 +9,24 @@ export default new Vuex.Store({
   state: {
     projects: [],
   },
-  getters: {},
+  getters: {
+    allProjects: (state)=> {
+        return state.projects
+    },
+    filteredProjects : state=> {
+        return state.projects.filter((project) => {
+            console.log(state.projects);
+            return project.person === "Juhász István";
+        })
+    }
+  },
   mutations: {
     ...vuexfireMutations,
-   
   },
   actions: {
-   getProjects : firestoreAction(({bindFirestoreRef }) => {
-       return bindFirestoreRef('projects', db.collection('projects2'))
-   }),
+    getProjects: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef("projects", db.collection("projects2"));
+    }),
+
   },
-  modules: {},
 });

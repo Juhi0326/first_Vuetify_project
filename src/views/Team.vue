@@ -1,7 +1,8 @@
 <template>
   <div class="Team">
     <h1 class="subheading grey--text ml-12">Our Team</h1>
-    {{projects}}
+  
+    <v-btn @click="filterByName()">update</v-btn>
     <v-container class="my-5">
       <v-row>
         <v-col
@@ -15,9 +16,8 @@
           <v-card flat class="text-center ma-3">
             <v-responsive class="pt-4">
               <v-avatar size="100" class="grey lighten-2">
-                <img :src="person.avatar" alt="">
+                <img :src="person.avatar" alt="" />
               </v-avatar>
-              
             </v-responsive>
             <v-card-text>
               <div class="subheading">
@@ -44,7 +44,6 @@
 
 <script>
 
-
 export default {
   name: "Team",
   data() {
@@ -55,7 +54,11 @@ export default {
           role: "Junior web developer",
           avatar: "/me3.jpg",
         },
-        { name: "Bigos András", role: "Graphic designer", avatar: "/santa.webp" },
+        {
+          name: "Bigos András",
+          role: "Graphic designer",
+          avatar: "/santa.webp",
+        },
         { name: "Borzsák Anna", role: "web developer", avatar: "/anna.webp" },
         {
           name: "Márkus Szabolcs",
@@ -65,12 +68,6 @@ export default {
       ],
     };
   },
-  components: {},
-  computed: {
-    projects: function () {
-      return this.$store.state.projects
-
-    }
-  }
+  
 };
 </script>

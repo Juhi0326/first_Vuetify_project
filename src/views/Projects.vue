@@ -204,7 +204,7 @@ export default {
   },
   data() {
     return {
-      projects: [],
+     
       dialog: false,
       dialog2: false,
       dialog3: false,
@@ -219,10 +219,11 @@ export default {
     };
   },
   computed: {
-    myProjects() {
-      return this.projects.filter((project) => {
-        return project.person === "Juhász István";
-      });
+    // projects: function() {
+    //   return this.$store.state.projects;
+    // },
+    myProjects: function () {
+      return this.$store.getters.filteredProjects
     },
     computedDateFormattedDatefns() {
       return this.date
@@ -256,20 +257,7 @@ export default {
       return errors;
     },
   },
-  created() {
-    db.collection("projects2").onSnapshot((res) => {
-      const changes = res.docChanges();
-
-      changes.forEach((change) => {
-        if (change.type === "added") {
-          this.projects.push({
-            ...change.doc.data(),
-            id: change.doc.id,
-          });
-        }
-      });
-    });
-  },
+ 
   methods: {
 
     getContentById() {
