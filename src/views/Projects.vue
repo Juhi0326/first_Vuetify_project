@@ -85,9 +85,6 @@ import DeleteProjectDialog from "../components/DeleteProjectDialog";
 import SetCompletedDialog from "../components/SetCompletedDialog";
 import ModifyProjectDialog from "../components/ModifyProjectDialog";
 
-// title cannot contain new line character
-
-import db from "@/fb";
 export default {
   name: "Projects",
   components: {
@@ -113,10 +110,7 @@ export default {
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
         if (actualDate > d || project.status === "completed") {
-          let id = project.id;
-          db.collection("projects2")
-            .doc(id)
-            .update({ status: "overdue" });
+          project.status = "overdue";
         }
       });
       return this.$store.getters.filteredProjects;
