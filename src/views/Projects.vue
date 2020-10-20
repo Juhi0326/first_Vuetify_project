@@ -80,14 +80,13 @@
 
 <script>
 import { format, parseISO } from "date-fns";
-//import db from "@/fb";
-import { required, minLength } from "vuelidate/lib/validators";
+
 import DeleteProjectDialog from "../components/DeleteProjectDialog";
 import SetCompletedDialog from "../components/SetCompletedDialog";
 import ModifyProjectDialog from "../components/ModifyProjectDialog";
 
 // title cannot contain new line character
-const enter = (value) => value.indexOf("\n") < 1;
+
 import db from "@/fb";
 export default {
   name: "Projects",
@@ -96,20 +95,10 @@ export default {
     SetCompletedDialog,
     ModifyProjectDialog,
   },
-  validations: {
-    title: { required, minLength: minLength(3), enter },
-    contentText: { required, minLength: minLength(3) },
-    date: { required },
-  },
+
   data() {
     return {
-      dialog: false,
-      dialog2: false,
-      dialog3: false,
       id: null,
-      title: "",
-      contentText: "",
-      date: "",
       menu: false,
       loading: false,
       snackbarDelete: false,
