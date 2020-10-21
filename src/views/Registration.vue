@@ -18,12 +18,12 @@
                     height="50px"
                     max-width="500"
                   >
-                    <v-textarea
+                    <v-text-field
                       flat
                       v-model="firstName"
                       label="First Name"
                       required
-                    ></v-textarea>
+                    ></v-text-field>
                   </v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
@@ -46,12 +46,12 @@
                     height="50px"
                     max-width="500"
                   >
-                    <v-textarea
+                    <v-text-field
                       flat
                       v-model="lastName"
                       label="Last Name"
                       required
-                    ></v-textarea>
+                    ></v-text-field>
                   </v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
@@ -77,12 +77,12 @@
                     height="50px"
                     max-width="500"
                   >
-                    <v-textarea
+                    <v-text-field
                       flat
                       v-model="email"
                       label="email address"
                       required
-                    ></v-textarea
+                    ></v-text-field
                   ></v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
@@ -171,22 +171,24 @@
                   View your data (without password)
                 </v-stepper-step>
                 <v-stepper-content step="6">
-                  <v-card color="grey lighten-4" class="mb-12" height="200px">
-                    Your first name: {{ firstName }}
-                    <br />
-                    Your last name: {{ lastName }}
-                    <br />
-                    Your email address: {{ email }}
-                    <br />
+                  <v-card color="grey lighten-4" class="pl-4 d-flex align-center" height="200px" max-width="500">
+                    <div >
+                      Your first name: {{ firstName }}
+                      <br />
+                      Your last name: {{ lastName }}
+                      <br />
+                      Your email address: {{ email }}
+                      <br />
+                    </div>
                   </v-card>
-                  <v-btn color="primary" @click="save()">
+                  <v-btn color="primary" @click="save()" class="mt-4">
                     Save
                   </v-btn>
-                  <v-btn class="ml-3" color="accent" text @click="decrease()">
+                  <v-btn class="ml-3 mt-4" color="accent" text @click="decrease()">
                     Back
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
-                    <v-btn color="secondary" text class="ml-3">
+                    <v-btn color="secondary" text class="ml-3 mt-4">
                       Cancel
                     </v-btn>
                   </router-link>
