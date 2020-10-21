@@ -24,9 +24,11 @@
             </v-btn>
           </router-link>
 
-          <v-btn large color="orange" text>
-            Register
-          </v-btn>
+          <router-link class="text-decoration-none" to="/register">
+            <v-btn large color="orange" text>
+              Register
+            </v-btn>
+          </router-link>
         </v-card-actions>
       </v-card>
     </v-container>

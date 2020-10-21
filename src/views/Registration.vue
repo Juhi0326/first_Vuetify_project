@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container>
-        Login page
+        Registration page
         </v-container>
     </div>
 </template>
