@@ -54,7 +54,7 @@
                       label="Last Name"
                       required
                       v-on:keyup.13="increase()"
-                      v-on:keyup.8="decrease()"
+                      
                       ref="lastName"
                     ></v-text-field>
                   </v-card>
@@ -88,7 +88,7 @@
                       label="email address"
                       required
                       v-on:keyup.13="increase()"
-                      v-on:keyup.8="decrease()"
+                      
                       ref="email"
                     ></v-text-field
                   ></v-card>
@@ -126,7 +126,7 @@
                       counter
                       @click:append="show1 = !show1"
                       v-on:keyup.13="increase()"
-                      v-on:keyup.8="decrease()"
+                      
                       ref="password1"
                     ></v-text-field>
                   </v-card>
@@ -164,7 +164,7 @@
                       counter
                       @click:append="show1 = !show1"
                       v-on:keyup.13="increase()"
-                      v-on:keyup.8="decrease()"
+                      
                       ref="password2"
                     ></v-text-field
                   ></v-card>
@@ -246,6 +246,9 @@ export default {
       password1: "",
       password2: "",
     };
+  },
+  mounted (){
+      this.setFocus();
   },
   methods: {
     increase() {

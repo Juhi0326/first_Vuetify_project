@@ -9,7 +9,7 @@
       <v-card>
         <v-img
           src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="600px"
+          height="500px"
         ></v-img>
 
         <v-card-title>
