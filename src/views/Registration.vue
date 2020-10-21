@@ -20,7 +20,7 @@
                   >
                     <v-textarea
                       flat
-                      v-model="name"
+                      v-model="firstName"
                       label="First Name"
                       required
                     ></v-textarea>
@@ -45,7 +45,14 @@
                     class="mb-12"
                     height="50px"
                     max-width="500"
-                  ></v-card>
+                  >
+                    <v-textarea
+                      flat
+                      v-model="lastName"
+                      label="Last Name"
+                      required
+                    ></v-textarea>
+                  </v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
                   </v-btn>
@@ -69,6 +76,13 @@
                     class="mb-12"
                     height="50px"
                     max-width="500"
+                  >
+                    <v-textarea
+                      flat
+                      v-model="email"
+                      label="email address"
+                      required
+                    ></v-textarea
                   ></v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
@@ -93,7 +107,18 @@
                     class="mb-12"
                     height="50px"
                     max-width="500"
-                  ></v-card>
+                  >
+                    <v-text-field
+                      v-model="password1"
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show1 ? 'text' : 'password'"
+                      name="input-10-1"
+                      label="Normal with hint text"
+                      hint="At least 8 characters"
+                      counter
+                      @click:append="show1 = !show1"
+                    ></v-text-field>
+                  </v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
                   </v-btn>
@@ -117,6 +142,17 @@
                     class="mb-12"
                     height="50px"
                     max-width="500"
+                  >
+                    <v-text-field
+                      v-model="password2"
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show1 ? 'text' : 'password'"
+                      name="input-10-1"
+                      label="Normal with hint text"
+                      hint="At least 8 characters"
+                      counter
+                      @click:append="show1 = !show1"
+                    ></v-text-field
                   ></v-card>
                   <v-btn color="primary" @click="increase()">
                     Continue
@@ -135,11 +171,14 @@
                   View your data (without password)
                 </v-stepper-step>
                 <v-stepper-content step="6">
-                  <v-card
-                    color="grey lighten-4"
-                    class="mb-12"
-                    height="200px"
-                  ></v-card>
+                  <v-card color="grey lighten-4" class="mb-12" height="200px">
+                    Your first name: {{ firstName }}
+                    <br />
+                    Your last name: {{ lastName }}
+                    <br />
+                    Your email address: {{ email }}
+                    <br />
+                  </v-card>
                   <v-btn color="primary" @click="save()">
                     Save
                   </v-btn>
@@ -169,11 +208,17 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       counter: 1,
+      show1: false,
+      show2: false,
+      firstName: "",
+      lastName: "",
+      email: "",
+      password1: "",
+      password2: "",
     };
   },
   methods: {
