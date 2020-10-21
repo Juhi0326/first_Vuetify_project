@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <h1 class="text-h1 text--primary text-center">
-        Welcome on my Page!
+        Welcome to my Page!
       </h1>
       <br />
 
@@ -13,8 +13,10 @@
         ></v-img>
 
         <v-card-title>
+            <h3>
           In order to use this project management page, you should sign in or
           fill the registration form.
+          </h3>
         </v-card-title>
 
         <v-card-actions>
