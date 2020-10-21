@@ -1,6 +1,13 @@
 <template>
   <div>
-      This is the home page
+    <v-main> 
+        <h1 class="text-h1">
+            Welcome my project management page!
+        </h1>
+        
+    </v-main>
+
+  
   </div>
 </template>
 
