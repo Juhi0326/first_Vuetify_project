@@ -63,6 +63,7 @@
                       v-if="project.status !== 'completed'"
                     >
                       <SetCompletedDialog
+                        :id="id"
                         @setCompleted="setComplete()"
                         @cancel="clearId()"
                       />
@@ -109,7 +110,7 @@ export default {
         d.setHours(0, 0, 0, 0);
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
-        if (actualDate > d || project.status === "completed") {
+        if (actualDate > d || project.status !== "completed") {
           project.status = "overdue";
         }
       });
@@ -132,13 +133,7 @@ export default {
       this.id = null;
     },
     setComplete() {
-      this.dialog = false;
-      for (let i = 0; i < this.myProjects.length; i++) {
-        if (this.myProjects[i].id === this.id) {
-          this.myProjects[i].status = "completed";
-          break;
-        }
-      }
+
       this.snackbarCompleted = true;
     },
 
