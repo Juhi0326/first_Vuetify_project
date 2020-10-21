@@ -50,7 +50,6 @@ export default {
   methods: {
     setComplete() {
 
-      this.dialog = false;
       for (let i = 0; i < this.$store.state.projects.length; i++) {
         if (this.$store.state.projects[i].id === this.id) {
         this.$store.state.projects[i].status = "completed";
