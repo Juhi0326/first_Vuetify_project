@@ -98,7 +98,8 @@ export default {
       snackbar2: false,
       drawer: false,
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
+        { title: "Home", icon: "mdi-view-dashboard", route: "/" },
+        { title: "Dashboard", icon: "mdi-view-dashboard", route: "/dashboard" },
         { title: "My Projects", icon: "mdi-forum", route: "/projects" },
         { title: "Team", icon: "mdi-forum", route: "/team" },
       ],

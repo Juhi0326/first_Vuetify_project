@@ -110,7 +110,9 @@ export default {
         d.setHours(0, 0, 0, 0);
         const actualDate = new Date();
         actualDate.setHours(0, 0, 0, 0);
-        if (actualDate > d || project.status !== "completed") {
+        if (actualDate <= d || project.status === "completed") {
+          project.status
+        } else {
           project.status = "overdue";
         }
       });
