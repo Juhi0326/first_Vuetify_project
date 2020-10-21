@@ -23,6 +23,8 @@
                       v-model="firstName"
                       label="First Name"
                       required
+                      v-on:keyup.13="increase()"
+                      ref="firstName"
                     ></v-text-field>
                   </v-card>
                   <v-btn color="primary" @click="increase()">
@@ -51,6 +53,8 @@
                       v-model="lastName"
                       label="Last Name"
                       required
+                      v-on:keyup.13="increase()"
+                      ref="lastName"
                     ></v-text-field>
                   </v-card>
                   <v-btn color="primary" @click="increase()">
@@ -82,6 +86,8 @@
                       v-model="email"
                       label="email address"
                       required
+                      v-on:keyup.13="increase()"
+                      ref="email"
                     ></v-text-field
                   ></v-card>
                   <v-btn color="primary" @click="increase()">
@@ -117,6 +123,8 @@
                       hint="At least 8 characters"
                       counter
                       @click:append="show1 = !show1"
+                      v-on:keyup.13="increase()"
+                      ref="password1"
                     ></v-text-field>
                   </v-card>
                   <v-btn color="primary" @click="increase()">
@@ -152,6 +160,8 @@
                       hint="At least 8 characters"
                       counter
                       @click:append="show1 = !show1"
+                      v-on:keyup.13="increase()"
+                      ref="password2"
                     ></v-text-field
                   ></v-card>
                   <v-btn color="primary" @click="increase()">
@@ -171,8 +181,13 @@
                   View your data (without password)
                 </v-stepper-step>
                 <v-stepper-content step="6">
-                  <v-card color="grey lighten-4" class="pl-4 d-flex align-center" height="200px" max-width="500">
-                    <div >
+                  <v-card
+                    color="grey lighten-4"
+                    class="pl-4 d-flex align-center"
+                    height="200px"
+                    max-width="500"
+                  >
+                    <div>
                       Your first name: {{ firstName }}
                       <br />
                       Your last name: {{ lastName }}
@@ -184,7 +199,12 @@
                   <v-btn color="primary" @click="save()" class="mt-4">
                     Save
                   </v-btn>
-                  <v-btn class="ml-3 mt-4" color="accent" text @click="decrease()">
+                  <v-btn
+                    class="ml-3 mt-4"
+                    color="accent"
+                    text
+                    @click="decrease()"
+                  >
                     Back
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
@@ -226,11 +246,35 @@ export default {
   methods: {
     increase() {
       this.counter = this.counter + 1;
+      this.setFocus();
     },
     decrease() {
       this.counter = this.counter - 1;
+      this.setFocus();
     },
     save() {},
+
+    setFocus() {
+      switch (this.counter) {
+        case 1:
+          this.$refs.firstName.focus();
+          break;
+        case 2:
+          this.$refs.lastName.focus();
+          break;
+        case 3:
+          this.$refs.email.focus();
+          break;
+        case 4:
+          this.$refs.password1.focus();
+          break;
+        case 5:
+          this.$refs.password2.focus();
+          break;
+        default:
+          break;
+      }
+    },
   },
 };
 </script>
