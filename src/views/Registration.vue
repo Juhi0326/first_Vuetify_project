@@ -160,16 +160,17 @@
                       v-model="password2"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="show1 ? 'text' : 'password'"
+                      :error-messages="password2Errors"
                       name="input-10-1"
                       label="Normal with hint text"
                       hint="At least 8 characters"
                       counter
                       @click:append="show1 = !show1"
-                      v-on:keyup.13="increase()"
+                      v-on:keyup.13="password2Submit()"
                       ref="password2"
                     ></v-text-field
                   ></v-card>
-                  <v-btn color="primary" @click="increase()">
+                  <v-btn color="primary" @click="password2Submit()">
                     Continue
                   </v-btn>
                   <v-btn class="ml-3" color="accent" text @click="decrease()">
@@ -240,6 +241,7 @@ import {
   minLength,
   maxLength,
   email,
+  sameAs
 } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 const alpha = helpers.regex("alpha", /^[a-zA-Z]*$/);
@@ -251,7 +253,7 @@ export default {
   validations: {
     firstName: {
       required,
-      minLength: minLength(3),
+      minLength: minLength(3), 
       maxLength: maxLength(30),
       alpha,
     },
@@ -270,9 +272,7 @@ export default {
     },
     password2: {
       required,
-      minLength: minLength(8),
-      maxLength: maxLength(20),
-      passw,
+      sameAsPassword: sameAs("password1")
     },
   },
   data() {
@@ -326,6 +326,13 @@ export default {
       " one number and one special character");
       return errors;
     },
+      password2Errors() {
+      const errors = [];
+      if (!this.$v.password2.$dirty) return errors;
+      !this.$v.password2.required && errors.push("password is required.");
+      !this.$v.password2.sameAsPassword && errors.push("the password does not match")
+      return errors;
+    },
   },
   mounted() {
     this.setFocus();
@@ -352,6 +359,13 @@ export default {
       password1Submit() {
       this.$v.password1.$touch();
       if (!this.$v.password1.$error == true) {
+        this.increase();
+      }  
+    },
+      password2Submit() {
+        console.log(this.$v.password2);
+      this.$v.password2.$touch();
+      if (!this.$v.password2.$error == true) {
         this.increase();
       }  
     },
