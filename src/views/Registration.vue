@@ -333,6 +333,7 @@ export default {
       !this.$v.password2.sameAsPassword && errors.push("the password does not match")
       return errors;
     },
+
   },
   mounted() {
     this.setFocus();
@@ -347,6 +348,7 @@ export default {
     lastNameSubmit() {
       this.$v.lastName.$touch();
       if (!this.$v.lastName.$error == true) {
+        this.trimName(this.lastName);
         this.increase();
       }  
     },
@@ -376,6 +378,9 @@ export default {
     decrease() {
       this.counter = this.counter - 1;
       this.setFocus();
+    },
+    trimName(s) {
+      return s=s.trim();
     },
     save() {},
 
