@@ -313,8 +313,8 @@ export default {
       emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
-      !this.$v.lastName.required && errors.push("email is required.");
-      !this.$v.lastName.email && errors.push("the email must be in email format!");
+      !this.$v.email.required && errors.push("email is required.");
+      !this.$v.email && errors.push("the email must be in email format!");
       return errors;
     },
       password1Errors() {
