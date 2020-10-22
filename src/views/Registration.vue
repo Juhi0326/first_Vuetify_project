@@ -5,8 +5,8 @@
         <v-stepper v-model="counter" vertical>
           <div>
             <v-row>
-              <v-col>
-                <v-stepper-step :complete="counter > 1" step="1">
+              <v-col >
+                <v-stepper-step :complete="counter > 1" step="1" >
                   Enter your first name
                   <small></small>
                 </v-stepper-step>
@@ -191,14 +191,14 @@
                     height="200px"
                     max-width="500"
                   >
-                    <div>
+                    <v-card-subtitle>
                       Your first name: {{ firstName }}
                       <br />
                       Your last name: {{ lastName }}
                       <br />
                       Your email address: {{ email }}
                       <br />
-                    </div>
+                    </v-card-subtitle>
                   </v-card>
                   <v-btn color="primary" @click="save()" class="mt-4">
                     Save

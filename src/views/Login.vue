@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <v-container>
-        Login page
-        </v-container>
-    </div>
+  <div>
+    <v-container>
+
+    </v-container>
+  </div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
