@@ -5,7 +5,7 @@
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
     
-      <v-app-bar app flat height="150" class="grey lighten-4">
+      <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>
           <span class="font-weight-light">Todo</span>

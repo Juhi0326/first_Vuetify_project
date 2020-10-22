@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <h1 class="text-h1 text--primary text-center">
+      <h1 class="text-center">
         Welcome to my Page!
       </h1>
       <br />
