@@ -5,8 +5,8 @@
         <v-stepper v-model="counter" vertical>
           <div>
             <v-row class="d-flex flex-wrap-reverse">
-              <v-col >
-                <v-stepper-step :complete="counter > 1" step="1" >
+              <v-col>
+                <v-stepper-step :complete="counter > 1" step="1">
                   Enter your first name
                   <small></small>
                 </v-stepper-step>
@@ -23,11 +23,12 @@
                       v-model="firstName"
                       label="First Name"
                       required
-                      v-on:keyup.13="increase()"
+                      :error-messages="firstNameErrors"
+                      v-on:keyup.13="firstNameSubmit()"
                       ref="firstName"
                     ></v-text-field>
                   </v-card>
-                  <v-btn color="primary" @click="increase()">
+                  <v-btn color="primary" @click="firstNameSubmit()">
                     Continue
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
@@ -53,12 +54,12 @@
                       v-model="lastName"
                       label="Last Name"
                       required
-                      v-on:keyup.13="increase()"
-                      
+                      :error-messages="lastNameErrors"
+                      v-on:keyup.13="lastNameSubmit()"
                       ref="lastName"
                     ></v-text-field>
                   </v-card>
-                  <v-btn color="primary" @click="increase()">
+                  <v-btn color="primary" @click="lastNameSubmit()">
                     Continue
                   </v-btn>
                   <v-btn class="ml-3" color="accent" text @click="decrease()">
@@ -88,7 +89,6 @@
                       label="email address"
                       required
                       v-on:keyup.13="increase()"
-                      
                       ref="email"
                     ></v-text-field
                   ></v-card>
@@ -126,7 +126,6 @@
                       counter
                       @click:append="show1 = !show1"
                       v-on:keyup.13="increase()"
-                      
                       ref="password1"
                     ></v-text-field>
                   </v-card>
@@ -164,7 +163,6 @@
                       counter
                       @click:append="show1 = !show1"
                       v-on:keyup.13="increase()"
-                      
                       ref="password2"
                     ></v-text-field
                   ></v-card>
@@ -234,7 +232,43 @@
 </template>
 
 <script>
+import {
+  required,
+  minLength,
+  maxLength,
+  email,
+} from "vuelidate/lib/validators";
+import { helpers } from "vuelidate/lib/validators";
+const alpha = helpers.regex("alpha", /^[a-zA-Z]*$/);
+
 export default {
+  validations: {
+    firstName: {
+      required,
+      minLength: minLength(3),
+      maxLength: maxLength(30),
+      alpha,
+    },
+    lastName: {
+      required,
+      minLength: minLength(2),
+      maxLength: maxLength(30),
+      alpha,
+    },
+    email: { required, email, maxLength: maxLength(30) },
+    password1: {
+      required,
+      minLength: minLength(8),
+      maxLength: maxLength(20),
+      alpha,
+    },
+    password2: {
+      required,
+      minLength: minLength(8),
+      maxLength: maxLength(20),
+      alpha,
+    },
+  },
   data() {
     return {
       counter: 1,
@@ -247,10 +281,46 @@ export default {
       password2: "",
     };
   },
-  mounted (){
-      this.setFocus();
+  computed: {
+    firstNameErrors() {
+      const errors = [];
+      if (!this.$v.firstName.$dirty) return errors;
+      !this.$v.firstName.minLength &&
+        errors.push("first name must be more then 2 characters long");
+      !this.$v.firstName.maxLength &&
+        errors.push("first name must be less then 31 characters long");
+      !this.$v.firstName.required && errors.push("first name is required.");
+      !this.$v.firstName.alpha && errors.push("the first name can only contain letters");
+      return errors;
+    },
+    lastNameErrors() {
+      const errors = [];
+      if (!this.$v.lastName.$dirty) return errors;
+      !this.$v.lastName.minLength &&
+        errors.push("last name must be more then 1 characters long");
+      !this.$v.lastName.maxLength &&
+        errors.push("last name must be less then 31 characters long");
+      !this.$v.lastName.required && errors.push("last name is required.");
+      !this.$v.lastName.alpha && errors.push("the last name can only contain letters");
+      return errors;
+    },
+  },
+  mounted() {
+    this.setFocus();
   },
   methods: {
+    firstNameSubmit() {
+      this.$v.firstName.$touch();
+      if (!this.$v.firstName.$error == true) {
+        this.increase();
+      }
+    },
+    lastNameSubmit() {
+      this.$v.lastName.$touch();
+      if (!this.$v.lastName.$error == true) {
+        this.increase();
+      }
+    },
     increase() {
       this.counter = this.counter + 1;
       this.setFocus();
