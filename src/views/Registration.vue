@@ -4,7 +4,7 @@
       <v-form>
         <v-stepper v-model="counter" vertical>
           <div>
-            <v-row>
+            <v-row class="d-flex flex-wrap-reverse">
               <v-col >
                 <v-stepper-step :complete="counter > 1" step="1" >
                   Enter your first name
