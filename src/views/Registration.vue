@@ -244,7 +244,7 @@ import {
   sameAs
 } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
-const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ]*$/);
+const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.]*$/);
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
