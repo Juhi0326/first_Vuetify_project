@@ -122,15 +122,17 @@
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
+                      :error-messages="password1Errors"
                       label="Normal with hint text"
-                      hint="At least 8 characters"
+                      hint="8-10 Character Password with lowercase, uppercase letters, numbers, 
+                    special characters and at least one lowercase letter, one uppercase letter, one number and one special character"
                       counter
                       @click:append="show1 = !show1"
-                      v-on:keyup.13="increase()"
+                      v-on:keyup.13="password1Submit()"
                       ref="password1"
                     ></v-text-field>
                   </v-card>
-                  <v-btn color="primary" @click="increase()">
+                  <v-btn color="primary" @click="password1Submit()">
                     Continue
                   </v-btn>
                   <v-btn class="ml-3" color="accent" text @click="decrease()">
@@ -241,6 +243,9 @@ import {
 } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 const alpha = helpers.regex("alpha", /^[a-zA-Z]*$/);
+// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-useless-escape
+const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
 
 export default {
   validations: {
@@ -261,13 +266,13 @@ export default {
       required,
       minLength: minLength(8),
       maxLength: maxLength(20),
-      alpha,
+      passw,
     },
     password2: {
       required,
       minLength: minLength(8),
       maxLength: maxLength(20),
-      alpha,
+      passw,
     },
   },
   data() {
@@ -312,6 +317,15 @@ export default {
       !this.$v.lastName.email && errors.push("the email must be in email format!");
       return errors;
     },
+      password1Errors() {
+      const errors = [];
+      if (!this.$v.password1.$dirty) return errors;
+      !this.$v.password1.required && errors.push("password is required.");
+      !this.$v.password1.passw && errors.push("Password has to at least 8 characters long and less then 20 characters long with lowercase, uppercase letters,"+ 
+      "numbers, special characters and at least one lowercase letter, one uppercase letter,"+
+      " one number and one special character");
+      return errors;
+    },
   },
   mounted() {
     this.setFocus();
@@ -332,6 +346,12 @@ export default {
       emailSubmit() {
       this.$v.email.$touch();
       if (!this.$v.email.$error == true) {
+        this.increase();
+      }  
+    },
+      password1Submit() {
+      this.$v.password1.$touch();
+      if (!this.$v.password1.$error == true) {
         this.increase();
       }  
     },
