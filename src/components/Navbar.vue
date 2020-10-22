@@ -7,7 +7,7 @@
     
       <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>
+        <v-toolbar-title v-if="!isMobile">
           <span class="font-weight-light">Todo</span>
           <span>Projects</span>
         </v-toolbar-title>
@@ -105,5 +105,10 @@ export default {
       ],
     };
   },
+  computed: {
+    isMobile() {
+  return this.$vuetify.breakpoint.xsOnly;
+}
+  }
 };
 </script>
