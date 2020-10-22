@@ -88,11 +88,12 @@
                       v-model="email"
                       label="email address"
                       required
-                      v-on:keyup.13="increase()"
+                      :error-messages="emailErrors"
+                      v-on:keyup.13="emailSubmit()"
                       ref="email"
                     ></v-text-field
                   ></v-card>
-                  <v-btn color="primary" @click="increase()">
+                  <v-btn color="primary" @click="emailSubmit()">
                     Continue
                   </v-btn>
                   <v-btn class="ml-3" color="accent" text @click="decrease()">
@@ -255,7 +256,7 @@ export default {
       maxLength: maxLength(30),
       alpha,
     },
-    email: { required, email, maxLength: maxLength(30) },
+    email: { required, email},
     password1: {
       required,
       minLength: minLength(8),
@@ -304,6 +305,13 @@ export default {
       !this.$v.lastName.alpha && errors.push("the last name can only contain letters");
       return errors;
     },
+      emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.lastName.required && errors.push("email is required.");
+      !this.$v.lastName.email && errors.push("the email must be in email format!");
+      return errors;
+    },
   },
   mounted() {
     this.setFocus();
@@ -319,7 +327,13 @@ export default {
       this.$v.lastName.$touch();
       if (!this.$v.lastName.$error == true) {
         this.increase();
-      }
+      }  
+    },
+      emailSubmit() {
+      this.$v.email.$touch();
+      if (!this.$v.email.$error == true) {
+        this.increase();
+      }  
     },
     increase() {
       this.counter = this.counter + 1;
