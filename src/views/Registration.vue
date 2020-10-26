@@ -183,10 +183,87 @@
                   </router-link>
                 </v-stepper-content>
 
-                <v-stepper-step step="6">
+                <!-- address -->
+
+                <v-stepper-step :complete="counter > 6" step="6">
+                  Enter your address
+                </v-stepper-step>
+
+                <v-stepper-content :complete="counter > 6" step="6">
+
+                  <v-card
+                    color="grey lighten-4"
+                    class="mb-12"
+                    max-height="1000px"
+                    max-width="500"
+                  >
+                  <v-card-title>Account Address</v-card-title>
+                    <v-text-field label="postcode" class="ml-4" v-model="postcode">
+                    </v-text-field>
+                    <v-text-field label="city" v-model="city" class="ml-4"> </v-text-field>
+                    <v-text-field label="street" v-model="street" class="ml-4"> </v-text-field>
+                    <v-text-field label="hause number" v-model="hauseNumber" class="ml-4">
+                    </v-text-field>
+
+                    <v-radio-group v-model="radioGroup">
+                      <v-radio
+                        :label="`Delivery address is the same`"
+                        :value="1"
+                      ></v-radio>
+                      <v-radio
+                        :label="`A kiszállítási cím eltér a számlázási címtől`"
+                        :value="2"
+                      ></v-radio>
+                    </v-radio-group>
+
+                    <v-card
+                      v-if="deliveryAddress"
+                      color="grey lighten-4"
+                      class="mb-12"
+                      max-height="500px"
+                      max-width="500"
+                    >
+                      <v-card-title>
+                        Delivery Address
+                      </v-card-title>
+                          <v-text-field label="postcode" class="ml-4" v-model="deliveryPostcode">
+                    </v-text-field>
+                    <v-text-field label="city" v-model="deliveryCity" class="ml-4"> </v-text-field>
+                    <v-text-field label="street" v-model="deliveryStreet" class="ml-4"> </v-text-field>
+                    <v-text-field label="hause number" v-model="deliveryHauseNumber" class="ml-4"></v-text-field>
+                    </v-card>
+<!--                   <v-btn v-if="deliveryAddress" color="primary" @click="addressSubmit()">
+                    Continue
+                  </v-btn>
+                  <v-btn v-if="deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
+                    Back
+                  </v-btn>
+                  <router-link class="text-decoration-none" to="/">
+                    <v-btn v-if="deliveryAddress" color="secondary" text class="ml-3">
+                      Cancel
+                    </v-btn>
+                  </router-link> -->
+                  </v-card>
+
+                  
+                  <v-btn  color="primary" @click="addressSubmit()">
+                    Continue
+                  </v-btn>
+                  <v-btn class="ml-3" color="accent" text @click="decrease()">
+                    Back
+                  </v-btn>
+                  <router-link class="text-decoration-none" to="/">
+                    <v-btn color="secondary" text class="ml-3">
+                      Cancel
+                    </v-btn>
+                  </router-link>
+                </v-stepper-content>
+
+
+                <v-stepper-step step="8">
                   View your data (without password)
                 </v-stepper-step>
-                <v-stepper-content step="6">
+                <v-stepper-content step="8">
                   <v-card
                     color="grey lighten-4"
                     class="pl-4 d-flex align-center"
@@ -249,7 +326,10 @@ const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
 
+
 export default {
+
+
   validations: {
     firstName: {
       required,
@@ -285,6 +365,17 @@ export default {
       email: "",
       password1: "",
       password2: "",
+      radioGroup: 1,
+      address: "",
+      postcode: null,
+      city: "",
+      street: "",
+      hauseNumber: "",
+      deliveryPostcode: null,
+      deliveryCity: "",
+      deliveryStreet: "",
+      deliveryHauseNumber: "",
+      deliveryAddress2:""
     };
   },
   computed: {
@@ -333,10 +424,19 @@ export default {
       !this.$v.password2.sameAsPassword && errors.push("the password does not match")
       return errors;
     },
+    deliveryAddress() {
+      if (this.radioGroup === 2) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
 
   },
   mounted() {
     this.setFocus();
+    console.log(this.radioGroup);
   },
   methods: {
     firstNameSubmit() {
