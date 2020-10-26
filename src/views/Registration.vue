@@ -232,17 +232,6 @@
                     <v-text-field label="street" v-model="deliveryStreet" class="ml-4"> </v-text-field>
                     <v-text-field label="hause number" v-model="deliveryHauseNumber" class="ml-4"></v-text-field>
                     </v-card>
-<!--                   <v-btn v-if="deliveryAddress" color="primary" @click="addressSubmit()">
-                    Continue
-                  </v-btn>
-                  <v-btn v-if="deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
-                    Back
-                  </v-btn>
-                  <router-link class="text-decoration-none" to="/">
-                    <v-btn v-if="deliveryAddress" color="secondary" text class="ml-3">
-                      Cancel
-                    </v-btn>
-                  </router-link> -->
                   </v-card>
 
                   
@@ -297,13 +286,7 @@
                   </router-link>
                 </v-stepper-content>
               </v-col>
-              <v-col>
-                <v-img
-                  src="../assets/spacex.jpg"
-                  height="600px"
-                  class="mr-8 mt-8"
-                ></v-img>
-              </v-col>
+
             </v-row>
           </div>
         </v-stepper>
