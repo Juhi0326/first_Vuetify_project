@@ -197,7 +197,7 @@
                     max-height="1000px"
                     max-width="500"
                   >
-                  <v-card-title>Account Address</v-card-title>
+                  <v-card-title>Billing Address</v-card-title>
                     <v-text-field label="postcode" class="ml-4" v-model="postcode">
                     </v-text-field>
                     <v-text-field label="city" v-model="city" class="ml-4"> </v-text-field>
@@ -249,10 +249,10 @@
                 </v-stepper-content>
 
 
-                <v-stepper-step step="8">
+                <v-stepper-step step="7">
                   View your data (without password)
                 </v-stepper-step>
-                <v-stepper-content step="8">
+                <v-stepper-content step="7">
                   <v-card
                     color="grey lighten-4"
                     class="pl-4 d-flex align-center"
@@ -266,6 +266,16 @@
                       <br />
                       Your email address: {{ email }}
                       <br />
+                      Your billing address: {{ fullAccountAddress }}
+                      <br />
+                      <div v-if="deliveryAddress">
+                        Your delivery address: {{ fulldeliveryAddress }}
+                        <br />
+                      </div>
+                      <div v-if="!deliveryAddress">
+                        Your delivery address: {{ fulldeliveryAddress }}
+                        <br />
+                      </div>
                     </v-card-subtitle>
                   </v-card>
                   <v-btn color="primary" @click="save()" class="mt-4">
@@ -414,6 +424,19 @@ export default {
         return false;
       }
     },
+    fullAccountAddress() {
+      return `${this.postcode} ${this.city} ${this.street} ${this.hauseNumber}`
+    },
+    fulldeliveryAddress() {
+      if (this.deliveryAddress) {
+        return `${this.deliveryPostcode} ${this.deliveryCity} ${this.deliveryStreet} ${this.deliveryHauseNumber}`
+      } else {
+        return "same as billing address"
+        
+      }
+
+      
+    }
 
 
   },
@@ -454,6 +477,10 @@ export default {
         this.increase();
       }  
     },
+    addressSubmit() {
+      this.increase();
+    },
+
     increase() {
       this.counter = this.counter + 1;
       this.setFocus();
