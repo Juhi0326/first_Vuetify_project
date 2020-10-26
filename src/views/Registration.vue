@@ -198,7 +198,11 @@
                     max-width="500"
                   >
                   <v-card-title>Billing Address</v-card-title>
-                    <v-text-field label="postcode" class="ml-4" v-model="postcode">
+                    <v-text-field 
+                    label="postcode" 
+                    class="ml-4" 
+                    v-model="postcode" 
+                    :error-messages="postcodeErrors">
                     </v-text-field>
                     <v-text-field label="city" v-model="city" class="ml-4"> </v-text-field>
                     <v-text-field label="street" v-model="street" class="ml-4"> </v-text-field>
@@ -318,7 +322,7 @@ const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
-
+const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/)
 
 export default {
 
@@ -347,6 +351,11 @@ export default {
       required,
       sameAsPassword: sameAs("password1")
     },
+    postcode: {
+      required,
+      postcodeRegex,
+      maxLength: maxLength(4)
+    }
   },
   data() {
     return {
@@ -417,6 +426,14 @@ export default {
       !this.$v.password2.sameAsPassword && errors.push("the password does not match")
       return errors;
     },
+      postcodeErrors() {
+      const errors = [];
+      if (!this.$v.postcode.$dirty) return errors;
+      !this.$v.postcode.required && errors.push("postcode is required.");
+      !this.$v.postcode.postcodeRegex && errors.push("ivalid format of postcode!")
+      !this.$v.postcode.maxLength && errors.push("the posctcode has to 4 characters long")
+      return errors;
+      },
     deliveryAddress() {
       if (this.radioGroup === 2) {
         return true;
@@ -478,7 +495,10 @@ export default {
       }  
     },
     addressSubmit() {
-      this.increase();
+      this.$v.postcode.$touch();
+      if (!this.$v.postcode.$error == true) {
+        this.increase();
+      }  
     },
 
     increase() {
