@@ -380,7 +380,10 @@ export default {
       this.setFocus();
     },
     trimName(s) {
-      return s=s.replace(/ +/g, ' ')
+      s=s.replace(/ +/g, ' ')
+      s=s.trim();
+      return s;
+      
     },
     save() {
       console.log(this.lastName);
