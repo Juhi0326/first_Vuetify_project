@@ -348,7 +348,7 @@ export default {
     lastNameSubmit() {
       this.$v.lastName.$touch();
       if (!this.$v.lastName.$error == true) {
-        this.trimName(this.lastName);
+       this.lastName = this.trimName(this.lastName);
         this.increase();
       }  
     },
@@ -380,9 +380,11 @@ export default {
       this.setFocus();
     },
     trimName(s) {
-      return s=s.trim();
+      return s=s.replace(/ +/g, ' ')
     },
-    save() {},
+    save() {
+      console.log(this.lastName);
+    },
 
     setFocus() {
       switch (this.counter) {
