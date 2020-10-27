@@ -237,16 +237,28 @@
                     <v-text-field label="hause number" v-model="deliveryHauseNumber" class="ml-4"></v-text-field>
                     </v-card>
                   </v-card>
-
-                  
-                  <v-btn  color="primary" @click="addressSubmit()">
+                  <!-- buttons in case of only billing address -->
+                  <v-btn v-if="!deliveryAddress" color="primary" @click="addressSubmit()">
                     Continue
                   </v-btn>
-                  <v-btn class="ml-3" color="accent" text @click="decrease()">
+                  <v-btn v-if="!deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
                     Back
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
-                    <v-btn color="secondary" text class="ml-3">
+                    <v-btn v-if="!deliveryAddress" color="secondary" text class="ml-3">
+                      Cancel
+                    </v-btn>
+                  </router-link>
+
+                  <!-- buttons in case of delivery address -->
+                  <v-btn v-if="deliveryAddress" color="primary" @click="addressSubmit()">
+                    Continue
+                  </v-btn>
+                  <v-btn v-if="deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
+                    Back
+                  </v-btn>
+                  <router-link class="text-decoration-none" to="/">
+                    <v-btn v-if="deliveryAddress" color="secondary" text class="ml-3">
                       Cancel
                     </v-btn>
                   </router-link>
