@@ -322,7 +322,7 @@ const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
-const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/)
+const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/y)
 
 export default {
 
@@ -354,7 +354,6 @@ export default {
     postcode: {
       required,
       postcodeRegex,
-      maxLength: maxLength(4)
     }
   },
   data() {
@@ -431,7 +430,6 @@ export default {
       if (!this.$v.postcode.$dirty) return errors;
       !this.$v.postcode.required && errors.push("postcode is required.");
       !this.$v.postcode.postcodeRegex && errors.push("ivalid format of postcode!")
-      !this.$v.postcode.maxLength && errors.push("the posctcode has to 4 characters long")
       return errors;
       },
     deliveryAddress() {
