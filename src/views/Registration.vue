@@ -204,17 +204,25 @@
                     v-model="postcode" 
                     :error-messages="postcodeErrors">
                     </v-text-field>
+
                     <v-text-field 
                     label="city" 
                     v-model="city"
                     :error-messages="cityErrors"
-                    class="ml-4"> </v-text-field>
+                    class="ml-4"> 
+                    </v-text-field>
+
                     <v-text-field 
                     label="street" 
                     v-model="street" 
                     :error-messages="streetErrors"
                     class="ml-4"> </v-text-field>
-                    <v-text-field label="hause number" v-model="hauseNumber" class="ml-4">
+
+                    <v-text-field 
+                    label="hause number" 
+                    v-model="houseNumber" 
+                    :error-messages="houseNumberErrors"
+                    class="ml-4">
                     </v-text-field>
 
                     <v-radio-group v-model="radioGroup">
@@ -242,7 +250,7 @@
                     </v-text-field>
                     <v-text-field label="city" v-model="deliveryCity" class="ml-4"> </v-text-field>
                     <v-text-field label="street" v-model="deliveryStreet" class="ml-4"> </v-text-field>
-                    <v-text-field label="hause number" v-model="deliveryHauseNumber" class="ml-4"></v-text-field>
+                    <v-text-field label="hause number" v-model="deliveryHouseNumber" class="ml-4"></v-text-field>
                     </v-card>
                   </v-card>
                   <!-- buttons in case of only billing address -->
@@ -342,7 +350,8 @@ const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
-const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/y)
+const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/y);
+const regexHouseNumber = helpers.regex("houseNumber",/^[\d]/);
 
 export default {
 
@@ -384,6 +393,11 @@ export default {
       required,
       minLength: minLength(2)
     },
+    houseNumber: {
+      required,
+      maxLength: maxLength(15),
+      regexHouseNumber
+    },
   },
   data() {
     return {
@@ -400,11 +414,11 @@ export default {
       postcode: null,
       city: "",
       street: "",
-      hauseNumber: "",
+      houseNumber: "",
       deliveryPostcode: null,
       deliveryCity: "",
       deliveryStreet: "",
-      deliveryHauseNumber: "",
+      deliveryHouseNumber: "",
       deliveryAddress2:""
     };
   },
@@ -435,7 +449,7 @@ export default {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
       !this.$v.email.required && errors.push("email is required.");
-      !this.$v.email && errors.push("the email must be in email format!");
+      !this.$v.email.email && errors.push("the email must be in email format!");
       return errors;
     },
       password1Errors() {
@@ -476,6 +490,17 @@ export default {
       !this.$v.street.minLength && errors.push("street must be more then 1 characters long!");
       return errors;
       },
+      houseNumberErrors() {
+      const errors = [];
+      if (!this.$v.houseNumber.$dirty) return errors;
+      !this.$v.houseNumber.required && errors.push("house Number is required.");
+      !this.$v.houseNumber.maxLength && errors.push("House number must be less then 16 characters long!");
+      !this.$v.houseNumber.regexHouseNumber && errors.push("invalid format of house number!");
+      return errors;
+      },
+
+
+
     deliveryAddress() {
       if (this.radioGroup === 2) {
         return true;
@@ -484,11 +509,11 @@ export default {
       }
     },
     fullAccountAddress() {
-      return `${this.postcode} ${this.city} ${this.street} ${this.hauseNumber}`
+      return `${this.postcode} ${this.city} ${this.street} ${this.houseNumber}`
     },
     fulldeliveryAddress() {
       if (this.deliveryAddress) {
-        return `${this.deliveryPostcode} ${this.deliveryCity} ${this.deliveryStreet} ${this.deliveryHauseNumber}`
+        return `${this.deliveryPostcode} ${this.deliveryCity} ${this.deliveryStreet} ${this.deliveryHouseNumber}`
       } else {
         return "same as billing address"
         
@@ -539,9 +564,12 @@ export default {
       this.$v.postcode.$touch();
       this.$v.city.$touch();
       this.$v.street.$touch();
+      this.$v.houseNumber.$touch();
       if (!this.$v.postcode.$error == true 
         && !this.$v.city.$error == true
-        && !this.$v.street.$error == true) {
+        && !this.$v.street.$error == true
+        && !this.$v.houseNumber.$error == true
+        ) {
         this.increase();
       }  
     },
