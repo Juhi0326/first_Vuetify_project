@@ -209,7 +209,11 @@
                     v-model="city"
                     :error-messages="cityErrors"
                     class="ml-4"> </v-text-field>
-                    <v-text-field label="street" v-model="street" class="ml-4"> </v-text-field>
+                    <v-text-field 
+                    label="street" 
+                    v-model="street" 
+                    :error-messages="streetErrors"
+                    class="ml-4"> </v-text-field>
                     <v-text-field label="hause number" v-model="hauseNumber" class="ml-4">
                     </v-text-field>
 
@@ -375,7 +379,11 @@ export default {
       required,
       minLength: minLength(2),
       alpha
-    }
+    },
+    street: {
+      required,
+      minLength: minLength(2)
+    },
   },
   data() {
     return {
@@ -461,6 +469,13 @@ export default {
       !this.$v.city.minLength && errors.push("city must be more then 1 characters long!");
       return errors;
       },
+      streetErrors() {
+      const errors = [];
+      if (!this.$v.street.$dirty) return errors;
+      !this.$v.street.required && errors.push("street is required.");
+      !this.$v.street.minLength && errors.push("street must be more then 1 characters long!");
+      return errors;
+      },
     deliveryAddress() {
       if (this.radioGroup === 2) {
         return true;
@@ -523,8 +538,10 @@ export default {
     addressSubmit() {
       this.$v.postcode.$touch();
       this.$v.city.$touch();
+      this.$v.street.$touch();
       if (!this.$v.postcode.$error == true 
-        && !this.$v.city.$error == true) {
+        && !this.$v.city.$error == true
+        && !this.$v.street.$error == true) {
         this.increase();
       }  
     },
