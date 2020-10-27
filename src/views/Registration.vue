@@ -204,7 +204,11 @@
                     v-model="postcode" 
                     :error-messages="postcodeErrors">
                     </v-text-field>
-                    <v-text-field label="city" v-model="city" class="ml-4"> </v-text-field>
+                    <v-text-field 
+                    label="city" 
+                    v-model="city"
+                    :error-messages="cityErrors"
+                    class="ml-4"> </v-text-field>
                     <v-text-field label="street" v-model="street" class="ml-4"> </v-text-field>
                     <v-text-field label="hause number" v-model="hauseNumber" class="ml-4">
                     </v-text-field>
@@ -366,6 +370,11 @@ export default {
     postcode: {
       required,
       postcodeRegex,
+    },
+    city: {
+      required,
+      minLength: minLength(2),
+      alpha
     }
   },
   data() {
@@ -444,6 +453,14 @@ export default {
       !this.$v.postcode.postcodeRegex && errors.push("ivalid format of postcode!")
       return errors;
       },
+      cityErrors() {
+      const errors = [];
+      if (!this.$v.city.$dirty) return errors;
+      !this.$v.city.required && errors.push("city is required.");
+      !this.$v.city.alpha && errors.push("ivalid format of city!");
+      !this.$v.city.minLength && errors.push("city must be more then 1 characters long!");
+      return errors;
+      },
     deliveryAddress() {
       if (this.radioGroup === 2) {
         return true;
@@ -505,7 +522,9 @@ export default {
     },
     addressSubmit() {
       this.$v.postcode.$touch();
-      if (!this.$v.postcode.$error == true) {
+      this.$v.city.$touch();
+      if (!this.$v.postcode.$error == true 
+        && !this.$v.city.$error == true) {
         this.increase();
       }  
     },
