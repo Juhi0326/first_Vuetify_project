@@ -1,8 +1,11 @@
 <template>
-  <div>
     <v-container class="mt-12">
       <v-form>
         <v-stepper v-model="counter" vertical>
+        <br>
+          <span class="pa-12">
+            Registration 2 form
+          </span>
           <div>
                 <v-stepper-step :complete="counter > 1" step="1">
                   Enter your first name
@@ -233,15 +236,37 @@
                         :value="2"
                       ></v-radio>
                     </v-radio-group>
+  
+                  </v-card> 
+                  
+                  <!-- buttons in case of only billing address -->
+                  <v-btn v-if="!deliveryAddress" color="primary" @click="addressSubmit()">
+                    Continue
+                  </v-btn>
+                  <v-btn v-if="!deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
+                    Back
+                  </v-btn>
+                  <router-link class="text-decoration-none" to="/">
+                    <v-btn v-if="!deliveryAddress" color="secondary" text class="ml-3">
+                      Cancel
+                    </v-btn>
+                  </router-link>                
+                </v-stepper-content>
 
-                    <v-card
+                <!-- innen jön a delivery address --> 
+
+                <v-stepper-step :complete="counter > 7" step="7">
+                  Enter your delivery address
+                </v-stepper-step>
+                <v-stepper-content :complete="counter > 7" step="7">
+               <v-card
                       v-if="deliveryAddress"
                       color="grey lighten-4"
                       class="mb-12"
                       max-height="500px"
                       max-width="500"
                     >
-                      <v-card-title>
+                    <v-card-title>
                         Delivery Address
                       </v-card-title>
                           <v-text-field 
@@ -269,21 +294,8 @@
                             class="ml-4">
                           </v-text-field>
                     </v-card>
-                  </v-card>
-                  <!-- buttons in case of only billing address -->
-                  <v-btn v-if="!deliveryAddress" color="primary" @click="addressSubmit()">
-                    Continue
-                  </v-btn>
-                  <v-btn v-if="!deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
-                    Back
-                  </v-btn>
-                  <router-link class="text-decoration-none" to="/">
-                    <v-btn v-if="!deliveryAddress" color="secondary" text class="ml-3">
-                      Cancel
-                    </v-btn>
-                  </router-link>
 
-                  <!-- buttons in case of delivery address -->
+<!-- buttons in case of delivery address -->
                   <v-btn v-if="deliveryAddress" color="primary" @click="billingAndDeliveryAddressSubmit()">
                     Continue
                   </v-btn>
@@ -298,10 +310,10 @@
                 </v-stepper-content>
 
 
-                <v-stepper-step step="7">
+                <v-stepper-step step="8">
                   View your data (without password)
                 </v-stepper-step>
-                <v-stepper-content step="7">
+                <v-stepper-content step="8">
                   <v-card
                     color="grey lighten-4"
                     class="pl-4 d-flex align-center"
@@ -348,7 +360,6 @@
         </v-stepper>
       </v-form>
     </v-container>
-  </div>
 </template>
 
 <script>

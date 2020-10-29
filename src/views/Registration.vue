@@ -1,8 +1,14 @@
 <template>
-  <div>
     <v-container class="mt-12">
-      <v-form>
+      <v-form> 
+        
         <v-stepper v-model="counter" vertical>
+          <br>
+
+          <span class="pa-12">
+            Registration form
+          </span>
+          
           <div>
                 <v-stepper-step :complete="counter > 1" step="1">
                   Enter your first name
@@ -348,7 +354,6 @@
         </v-stepper>
       </v-form>
     </v-container>
-  </div>
 </template>
 
 <script>
