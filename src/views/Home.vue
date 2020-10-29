@@ -13,9 +13,9 @@
         ></v-img>
 
         <v-card-title>
-            <h3>
-          In order to use this project management page, you should sign in or
-          fill the registration form.
+          <h3>
+            In order to use this project management page, you should sign in or
+            fill the registration form.
           </h3>
         </v-card-title>
 
@@ -29,6 +29,11 @@
           <router-link class="text-decoration-none" to="/register">
             <v-btn large color="orange" text>
               Register
+            </v-btn>
+          </router-link>
+          <router-link class="text-decoration-none" to="/register2">
+            <v-btn large color="orange" text>
+              Register2
             </v-btn>
           </router-link>
         </v-card-actions>

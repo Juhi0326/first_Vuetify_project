@@ -15,31 +15,37 @@ const routes = [
     path: "/register",
     name: "Registration",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Registration.vue"),
+      import(/* webpackChunkName: "Registration" */ "../views/Registration.vue"),
+  },
+  {
+    path: "/register2",
+    name: "Registration2",
+    component: () =>
+      import(/* webpackChunkName: "Registration2" */ "../views/Registration2.vue"),
   },
   {
     path: "/login",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
   },
   {
     path: "/projects",
     name: "Projects",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Projects.vue"),
+      import(/* webpackChunkName: "Projects" */ "../views/Projects.vue"),
   },
   {
     path: "/team",
     name: "Team",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Team.vue"),
+      import(/* webpackChunkName: "Team" */ "../views/Team.vue"),
   },
   {
     path: "/Dashboard",
     name: "Dashboard",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Dashboard.vue"),
+      import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
   },
 ];
 
