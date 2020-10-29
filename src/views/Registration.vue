@@ -305,7 +305,7 @@
                   <v-card
                     color="grey lighten-4"
                     class="pl-4 d-flex align-center"
-                    height="200px"
+                    max-height="1000px"
                     max-width="500"
                   >
                     <v-card-subtitle>
