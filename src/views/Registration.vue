@@ -219,7 +219,7 @@
                     class="ml-4"> </v-text-field>
 
                     <v-text-field 
-                    label="hause number" 
+                    label="house number" 
                     v-model="houseNumber" 
                     :error-messages="houseNumberErrors"
                     class="ml-4">
@@ -246,11 +246,30 @@
                       <v-card-title>
                         Delivery Address
                       </v-card-title>
-                          <v-text-field label="postcode" class="ml-4" v-model="deliveryPostcode">
-                    </v-text-field>
-                    <v-text-field label="city" v-model="deliveryCity" class="ml-4"> </v-text-field>
-                    <v-text-field label="street" v-model="deliveryStreet" class="ml-4"> </v-text-field>
-                    <v-text-field label="hause number" v-model="deliveryHouseNumber" class="ml-4"></v-text-field>
+                          <v-text-field 
+                            label="delivery postcode" 
+                            class="ml-4" 
+                            :error-messages="deliveryPostcodeErrors"
+                            v-model="deliveryPostcode">
+                          </v-text-field>
+                          <v-text-field 
+                            label="delivery city" 
+                            v-model="deliveryCity"
+                            :error-messages="deliveryCityErrors"
+                            class="ml-4"> 
+                          </v-text-field>
+                          <v-text-field 
+                            label="delivery street" 
+                            v-model="deliveryStreet" 
+                            :error-messages="deliveryStreetErrors"
+                            class="ml-4"> 
+                          </v-text-field>
+                          <v-text-field 
+                            label="delivery house number" 
+                            v-model="deliveryHouseNumber" 
+                            :error-messages="deliveryHouseNumberErrors"
+                            class="ml-4">
+                          </v-text-field>
                     </v-card>
                   </v-card>
                   <!-- buttons in case of only billing address -->
@@ -267,7 +286,7 @@
                   </router-link>
 
                   <!-- buttons in case of delivery address -->
-                  <v-btn v-if="deliveryAddress" color="primary" @click="addressSubmit()">
+                  <v-btn v-if="deliveryAddress" color="primary" @click="billingAndDeliveryAddressSubmit()">
                     Continue
                   </v-btn>
                   <v-btn v-if="deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
@@ -398,6 +417,24 @@ export default {
       maxLength: maxLength(15),
       regexHouseNumber
     },
+    deliveryPostcode: {
+      required,
+      postcodeRegex,
+    },
+    deliveryCity: {
+      required,
+      minLength: minLength(2),
+      alpha
+    },
+    deliveryStreet: {
+      required,
+      minLength: minLength(2)
+    },
+    deliveryHouseNumber: {
+      required,
+      maxLength: maxLength(15),
+      regexHouseNumber
+    },
   },
   data() {
     return {
@@ -479,7 +516,7 @@ export default {
       const errors = [];
       if (!this.$v.city.$dirty) return errors;
       !this.$v.city.required && errors.push("city is required.");
-      !this.$v.city.alpha && errors.push("ivalid format of city!");
+      !this.$v.city.alpha && errors.push("the delivery city must contain only letters!!");
       !this.$v.city.minLength && errors.push("city must be more then 1 characters long!");
       return errors;
       },
@@ -498,9 +535,36 @@ export default {
       !this.$v.houseNumber.regexHouseNumber && errors.push("invalid format of house number!");
       return errors;
       },
-
-
-
+      deliveryPostcodeErrors() {
+      const errors = [];
+      if (!this.$v.deliveryPostcode.$dirty) return errors;
+      !this.$v.deliveryPostcode.required && errors.push("postcode is required.");
+      !this.$v.deliveryPostcode.postcodeRegex && errors.push("ivalid format of postcode!")
+      return errors;
+      },
+      deliveryCityErrors() {
+      const errors = [];
+      if (!this.$v.deliveryCity.$dirty) return errors;
+      !this.$v.deliveryCity.required && errors.push("city is required.");
+      !this.$v.deliveryCity.alpha && errors.push("the city must contain only letters!");
+      !this.$v.deliveryCity.minLength && errors.push("city must be more then 1 characters long!");
+      return errors;
+      },
+      deliveryStreetErrors() {
+      const errors = [];
+      if (!this.$v.deliveryStreet.$dirty) return errors;
+      !this.$v.deliveryStreet.required && errors.push("street is required.");
+      !this.$v.deliveryStreet.minLength && errors.push("street must be more then 1 characters long!");
+      return errors;
+      },
+      deliveryHouseNumberErrors() {
+      const errors = [];
+      if (!this.$v.deliveryHouseNumber.$dirty) return errors;
+      !this.$v.deliveryHouseNumber.required && errors.push("house Number is required.");
+      !this.$v.deliveryHouseNumber.maxLength && errors.push("House number must be less then 16 characters long!");
+      !this.$v.deliveryHouseNumber.regexHouseNumber && errors.push("invalid format of house number!");
+      return errors;
+      },
     deliveryAddress() {
       if (this.radioGroup === 2) {
         return true;
@@ -516,13 +580,8 @@ export default {
         return `${this.deliveryPostcode} ${this.deliveryCity} ${this.deliveryStreet} ${this.deliveryHouseNumber}`
       } else {
         return "same as billing address"
-        
-      }
-
-      
+      }  
     }
-
-
   },
   mounted() {
     this.setFocus();
@@ -569,6 +628,29 @@ export default {
         && !this.$v.city.$error == true
         && !this.$v.street.$error == true
         && !this.$v.houseNumber.$error == true
+        ) {
+        this.increase();
+      }  
+    },
+
+    billingAndDeliveryAddressSubmit() {
+      this.$v.postcode.$touch();
+      this.$v.city.$touch();
+      this.$v.street.$touch();
+      this.$v.houseNumber.$touch();
+      this.$v.deliveryPostcode.$touch();
+      this.$v.deliveryCity.$touch();
+      this.$v.deliveryStreet.$touch();
+      this.$v.deliveryHouseNumber.$touch();
+
+      if (!this.$v.postcode.$error == true 
+        && !this.$v.city.$error == true
+        && !this.$v.street.$error == true
+        && !this.$v.houseNumber.$error == true
+        && !this.$v.deliveryPostcode.$error == true
+        && !this.$v.deliveryCity.$error == true
+        && !this.$v.deliveryStreet.$error == true
+        && !this.$v.deliveryHouseNumber.$error == true
         ) {
         this.increase();
       }  
