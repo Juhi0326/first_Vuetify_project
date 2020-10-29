@@ -4,8 +4,6 @@
       <v-form>
         <v-stepper v-model="counter" vertical>
           <div>
-            <v-row class="d-flex flex-wrap-reverse">
-              <v-col>
                 <v-stepper-step :complete="counter > 1" step="1">
                   Enter your first name
                   <small></small>
@@ -346,9 +344,6 @@
                     </v-btn>
                   </router-link>
                 </v-stepper-content>
-              </v-col>
-
-            </v-row>
           </div>
         </v-stepper>
       </v-form>
@@ -585,7 +580,6 @@ export default {
   },
   mounted() {
     this.setFocus();
-    console.log(this.radioGroup);
   },
   methods: {
     firstNameSubmit() {
@@ -613,7 +607,6 @@ export default {
       }  
     },
       password2Submit() {
-        console.log(this.$v.password2);
       this.$v.password2.$touch();
       if (!this.$v.password2.$error == true) {
         this.increase();
@@ -671,7 +664,7 @@ export default {
       
     },
     save() {
-      console.log(this.lastName);
+
     },
 
     setFocus() {
