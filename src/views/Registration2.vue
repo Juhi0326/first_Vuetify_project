@@ -363,6 +363,7 @@
 </template>
 
 <script>
+import Proba from "../Proba"
 import {
   required,
   minLength,
@@ -466,8 +467,8 @@ export default {
     };
   },
   computed: {
-    isMobile() {
-  return this.$vuetify.breakpoint.xsOnly;
+    isMobile() { 
+        return this.$vuetify.breakpoint.xsOnly;
     },
     firstNameErrors() {
       const errors = [];
@@ -596,8 +597,12 @@ export default {
     this.setFocus();
   },
   methods: {
+      probamethod() {
+          console.log(Proba.kiir(this.firstName));
+      },
     firstNameSubmit() {
       this.$v.firstName.$touch();
+      this.probamethod();
       if (!this.$v.firstName.$error == true) {
         this.increase();
       }
@@ -652,8 +657,6 @@ export default {
       this.$v.deliveryCity.$touch();
       this.$v.deliveryStreet.$touch();
       this.$v.deliveryHouseNumber.$touch();
-
-      console.log(this.$v.deliveryPostcode);
 
       if (!this.$v.deliveryPostcode.$error == true
         && !this.$v.deliveryCity.$error == true
