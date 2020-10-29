@@ -472,7 +472,8 @@ export default {
     },
     firstNameErrors() {
       const errors = [];
-      if (!this.$v.firstName.$dirty) return errors;
+      if (!this.$v.firstName.$touch) return errors;
+      Proba.kiir(this.firstName);
       !this.$v.firstName.minLength &&
         errors.push("first name must be more then 2 characters long");
       !this.$v.firstName.maxLength &&
@@ -599,6 +600,9 @@ export default {
   methods: {
       probamethod() {
           console.log(Proba.kiir(this.firstName));
+      },
+      probaKiir(adat) {
+          console.log(`ezt a hívást a js file-ból indítottam és ez az adat érkezett: ${adat}`)
       },
     firstNameSubmit() {
       this.$v.firstName.$touch();
