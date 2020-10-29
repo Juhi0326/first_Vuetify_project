@@ -240,14 +240,14 @@
                   </v-card> 
                   
                   <!-- buttons in case of only billing address -->
-                  <v-btn v-if="!deliveryAddress" color="primary" @click="addressSubmit()">
+                  <v-btn color="primary" @click="addressSubmit()">
                     Continue
                   </v-btn>
-                  <v-btn v-if="!deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
+                  <v-btn class="ml-3" color="accent" text @click="decrease()">
                     Back
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
-                    <v-btn v-if="!deliveryAddress" color="secondary" text class="ml-3">
+                    <v-btn color="secondary" text class="ml-3">
                       Cancel
                     </v-btn>
                   </router-link>                
@@ -255,10 +255,10 @@
 
                 <!-- innen jön a delivery address --> 
 
-                <v-stepper-step :complete="counter > 7" step="7">
+                <v-stepper-step :complete="counter > 7 && deliveryAddress" step="7">
                   Enter your delivery address
                 </v-stepper-step>
-                <v-stepper-content :complete="counter > 7" step="7">
+                <v-stepper-content :complete="counter > 7 && deliveryAddress" step="7">
                <v-card
                       v-if="deliveryAddress"
                       color="grey lighten-4"
@@ -270,25 +270,25 @@
                         Delivery Address
                       </v-card-title>
                           <v-text-field 
-                            label="delivery postcode" 
+                            label="postcode" 
                             class="ml-4" 
                             :error-messages="deliveryPostcodeErrors"
                             v-model="deliveryPostcode">
                           </v-text-field>
                           <v-text-field 
-                            label="delivery city" 
+                            label="city" 
                             v-model="deliveryCity"
                             :error-messages="deliveryCityErrors"
                             class="ml-4"> 
                           </v-text-field>
                           <v-text-field 
-                            label="delivery street" 
+                            label="street" 
                             v-model="deliveryStreet" 
                             :error-messages="deliveryStreetErrors"
                             class="ml-4"> 
                           </v-text-field>
                           <v-text-field 
-                            label="delivery house number" 
+                            label="house number" 
                             v-model="deliveryHouseNumber" 
                             :error-messages="deliveryHouseNumberErrors"
                             class="ml-4">
@@ -296,14 +296,14 @@
                     </v-card>
 
 <!-- buttons in case of delivery address -->
-                  <v-btn v-if="deliveryAddress" color="primary" @click="billingAndDeliveryAddressSubmit()">
+                  <v-btn color="primary" @click="billingAndDeliveryAddressSubmit()">
                     Continue
                   </v-btn>
-                  <v-btn v-if="deliveryAddress" class="ml-3" color="accent" text @click="decrease()">
+                  <v-btn class="ml-3" color="accent" text @click="decrease()">
                     Back
                   </v-btn>
                   <router-link class="text-decoration-none" to="/">
-                    <v-btn v-if="deliveryAddress" color="secondary" text class="ml-3">
+                    <v-btn  color="secondary" text class="ml-3">
                       Cancel
                     </v-btn>
                   </router-link>
@@ -346,7 +346,7 @@
                     class="ml-3 mt-4"
                     color="accent"
                     text
-                    @click="decrease()"
+                    @click="addressDecrease()"
                   >
                     Back
                   </v-btn>
@@ -548,7 +548,7 @@ export default {
       const errors = [];
       if (!this.$v.deliveryPostcode.$dirty) return errors;
       !this.$v.deliveryPostcode.required && errors.push("postcode is required.");
-      !this.$v.deliveryPostcode.postcodeRegex && errors.push("ivalid format of postcode!")
+      !this.$v.deliveryPostcode.postcodeRegex && errors.push("ivalid format of delivery postcode!")
       return errors;
       },
       deliveryCityErrors() {
@@ -636,25 +636,26 @@ export default {
         && !this.$v.street.$error == true
         && !this.$v.houseNumber.$error == true
         ) {
-        this.increase();
+        if (this.deliveryAddress) {
+            this.increase();
+        } else {
+            this.increase();
+            this.increase();
+        }
+        
       }  
     },
 
     billingAndDeliveryAddressSubmit() {
-      this.$v.postcode.$touch();
-      this.$v.city.$touch();
-      this.$v.street.$touch();
-      this.$v.houseNumber.$touch();
+
       this.$v.deliveryPostcode.$touch();
       this.$v.deliveryCity.$touch();
       this.$v.deliveryStreet.$touch();
       this.$v.deliveryHouseNumber.$touch();
 
-      if (!this.$v.postcode.$error == true 
-        && !this.$v.city.$error == true
-        && !this.$v.street.$error == true
-        && !this.$v.houseNumber.$error == true
-        && !this.$v.deliveryPostcode.$error == true
+      console.log(this.$v.deliveryPostcode);
+
+      if (!this.$v.deliveryPostcode.$error == true
         && !this.$v.deliveryCity.$error == true
         && !this.$v.deliveryStreet.$error == true
         && !this.$v.deliveryHouseNumber.$error == true
@@ -669,6 +670,14 @@ export default {
     },
     decrease() {
       this.counter = this.counter - 1;
+      this.setFocus();
+    },
+    addressDecrease() {
+        if (this.deliveryAddress) {
+            this.counter = this.counter - 1;
+        } else {
+            this.counter = this.counter - 2;
+        }
       this.setFocus();
     },
     trimName(s) {
