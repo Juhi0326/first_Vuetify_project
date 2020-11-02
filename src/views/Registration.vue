@@ -369,7 +369,7 @@ const alpha = helpers.regex("alpha", /^[a-zA-ZíÍéÉáÁőŐűŰúÚóÓüÜ/.
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-useless-escape
 const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~])[a-zA-Z0-9!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@[\]\^_`\{\|}~]{8,20}$/);
-const postcodeRegex = helpers.regex("postCode",/[1-9]{1}[0-9]{3}$/y);
+const postcodeRegex = helpers.regex("postCode",/^[1-9]{1}[0-9]{3}$/);
 const regexHouseNumber = helpers.regex("houseNumber",/^[\d]/);
 
 export default {
