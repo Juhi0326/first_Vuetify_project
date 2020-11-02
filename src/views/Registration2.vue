@@ -187,7 +187,7 @@
                 <!-- address -->
 
                 <v-stepper-step :complete="counter > 6" step="6">
-                  Enter your address
+                  Enter your billing address
                 </v-stepper-step>
 
                 <v-stepper-content :complete="counter > 6" step="6">
@@ -232,7 +232,7 @@
                         :value="1"
                       ></v-radio>
                       <v-radio
-                        :label="`A kiszállítási cím eltér a számlázási címtől`"
+                        :label="`Delivery address is not the same`"
                         :value="2"
                       ></v-radio>
                     </v-radio-group>
@@ -363,7 +363,8 @@
 </template>
 
 <script>
-import Proba from "../Proba"
+
+
 import {
   required,
   minLength,
@@ -472,8 +473,7 @@ export default {
     },
     firstNameErrors() {
       const errors = [];
-      if (!this.$v.firstName.$touch) return errors;
-      Proba.kiir(this.firstName);
+      if (!this.$v.firstName.$dirty) return errors;
       !this.$v.firstName.minLength &&
         errors.push("first name must be more then 2 characters long");
       !this.$v.firstName.maxLength &&
@@ -598,15 +598,9 @@ export default {
     this.setFocus();
   },
   methods: {
-      probamethod() {
-          console.log(Proba.kiir(this.firstName));
-      },
-      probaKiir(adat) {
-          console.log(`ezt a hívást a js file-ból indítottam és ez az adat érkezett: ${adat}`)
-      },
+
     firstNameSubmit() {
       this.$v.firstName.$touch();
-      this.probamethod();
       if (!this.$v.firstName.$error == true) {
         this.increase();
       }

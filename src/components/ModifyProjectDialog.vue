@@ -97,7 +97,7 @@
 <script>
 import { format, parseISO } from "date-fns";
 import { required, minLength } from "vuelidate/lib/validators";
-
+import db from "@/fb";
 // title cannot contain new line character
 const enter = (value) => value.indexOf("\n") < 1;
 export default {
@@ -168,6 +168,20 @@ export default {
       for (let i = 0; i < this.$store.getters.allProjects.length; i++) {
         const element = this.$store.getters.allProjects[i];
         if (element.id === this.id) {
+
+           db.collection("projects2")
+           .doc(this.id)
+           .update({content: this.contentText});
+
+            db.collection("projects2")
+           .doc(this.id)
+           .update({due: this.date});
+
+            db.collection("projects2")
+           .doc(this.id)
+           .update({title: this.title});
+
+
           element.content = this.contentText;
           element.due = this.date;
           element.title = this.title;
