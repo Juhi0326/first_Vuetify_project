@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import db from "@/fb";
 export default {
   props: ["id"],
   data() {
@@ -52,6 +53,10 @@ export default {
 
       for (let i = 0; i < this.$store.state.projects.length; i++) {
         if (this.$store.state.projects[i].id === this.id) {
+          db.collection("projects2")
+          .doc(this.id)
+          .update({status: "completed"})
+
         this.$store.state.projects[i].status = "completed";
           break;
         }
