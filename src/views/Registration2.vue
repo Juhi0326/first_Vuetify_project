@@ -369,6 +369,7 @@
 <script>
 
 import * as firebase from "firebase/app";
+import db from "@/fb";
 import "firebase/auth";
 
 import {
@@ -474,10 +475,16 @@ export default {
       isloggedin: false,
       valid: false,
       loading: false,
-      user: {}
     };
   },
   computed: {
+    user() {
+     return {
+        firstName: this.firstName,
+        lastName: this.lastName
+      }
+    },
+
     isMobile() { 
         return this.$vuetify.breakpoint.xsOnly;
     },
@@ -698,20 +705,48 @@ export default {
       
     },
     async save() {
+      console.log(this.firstName);
       this.loading=true;
-    console.log('itt vagyok');
+     
+
       try {
-        const user=firebase.auth().createUserWithEmailAndPassword(this.email,this.password1);
+        await firebase.auth().createUserWithEmailAndPassword(this.email,this.password1)
+
+         var user = firebase.auth().currentUser; 
+         if (user) {
+           const uid = user.uid;
+           console.log(`ezt innen írtam ki`, this.firstName);
+            db.collection("users").add({
+
+            firstName: this.firstName,
+            userId: uid
       
-        console.log(user);
-         this.$refs.myForm.reset();
+      });
+          } else {
+            // No user is signed in.
+          }
+         
+
+        this.$refs.myForm.reset();
          this.loading=false;
+        
       } catch (error) {
         console.log(error);
         this.loading=false
       }
     },
 
+    addData(id) {
+      console.log(`ezt innen írtam ki`, this.firstName);
+      db.collection("users").add({
+
+      firstName: this.firstName,
+      userId: id
+      
+      });
+    },
+
+    
     clearForm (){
       this.firstName="";
       this.lastName="";
