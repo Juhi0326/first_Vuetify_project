@@ -339,7 +339,11 @@
                       </div>
                     </v-card-subtitle>
                   </v-card>
-                  <v-btn color="primary" @click="save()" class="mt-4">
+                  <v-btn 
+                  color="primary" 
+                  @click="save()" 
+                  :loading="loading"
+                  class="mt-4">
                     Save
                   </v-btn>
                   <v-btn
@@ -469,6 +473,7 @@ export default {
       deliveryAddress2:"",
       isloggedin: false,
       valid: false,
+      loading: false,
       user: {}
     };
   },
@@ -693,14 +698,17 @@ export default {
       
     },
     async save() {
+      this.loading=true;
     console.log('itt vagyok');
       try {
         const user=firebase.auth().createUserWithEmailAndPassword(this.email,this.password1);
       
         console.log(user);
          this.$refs.myForm.reset();
+         this.loading=false;
       } catch (error) {
         console.log(error);
+        this.loading=false
       }
     },
 
