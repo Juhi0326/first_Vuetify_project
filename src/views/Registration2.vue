@@ -1,6 +1,6 @@
 <template>
     <v-container class="mt-12">
-      <v-form>
+      <v-form v-model="valid" ref="myForm" lazy-validation>
         <v-stepper v-model="counter" vertical>
         <br>
           <span class="pa-12">
@@ -364,6 +364,8 @@
 
 <script>
 
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 import {
   required,
@@ -464,7 +466,10 @@ export default {
       deliveryCity: "",
       deliveryStreet: "",
       deliveryHouseNumber: "",
-      deliveryAddress2:""
+      deliveryAddress2:"",
+      isloggedin: false,
+      valid: false,
+      user: {}
     };
   },
   computed: {
@@ -687,8 +692,33 @@ export default {
       return s;
       
     },
-    save() {
+    async save() {
+    console.log('itt vagyok');
+      try {
+        const user=firebase.auth().createUserWithEmailAndPassword(this.email,this.password1);
+      
+        console.log(user);
+         this.$refs.myForm.reset();
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
+    clearForm (){
+      this.firstName="";
+      this.lastName="";
+      this.email="";
+      this.password1="";
+      this.password2="";
+      this.postcode="";
+      this.city="";
+      this.street="";
+      this.houseNumber="";
+      this.deliveryPostcode="";
+      this.deliveryCity="";
+      this.deliveryStreet="";
+      this.deliveryHouseNumber="";
+      this.deliveryAddress=false
     },
 
     setFocus() {
