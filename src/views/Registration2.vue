@@ -9,7 +9,7 @@
           :timeout="4000"
           top
         >
-          <span>You have registrated!</span>
+          <span>You have registrated, please go to the login page!</span>
           <v-btn small text color="white" @click="snackbar = false"
             >Close</v-btn
           >
