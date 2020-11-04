@@ -1,5 +1,20 @@
 <template>
+
     <v-container class="mt-12">
+      <div>
+          <v-snackbar
+          dark
+          color="primary"
+          v-model="snackbar"
+          :timeout="4000"
+          top
+        >
+          <span>You have registrated!</span>
+          <v-btn small text color="white" @click="snackbar = false"
+            >Close</v-btn
+          >
+          </v-snackbar>
+      </div>
       <v-form v-model="valid" ref="myForm" lazy-validation>
         <v-stepper v-model="counter" vertical>
         <br>
@@ -475,16 +490,10 @@ export default {
       isloggedin: false,
       valid: false,
       loading: false,
+      snackbar: false
     };
   },
   computed: {
-    user() {
-     return {
-        firstName: this.firstName,
-        lastName: this.lastName
-      }
-    },
-
     isMobile() { 
         return this.$vuetify.breakpoint.xsOnly;
     },
@@ -681,7 +690,6 @@ export default {
         this.increase();
       }  
     },
-
     increase() {
       this.counter = this.counter + 1;
       this.setFocus();
@@ -701,73 +709,50 @@ export default {
     trimName(s) {
       s=s.replace(/ +/g, ' ')
       s=s.trim();
-      return s;
-      
+      return s; 
     },
     async save() {
       console.log(this.firstName);
       this.loading=true;
-     
-
+    
       try {
         await firebase.auth().createUserWithEmailAndPassword(this.email,this.password1)
-
          var user = firebase.auth().currentUser; 
          if (user) {
            const uid = user.uid;
-           console.log(`ezt innen írtam ki`, this.firstName);
             db.collection("users").add({
-
-            firstName: this.firstName,
-            userId: uid
-      
+              firstName: this.firstName,
+              lastName:this.lastName,
+              email: this.email,
+              billingPostcode: this.postcode,
+              billingCity: this.city,
+              billingStreet: this.street,
+              billingHouseNumber: this.houseNumber,
+              deliveryPostcode:this.deliveryPostcode,
+              deliveryCity: this.deliveryCity,
+              deliveryStreet:this.deliveryStreet,
+              deliveryHouseNumber:this.deliveryHouseNumber,
+              userId: uid    
       });
           } else {
-            // No user is signed in.
+            alert("hiba a kapcsolatban!");
           }
-         
-
-        this.$refs.myForm.reset();
-         this.loading=false;
+          this.loading=false;
+         this.counter=1;
+         this.$refs.myForm.reset(); 
+         this.$v.$reset();
+         this.snackbar=true;
         
       } catch (error) {
         console.log(error);
         this.loading=false
       }
     },
-
-    addData(id) {
-      console.log(`ezt innen írtam ki`, this.firstName);
-      db.collection("users").add({
-
-      firstName: this.firstName,
-      userId: id
-      
-      });
-    },
-
-    
-    clearForm (){
-      this.firstName="";
-      this.lastName="";
-      this.email="";
-      this.password1="";
-      this.password2="";
-      this.postcode="";
-      this.city="";
-      this.street="";
-      this.houseNumber="";
-      this.deliveryPostcode="";
-      this.deliveryCity="";
-      this.deliveryStreet="";
-      this.deliveryHouseNumber="";
-      this.deliveryAddress=false
-    },
-
     setFocus() {
       switch (this.counter) {
         case 1:
           this.$refs.firstName.focus();
+          this.$refs.myForm.resetValidation();
           break;
         case 2:
           this.$refs.lastName.focus();
