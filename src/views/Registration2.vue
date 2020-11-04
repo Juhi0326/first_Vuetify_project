@@ -712,7 +712,7 @@ export default {
       return s; 
     },
     async save() {
-      console.log(this.firstName);
+      
       this.loading=true;
     
       try {
