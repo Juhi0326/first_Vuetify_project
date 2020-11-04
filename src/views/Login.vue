@@ -26,7 +26,7 @@
               </v-row>
             </div>
             <v-btn type="submit" class="ma-12">Submit</v-btn>
-            <v-btn class="ma-12">Cancel</v-btn>
+            <v-btn @click="cancel()" class="ma-12">Cancel</v-btn>
           </v-form>
         </v-card>
       </v-col>
@@ -55,6 +55,9 @@ export default {
      }
      
     },
+    cancel() {
+      this.$router.replace({name:"Home"});
+    }
   },
 };
 </script>
