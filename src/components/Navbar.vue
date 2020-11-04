@@ -32,7 +32,7 @@
           </v-menu>
         </div>
 
-        <v-btn text color="grey">
+        <v-btn text color="grey" @click="signedOut()">
           <span>Sign out</span>
           <v-icon right>mdi mdi-exit-to-app </v-icon>
         </v-btn>
@@ -86,8 +86,21 @@
 </template>
 
 <script>
+import * as firebase from "firebase/app";
+import "firebase/auth"
 import Popup from "./Popup";
 export default {
+  created() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.loggedIn= true
+        } else {
+          this.loggedIn = false
+        }
+        console.log(this.loggedIn);
+      }
+    
+      )},
   components: {
     Popup,
   },
@@ -97,6 +110,7 @@ export default {
       snackbar: false,
       snackbar2: false,
       drawer: false,
+      loggedIn: false,
       items: [
         { title: "Home", icon: "mdi mdi-home", route: "/" },
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/dashboard" },
@@ -109,6 +123,20 @@ export default {
     isMobile() {
   return this.$vuetify.breakpoint.xsOnly;
 }
+  },
+  methods: {
+    async signedOut() {
+      try {
+       const data = await firebase.auth().signOut()
+       this.$router.replace({name:"Home"});
+       console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+
+
+      
+    }
   }
 };
 </script>
