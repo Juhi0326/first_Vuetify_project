@@ -1,13 +1,13 @@
 <template>
   <v-container class="mt-12">
     <v-row>
-      <v-col cols="12" md="6">
+      <v-col class="max-width: 600px" cols="12" sm="8" md=7>
         <v-card>
           <v-img
             height="250"
             src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
           ></v-img>
-          <v-card-title>Log in Form</v-card-title>
+          <v-card-title>Login Form</v-card-title>
           <v-divider> </v-divider>
           <v-text-field
             v-model="email"
@@ -22,7 +22,7 @@
             class="px-12"
           ></v-text-field>
           <v-btn class="ma-12">Submit</v-btn>
-          <v-btn class="ma-12">Back to the Home page</v-btn>
+          <v-btn class="ma-12">Cancel</v-btn>
         </v-card>
       </v-col>
     </v-row>
