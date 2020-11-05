@@ -22,6 +22,11 @@
                     required
                     class="px-12"
                   ></v-text-field>
+                  <div v-if="errorMessage"
+                  class="px-12 pt-12 red--text"
+                  >
+                    {{errorMessage}}
+                  </div>
                 </v-col>
               </v-row>
             </div>
@@ -42,7 +47,10 @@ export default {
     return {
       email: "",
       password: "",
+      errorMessage: ""
+      
     };
+
   },
   methods: {
    async login() {
@@ -51,7 +59,8 @@ export default {
        console.log(val);
        this.$router.replace({name:"Dashboard"});
      } catch (error) {
-       console.log(error)
+       
+       this.errorMessage=error.message
      }
      
     },
