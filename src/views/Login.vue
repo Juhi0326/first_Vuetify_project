@@ -19,6 +19,9 @@
                   <v-text-field
                     v-model="password"
                     label="Password"
+                    :type="show1 ? 'text' : 'password'"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                     @click:append="show1 = !show1"
                     required
                     class="px-12"
                   ></v-text-field>
@@ -45,6 +48,7 @@ import "firebase/auth";
 export default {
   data() {
     return {
+      show1:false,
       email: "",
       password: "",
       errorMessage: ""
