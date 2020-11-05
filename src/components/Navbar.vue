@@ -5,6 +5,28 @@
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
+    <v-snackbar
+      dark
+      color="green accent-3"
+      v-model="snackbarSingedIn"
+      :timeout="4000"
+      top
+    >
+      <span>You have signed in successfuly!</span>
+      <v-btn text color="white" @click="snackbarSingedIn = false">Close</v-btn>
+    </v-snackbar>
+
+    <v-snackbar
+      dark
+      color="orange darken-4"
+      v-model="snackbarSingedOut"
+      :timeout="4000"
+      top
+    >
+      <span>You have signed out!</span>
+      <v-btn text color="white" @click="snackbarSingedOut = false">Close</v-btn>
+    </v-snackbar>
+
     <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isMobile">
@@ -39,7 +61,12 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer v-if="loggedIn" app v-model="drawer" class="blue-grey lighten-5">
+    <v-navigation-drawer
+      v-if="loggedIn"
+      app
+      v-model="drawer"
+      class="blue-grey lighten-5"
+    >
       <v-list>
         <v-list-item class="px-2 ml-10 mt-5">
           <v-list-item-avatar size="150">
@@ -91,11 +118,13 @@ import "firebase/auth";
 import Popup from "./Popup";
 export default {
   created() {
-    console.log(this.loggedIn,"created");
+    console.log(this.loggedIn, "created");
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.snackbarSingedIn = true;
         this.loggedIn = true;
       } else {
+        this.snackbarSingedOut = true;
         this.loggedIn = false;
       }
       console.log(this.loggedIn);
@@ -110,6 +139,8 @@ export default {
     return {
       snackbar: false,
       snackbar2: false,
+      snackbarSingedIn: false,
+      snackbarSingedOut: false,
       drawer: false,
       loggedIn: false,
       items: [
