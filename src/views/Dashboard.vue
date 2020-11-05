@@ -114,8 +114,15 @@
 </template>
 
 <script>
+import db from "@/fb";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "Dashboard",
+  created () {
+    this.setActiveUser();
+  },
+
   data() {
     return {
       dialog: false,
@@ -160,6 +167,20 @@ export default {
         }
       }
     },
+
+    setActiveUser() {
+      var user = firebase.auth().currentUser;
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().userId === user.uid) {
+              this.$store.dispatch('setActiveUser',`${doc.data().firstName} ${doc.data().lastName}`);
+            }
+          })
+        })
+
+    }
   },
   components: {},
 };
