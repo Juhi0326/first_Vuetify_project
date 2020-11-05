@@ -116,18 +116,12 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import Popup from "./Popup";
+import { bus } from "../main";
 export default {
   created() {
-    console.log(this.loggedIn, "created");
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.snackbarSingedIn = true;
-        this.loggedIn = true;
-      } else {
-        this.snackbarSingedOut = true;
-        this.loggedIn = false;
-      }
-      console.log(this.loggedIn);
+    bus.$on("login", () => {
+      this.snackbarSingedIn = true;
+      this.loggedIn=true;
     });
   },
 
@@ -155,6 +149,7 @@ export default {
     isMobile() {
       return this.$vuetify.breakpoint.xsOnly;
     },
+    
   },
   methods: {
     async signedOut() {

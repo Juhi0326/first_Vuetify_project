@@ -45,6 +45,7 @@
 <script>
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import {bus} from "../main";
 export default {
   data() {
     return {
@@ -59,9 +60,9 @@ export default {
   methods: {
    async login() {
      try {
-       const val= await firebase.auth().signInWithEmailAndPassword(this.email,this.password);
-       console.log(val);
+       await firebase.auth().signInWithEmailAndPassword(this.email,this.password);
        this.errorMessage="";
+       bus.$emit('login');
        this.$router.replace({name:"Dashboard"});
      } catch (error) {
        
