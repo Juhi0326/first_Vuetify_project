@@ -18,13 +18,14 @@
 
     <v-snackbar
       dark
-      color="orange darken-4"
+      color="orange accent-2"
       v-model="snackbarSingedOut"
       :timeout="4000"
       top
-    >
-      <span>You have signed out!</span>
+    ><div class="d-flex justify-space-around">
+      <span class="pt-2">You have signed out!</span>
       <v-btn text color="white" @click="snackbarSingedOut = false">Close</v-btn>
+      </div>
     </v-snackbar>
 
     <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
@@ -121,7 +122,7 @@ export default {
   created() {
     bus.$on("login", () => {
       this.snackbarSingedIn = true;
-      this.loggedIn=true;
+      this.loggedIn = true;
     });
   },
 
@@ -149,13 +150,14 @@ export default {
     isMobile() {
       return this.$vuetify.breakpoint.xsOnly;
     },
-    
   },
   methods: {
     async signedOut() {
       try {
         const data = await firebase.auth().signOut();
         this.$router.replace({ name: "Home" });
+        this.loggedIn = false;
+        this.snackbarSingedOut = true;
         console.log(data);
       } catch (error) {
         console.log(error);
