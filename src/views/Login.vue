@@ -57,6 +57,7 @@ export default {
      try {
        const val= await firebase.auth().signInWithEmailAndPassword(this.email,this.password);
        console.log(val);
+       this.errorMessage="";
        this.$router.replace({name:"Dashboard"});
      } catch (error) {
        

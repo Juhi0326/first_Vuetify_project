@@ -4,42 +4,42 @@
       <span>You added a new project!</span>
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-    
-      <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title v-if="!isMobile">
-          <span class="font-weight-light">Todo</span>
-          <span>Projects</span>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
 
-        <div class="text-center">
-          <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn text color="grey" dark v-bind="attrs" v-on="on">
-                Menu
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(item, index) in items"
-                :key="index"
-                :to="item.route"
-              >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </div>
+    <v-app-bar app flat height="150" class="grey lighten-4" hide-on-scroll>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title v-if="!isMobile">
+        <span class="font-weight-light">Todo</span>
+        <span>Projects</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
 
+      <div class="text-center">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text color="grey" dark v-bind="attrs" v-on="on">
+              Menu
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :to="item.route"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+      <div v-if="loggedIn">
         <v-btn text color="grey" @click="signedOut()">
           <span>Sign out</span>
           <v-icon right>mdi mdi-exit-to-app </v-icon>
         </v-btn>
-      </v-app-bar>
+      </div>
+    </v-app-bar>
 
-
-    <v-navigation-drawer app v-model="drawer" class="blue-grey lighten-5">
+    <v-navigation-drawer v-if="loggedIn" app v-model="drawer" class="blue-grey lighten-5">
       <v-list>
         <v-list-item class="px-2 ml-10 mt-5">
           <v-list-item-avatar size="150">
@@ -87,20 +87,21 @@
 
 <script>
 import * as firebase from "firebase/app";
-import "firebase/auth"
+import "firebase/auth";
 import Popup from "./Popup";
 export default {
   created() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.loggedIn= true
-        } else {
-          this.loggedIn = false
-        }
-        console.log(this.loggedIn);
+    console.log(this.loggedIn,"created");
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn = true;
+      } else {
+        this.loggedIn = false;
       }
-    
-      )},
+      console.log(this.loggedIn);
+    });
+  },
+
   components: {
     Popup,
   },
@@ -121,22 +122,19 @@ export default {
   },
   computed: {
     isMobile() {
-  return this.$vuetify.breakpoint.xsOnly;
-}
+      return this.$vuetify.breakpoint.xsOnly;
+    },
   },
   methods: {
     async signedOut() {
       try {
-       const data = await firebase.auth().signOut()
-       this.$router.replace({name:"Home"});
-       console.log(data);
+        const data = await firebase.auth().signOut();
+        this.$router.replace({ name: "Home" });
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
-
-
-      
-    }
-  }
+    },
+  },
 };
 </script>
