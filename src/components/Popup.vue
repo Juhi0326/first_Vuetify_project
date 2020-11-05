@@ -91,10 +91,12 @@
 <script>
 import { format, parseISO } from "date-fns";
 import db from "@/fb";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 import { required, minLength } from "vuelidate/lib/validators";
 
 // title cannot contain new line character
-const enter = (value) => value.indexOf("\n") <1;
+const enter = (value) => value.indexOf("\n") < 1;
 
 export default {
   validations: {
@@ -111,30 +113,43 @@ export default {
       title: "",
       content: "",
       loading: false,
+      person: "",
     };
   },
   methods: {
     submit() {
       this.$v.$touch();
 
-      if (!this.$v.invalid) {
-        const project = {
-          title: this.title,
-          content: this.content,
-          due: this.date.toString(),
-          person: "Juhász István",
-          status: "ongoing",
-        };
-
-        db.collection("projects2")
-          .add(project)
-          .then(() => {
-            this.loading = false;
-            this.dialog = false;
-            this.$emit("projectAdded");
-            this.clear();
+      var user = firebase.auth().currentUser;
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().userId === user.uid) {
+              this.person = `${doc.data().firstName} ${doc.data().lastName}`;
+            }
           });
-      }
+
+          if (!this.$v.invalid) {
+            const project = {
+              title: this.title,
+              content: this.content,
+              due: this.date.toString(),
+              userId: user.uid,
+              person: this.person,
+              status: "ongoing",
+            };
+
+            db.collection("projects2")
+              .add(project)
+              .then(() => {
+                this.loading = false;
+                this.dialog = false;
+                this.$emit("projectAdded");
+                this.clear();
+              });
+          }
+        });
     },
     clear() {
       this.$v.$reset();
@@ -156,7 +171,8 @@ export default {
       !this.$v.title.minLength &&
         errors.push("Title must be more then 3 characters long");
       !this.$v.title.required && errors.push("Title is required.");
-      !this.$v.title.enter && errors.push('title cannot contain new line character!');
+      !this.$v.title.enter &&
+        errors.push("title cannot contain new line character!");
       return errors;
     },
     contentErrors() {
