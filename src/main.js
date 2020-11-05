@@ -1,17 +1,19 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import vuetify from './plugins/vuetify';
-import store from './Store'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import vuetify from "./plugins/vuetify";
+import store from "./Store";
+import Vuelidate from "vuelidate";
 
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
+export const bus = new Vue();
 
-Vue.config.productionTip = false
+Vue.use(Vuelidate);
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
