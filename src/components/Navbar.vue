@@ -158,7 +158,7 @@ export default {
     async signedOut() {
       try {
         const data = await firebase.auth().signOut();
-        this.$router.replace({ name: "Home" });
+        this.$router.push('/');
         this.loggedIn = false;
         this.snackbarSingedOut = true;
         console.log(data);
