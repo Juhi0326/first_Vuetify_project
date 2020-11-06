@@ -78,7 +78,7 @@
       <v-list>
         <v-list-item class="ml-14">
           <v-list-item-title class="font-weight-bold"
-            >Juhász István</v-list-item-title
+            >{{currentUser}}</v-list-item-title
           >
         </v-list-item>
       </v-list>
@@ -150,6 +150,9 @@ export default {
     isMobile() {
       return this.$vuetify.breakpoint.xsOnly;
     },
+    currentUser() {
+      return this.$store.getters.getActiveUser
+    }
   },
   methods: {
     async signedOut() {

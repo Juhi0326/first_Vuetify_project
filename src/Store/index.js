@@ -17,17 +17,16 @@ export default new Vuex.Store({
     allProjects: (state) => {
       return state.projects;
     },
-    filteredProjects: (state) => {
+    filteredProjects: (state,getters) => {
       console.log(state.activeUser);
       return state.projects.filter((project) => {
 
-        return project.person === state.activeUser;
+        return project.person === getters.getActiveUser;
       });
     },
   },
   mutations: {
     SET_ACTIVE_USER(state, user) {
-      console.log(user, "és ezt a mutationból írtam ki");
       state.activeUser = user;
     },
     ...vuexfireMutations,
