@@ -22,9 +22,11 @@
       v-model="snackbarSingedOut"
       :timeout="4000"
       top
-    ><div class="d-flex justify-space-around">
-      <span class="pt-2">You have signed out!</span>
-      <v-btn text color="white" @click="snackbarSingedOut = false">Close</v-btn>
+      ><div class="d-flex justify-space-around">
+        <span class="pt-2">You have signed out!</span>
+        <v-btn text color="white" @click="snackbarSingedOut = false"
+          >Close</v-btn
+        >
       </div>
     </v-snackbar>
 
@@ -77,9 +79,9 @@
       </v-list>
       <v-list>
         <v-list-item class="ml-14">
-          <v-list-item-title class="font-weight-bold"
-            >{{currentUser}}</v-list-item-title
-          >
+          <v-list-item-title class="font-weight-bold">{{
+            currentUser
+          }}</v-list-item-title>
         </v-list-item>
       </v-list>
       <Popup @projectAdded="snackbar = true" />
@@ -122,7 +124,16 @@ export default {
   created() {
     bus.$on("login", () => {
       this.snackbarSingedIn = true;
-      this.loggedIn = true;
+      //   this.loggedIn = true;
+      //   console.log(this.loggedIn);
+    });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn = true;
+      } else {
+        this.loggedIn = false;
+        this.snackbarSingedOut = true;
+      }
     });
   },
 
@@ -151,17 +162,21 @@ export default {
       return this.$vuetify.breakpoint.xsOnly;
     },
     currentUser() {
-      return this.$store.getters.getActiveUser
-    }
+      return this.$store.getters.getActiveUser;
+    },
   },
   methods: {
     async signedOut() {
       try {
-        const data = await firebase.auth().signOut();
-        this.$router.push('/');
-        this.loggedIn = false;
+        await firebase.auth().signOut();
+        console.log(this.$router.currentRoute.path);
+        if (this.$router.currentRoute.path === "/") {
+          this.loggedIn = false;
+        } else {
+          this.$router.push("/");
+          this.loggedIn = false;
+        }
         this.snackbarSingedOut = true;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
