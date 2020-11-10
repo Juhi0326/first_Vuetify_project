@@ -1,10 +1,10 @@
 <template>
   <v-container class="mt-12">
-      This is the Admin page
+    This is the Admin page
     <v-row>
       <v-col class="flex-md-row">
         <v-card>
-          <v-form @submit.prevent="addAdmin" ref="adminForm">
+          <v-form @submit.prevent="setAdmin" ref="adminForm">
             <v-img height="300" src="../assets/haziko.jpg"></v-img>
             <v-card-title class="pa-12"> Admin Form</v-card-title>
             <v-divider> </v-divider>
@@ -17,9 +17,9 @@
                     required
                     class="px-12 pt-12"
                   ></v-text-field>
-                <v-btn class="ml-12 mb-12" type="submit">
+                  <v-btn class="ml-12 mb-12" type="submit">
                     add Admin
-                </v-btn>
+                  </v-btn>
                 </v-col>
               </v-row>
             </div>
@@ -32,26 +32,31 @@
 
 <script>
 //import * as firebase from "firebase/app";
-import {fc} from "@/fb";
+import db from "@/fb";
 import "firebase/auth";
 
 //const fbFunctions = firebase.functions();
 
 export default {
-
-    data() {
+  data() {
     return {
       email: "",
     };
   },
   methods: {
-      addAdmin() {
-        const addAdminRole= fc.functions.httpsCallable('addAdminRole');
-        addAdminRole({email: this.email}).then(result=> {
-            console.log(result);
-        })
-      }
-  }
+    setAdmin() {
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().email === this.email) {
+              this.$store.dispatch("setAdmin", doc.id);
+              console.log("innen elment ez az id: ", doc.id);
+            }
+          });
+        });
+    },
+  },
 };
 </script>
 
