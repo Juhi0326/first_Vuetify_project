@@ -130,6 +130,7 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.loggedIn = true;
+        console.log("ezt innen írom ki");
       } else {
         this.loggedIn = false;
         //this.snackbarSingedOut = true;

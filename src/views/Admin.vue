@@ -4,7 +4,7 @@
     <v-row>
       <v-col class="flex-md-row">
         <v-card>
-          <v-form @submit.prevent="setAdmin" ref="adminForm">
+          <v-form @submit.prevent="addFirebaseAdmin" ref="adminForm">
             <v-img height="300" src="../assets/haziko.jpg"></v-img>
             <v-card-title class="pa-12"> Admin Form</v-card-title>
             <v-divider> </v-divider>
@@ -34,8 +34,9 @@
 //import * as firebase from "firebase/app";
 import db from "@/fb";
 import "firebase/auth";
+import * as firebase from "firebase/app";
 
-//const fbFunctions = firebase.functions();
+const fbFunctions = firebase.functions();
 
 export default {
   data() {
@@ -44,6 +45,13 @@ export default {
     };
   },
   methods: {
+    addFirebaseAdmin() {
+      const adminEmail = this.email;
+      const addAdminRole = fbFunctions.httpsCallable("addAdminRole");
+      addAdminRole({ email: adminEmail }).then((result)=> {
+        console.log(result)
+      })
+    },
     setAdmin() {
       db.collection("users")
         .get()
