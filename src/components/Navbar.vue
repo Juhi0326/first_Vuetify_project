@@ -132,7 +132,7 @@ export default {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
-        this.snackbarSingedOut = true;
+        //this.snackbarSingedOut = true;
       }
     });
   },

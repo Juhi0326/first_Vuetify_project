@@ -55,6 +55,13 @@ const routes = [
       import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
       meta: {requiresAuth:true}
   },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () =>
+      import(/* webpackChunkName: "Admin" */ "../views/Admin.vue"),
+      meta: {requiresAuth:true}
+  },
 ];
 
 const router = new VueRouter({

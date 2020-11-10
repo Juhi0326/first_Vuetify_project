@@ -718,6 +718,7 @@ export default {
       try {
         await firebase.auth().createUserWithEmailAndPassword(this.email,this.password1)
          var user = firebase.auth().currentUser; 
+         
          if (user) {
            const uid = user.uid;
             db.collection("users").add({
@@ -734,7 +735,8 @@ export default {
               deliveryHouseNumber:this.deliveryHouseNumber,
               userId: uid    
       });
-          } else {
+      this.signedOut();
+      } else {
             alert("hiba a kapcsolatban!");
           }
           this.loading=false;
@@ -746,6 +748,16 @@ export default {
       } catch (error) {
         console.log(error);
         this.loading=false
+      }
+    },
+    async signedOut() {
+      try {
+        await firebase.auth().signOut();
+          this.$router.push("/login");
+          this.loggedIn = false;
+        
+      } catch (error) {
+        console.log(error);
       }
     },
     setFocus() {
