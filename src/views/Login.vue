@@ -68,6 +68,7 @@ export default {
           .currentUser.getIdTokenResult(/* forceRefresh */ true)
           .then(function(idToken) {
             console.log(idToken.claims.admin);
+            console.log(firebase.auth().currentUser)
             // ...
           })
           .catch(function(error) {

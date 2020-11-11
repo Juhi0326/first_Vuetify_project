@@ -200,6 +200,8 @@ export default {
         } else {
           this.$router.push("/");
           this.loggedIn = false;
+          this.$store.dispatch("setActiveUserFalse");
+          console.log("ez a kilépésnél jön, az axctive user: ",this.$store.getters.getActiveUser)
         }
         this.snackbarSingedOut = true;
       } catch (error) {

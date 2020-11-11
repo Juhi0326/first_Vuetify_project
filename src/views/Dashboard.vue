@@ -163,12 +163,17 @@ export default {
       for (let i = 0; i < this.projects.length; i++) {
         if (this.projects[i].id === this.id) {
           this.projects[i].status = "completed";
+
+          db.collection("projects2")
+          .doc(this.id)
+          .update({status: "completed"})
           break;
         }
       }
     },
 
     setActiveUser() {
+      console.log("ez a dashboard-ból jön, szerinte ez az active user: ", firebase.auth().currentUser)
       var user = firebase.auth().currentUser;
       db.collection("users")
         .get()

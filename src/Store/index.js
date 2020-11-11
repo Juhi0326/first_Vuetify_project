@@ -45,6 +45,7 @@ export default new Vuex.Store({
     setActiveUser({ commit }, user) {
       commit("SET_ACTIVE_USER", user);
     },
+  
     setAdmin({ commit }, userId) {
       console.log("ez már a setAdmi-ból jön: ",userId)
       commit("SET_ADMIN", userId);
