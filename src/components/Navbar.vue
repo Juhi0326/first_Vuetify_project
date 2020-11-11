@@ -38,6 +38,13 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
+      <div v-if="admin">
+        <v-btn text color="grey">
+          <span>Admin</span>
+          <v-icon right>mdi mdi-account-key </v-icon>
+        </v-btn>
+      </div>
+
       <div class="text-center">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -130,13 +137,17 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.loggedIn = true;
-    
+        firebase
+          .auth()
+          .currentUser.getIdTokenResult(true)
+          .then((idToken) => {
+            this.admin = idToken.claims.admin;
+          }).catch(err=>{ console.log(err)});
       } else {
         this.loggedIn = false;
         //this.snackbarSingedOut = true;
       }
     });
-    firebase
   },
 
   components: {
@@ -151,6 +162,7 @@ export default {
       snackbarSingedOut: false,
       drawer: false,
       loggedIn: false,
+      admin: null,
       items: [
         { title: "Home", icon: "mdi mdi-home", route: "/" },
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "/dashboard" },
