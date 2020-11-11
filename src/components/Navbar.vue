@@ -39,7 +39,7 @@
       <v-spacer></v-spacer>
 
       <div v-if="admin">
-        <v-btn text color="grey">
+        <v-btn text color="grey" @click="GoToAdminPage()">
           <span>Admin</span>
           <v-icon right>mdi mdi-account-key </v-icon>
         </v-btn>
@@ -117,6 +117,14 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item v-if="admin" to="/admin">
+          <v-list-item-icon>
+            <v-icon> mdi mdi-account-key</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Admin Page</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -142,7 +150,10 @@ export default {
           .currentUser.getIdTokenResult(true)
           .then((idToken) => {
             this.admin = idToken.claims.admin;
-          }).catch(err=>{ console.log(err)});
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
         this.loggedIn = false;
         //this.snackbarSingedOut = true;
@@ -193,6 +204,13 @@ export default {
         this.snackbarSingedOut = true;
       } catch (error) {
         console.log(error);
+      }
+    },
+    GoToAdminPage() {
+      if (this.admin == true) {
+        this.$router.push("/admin");
+      } else {
+        console.log("you are not an admin user.");
       }
     },
   },
