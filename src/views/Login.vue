@@ -63,7 +63,18 @@ export default {
        await firebase.auth().signInWithEmailAndPassword(this.email,this.password);
        this.errorMessage="";
        bus.$emit('login');
+       firebase
+          .auth()
+          .currentUser.getIdTokenResult(/* forceRefresh */ true)
+          .then(function(idToken) {
+            console.log(idToken.claims.admin);
+            // ...
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
        this.$router.replace({name:"Dashboard"});
+
      } catch (error) {
        
        this.errorMessage=error.message

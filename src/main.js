@@ -16,7 +16,7 @@ Vue.config.productionTip = false;
 let app;
 
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user);
+  console.log("ez az app-ból jön",user);
   if (!app) {
     new Vue({
       router,

@@ -402,6 +402,8 @@ const passw = helpers.regex("passw", /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*
 const postcodeRegex = helpers.regex("postCode",/^[1-9]{1}[0-9]{3}$/);
 const regexHouseNumber = helpers.regex("houseNumber",/^[\d]/);
 
+const fbFunctions = firebase.functions();
+
 export default {
 
 
@@ -624,6 +626,13 @@ export default {
     this.setFocus();
   },
   methods: {
+    setAdminFalse() {
+      const adminEmail = this.email;
+      const SetAdminFalse = fbFunctions.httpsCallable("SetAdminFalse");
+      SetAdminFalse({ email: adminEmail }).then((result)=> {
+        console.log(result)
+      })
+    },
 
     firstNameSubmit() {
       this.$v.firstName.$touch();
@@ -735,6 +744,7 @@ export default {
               deliveryHouseNumber:this.deliveryHouseNumber,
               userId: uid    
       });
+      this.setAdminFalse();
       this.signedOut();
       } else {
             alert("hiba a kapcsolatban!");
