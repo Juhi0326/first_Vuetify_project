@@ -75,7 +75,7 @@
           <v-col cols="6" md="2">
             <v-btn
               v-if="
-                project.status !== 'completed' && project.userId == activeUserId
+                project.status !== 'completed' && (project.userId == activeUserId || admin)
               "
               color="primary"
               dark
@@ -123,14 +123,15 @@ export default {
   name: "Dashboard",
   created() {
     this.setActiveUser();
+    this.setAdmin();  
   },
-
   data() {
     return {
       dialog: false,
       id: null,
       activeUserId: null,
       completed: false,
+      admin: false,
     };
   },
   computed: {
@@ -147,18 +148,6 @@ export default {
         }
       });
       return this.$store.getters.allProjects;
-    },
-    visibleBtn: function() {
-      console.log("computed, project uid: ", this.$store.getters.allProjects);
-      if (
-        this.$store.getters.allProjects.userId ===
-          firebase.auth().currentUser.uid &&
-        this.$store.getters.allProjects.status !== "completed"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
     },
   },
 
@@ -187,12 +176,7 @@ export default {
         }
       }
     },
-
     setActiveUser() {
-      console.log(
-        "ez a dashboard-ból jön, szerinte ez az active user: ",
-        firebase.auth().currentUser
-      );
       var user = firebase.auth().currentUser;
       this.activeUserId = user.uid;
       db.collection("users")
@@ -206,6 +190,18 @@ export default {
               );
             }
           });
+        });
+    },
+    setAdmin() {
+      firebase
+        .auth()
+        .currentUser.getIdTokenResult(true)
+        .then((idToken) => {
+          this.admin = idToken.claims.admin;
+          
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },
