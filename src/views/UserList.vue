@@ -5,7 +5,7 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">
+            <th class="text-left py-6">
               Name
             </th>
             <th class="text-left">
@@ -17,10 +17,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, i) in users" :key="i">
-            <td>{{ user.firstName }} {{ user.lastName }}</td>
-            <td></td>
-            <td></td>
+          <tr v-for="(user, i) in users" :key="i" >
+            <td class="py-6">{{ user.firstName }} {{ user.lastName }}</td>
+            <td class="py-6" v-if="user.admin">Admin</td>
+            <td class="py-6" v-else></td>
+            <td class="py-6">
+              <v-chip class="chip" @click="blinds">
+                <v-icon left>
+                  mdi mdi-account-convert
+                </v-icon>
+                Edit
+              </v-chip>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -42,8 +50,13 @@ export default {
       return this.$store.getters.getAllUsers;
     },
   },
-
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+
+.chip:hover {
+    cursor: pointer;
+}
+
+</style>
