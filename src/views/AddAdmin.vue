@@ -50,6 +50,7 @@ export default {
       const addAdminRole = fbFunctions.httpsCallable("addAdminRole");
       addAdminRole({ email: adminEmail }).then((result)=> {
         console.log(result)
+        this.setAdmin();
       })
     },
     setAdmin() {
@@ -58,8 +59,9 @@ export default {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             if (doc.data().email === this.email) {
-              this.$store.dispatch("setAdmin", doc.id);
-
+              db.collection("users")
+              .doc(doc.id)
+              .update({admin: true})
             }
           });
         });

@@ -730,7 +730,8 @@ export default {
               deliveryCity: this.deliveryCity,
               deliveryStreet:this.deliveryStreet,
               deliveryHouseNumber:this.deliveryHouseNumber,
-              userId: uid    
+              userId: uid,
+              admin:false   
       });
       //this.setAdminFalse();
       //this.signedOut();

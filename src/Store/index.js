@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     projects: [],
+    users: [],
     activeUser: "",
     admin: false
   },
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     allProjects: (state) => {
       return state.projects;
+    },
+    getAllUsers: (state) =>{    
+      return state.users;
     },
     filteredProjects: (state, getters) => {
 
@@ -41,6 +45,9 @@ export default new Vuex.Store({
   actions: {
     getProjects: firestoreAction(({ bindFirestoreRef }) => {
       return bindFirestoreRef("projects", db.collection("projects2"));
+    }),
+    getUsers: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef("users", db.collection("users"));
     }),
     setActiveUser({ commit }, user) {
       commit("SET_ACTIVE_USER", user);
