@@ -22,7 +22,7 @@
             <td class="py-6" v-if="user.admin">Admin</td>
             <td class="py-6" v-else></td>
             <td class="py-6">
-              <v-chip class="chip" @click="blinds">
+              <v-chip class="chip" @click="editUser()">
                 <v-icon left>
                   mdi mdi-account-convert
                 </v-icon>
@@ -50,6 +50,11 @@ export default {
       return this.$store.getters.getAllUsers;
     },
   },
+  method: {
+      editUser() {
+          
+      }
+  }
 };
 </script>
 

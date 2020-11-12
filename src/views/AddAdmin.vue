@@ -20,6 +20,12 @@
                   <v-btn class="ml-12 mb-12" type="submit">
                     add Admin
                   </v-btn>
+
+                  <v-btn dark color="error mb-5" class="ml-12 mb-12" @click="deleteFirebaseAdmin()">
+                    <v-icon left>mdi mdi-xamarin-outline</v-icon>
+                    delete Admin
+                    
+                  </v-btn>
                 </v-col>
               </v-row>
             </div>
@@ -48,10 +54,18 @@ export default {
     addFirebaseAdmin() {
       const adminEmail = this.email;
       const addAdminRole = fbFunctions.httpsCallable("addAdminRole");
-      addAdminRole({ email: adminEmail }).then((result)=> {
-        console.log(result)
+      addAdminRole({ email: adminEmail }).then((result) => {
+        console.log(result);
         this.setAdmin();
-      })
+      });
+    },
+    deleteFirebaseAdmin() {
+      const adminEmail = this.email;
+      const SetAdminFalse = fbFunctions.httpsCallable("SetAdminFalse");
+      SetAdminFalse({ email: adminEmail }).then((result) => {
+        console.log(result);
+        this.setAdminToFalse();
+      });
     },
     setAdmin() {
       db.collection("users")
@@ -60,8 +74,21 @@ export default {
           querySnapshot.forEach((doc) => {
             if (doc.data().email === this.email) {
               db.collection("users")
-              .doc(doc.id)
-              .update({admin: true})
+                .doc(doc.id)
+                .update({ admin: true });
+            }
+          });
+        });
+    },
+    setAdminToFalse() {
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().email === this.email) {
+              db.collection("users")
+                .doc(doc.id)
+                .update({ admin: false });
             }
           });
         });
