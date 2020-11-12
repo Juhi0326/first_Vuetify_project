@@ -10,9 +10,9 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
     console.log(context.auth.token.admin);
 
       // check request is made by an admin
-//   if ( context.auth.token.admin !== true ) {
-//     return { error: 'Only admins can add other admins' }
-//   }
+  if ( context.auth.token.admin !== true ) {
+    return { error: 'Only admins can add other admins' }
+  }
 
   //get user and add custom claim(admin)
 
@@ -38,9 +38,9 @@ exports.SetAdminFalse = functions.https.onCall((data, context) => {
   console.log(context.auth.token.admin);
 
     // check request is made by an admin
-//   if ( context.auth.token.admin !== true ) {
-//     return { error: 'Only admins can add other admins' }
-//   }
+  if ( context.auth.token.admin !== true ) {
+    return { error: 'Only admins can add other admins' }
+  }
 
 //get user and add custom claim(admin)
 
