@@ -7,8 +7,6 @@ import * as firebase from "firebase/app";
 
 Vue.use(VueRouter);
 
-
-
 const routes = [
   {
     path: "/",
@@ -60,6 +58,13 @@ const routes = [
     name: "Admin",
     component: () =>
       import(/* webpackChunkName: "Admin" */ "../views/Admin.vue"),
+      meta: {requiresAuth:true}
+  },
+  {
+    path: "/addAdmin",
+    name: "AddAdmin",
+    component: () =>
+      import(/* webpackChunkName: "AddAdmin" */ "../views/AddAdmin.vue"),
       meta: {requiresAuth:true}
   },
 ];

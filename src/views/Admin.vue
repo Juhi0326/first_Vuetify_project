@@ -1,71 +1,57 @@
 <template>
   <v-container class="mt-12">
-    This is the Admin page
-    <v-row>
-      <v-col class="flex-md-row">
-        <v-card>
-          <v-form @submit.prevent="addFirebaseAdmin" ref="adminForm">
-            <v-img height="300" src="../assets/haziko.jpg"></v-img>
-            <v-card-title class="pa-12"> Admin Form</v-card-title>
-            <v-divider> </v-divider>
-            <div>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="email"
-                    label="Email"
-                    required
-                    class="px-12 pt-12"
-                  ></v-text-field>
-                  <v-btn class="ml-12 mb-12" type="submit">
-                    add Admin
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </div>
-          </v-form>
-        </v-card>
-      </v-col>
-    </v-row>
+    <h1 class="subheading grey--text ml-12">Admin page</h1>
+    <v-card class="mt-16 mx-auto" max-width="800">
+      <v-toolbar color="indigo" dark>
+        <v-toolbar-title>Admin interface</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-container fluid>
+        <v-row dense>
+          <v-col v-for="card in cards" :key="card.title" :cols="card.flex">
+            <v-card>
+              <v-img
+                :src="card.src"
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="200px"
+              >
+                <v-card-title v-text="card.title"></v-card-title>
+              </v-img>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 
 <script>
-//import * as firebase from "firebase/app";
-import db from "@/fb";
-import "firebase/auth";
-import * as firebase from "firebase/app";
-
-const fbFunctions = firebase.functions();
-
 export default {
-  data() {
-    return {
-      email: "",
-    };
-  },
-  methods: {
-    addFirebaseAdmin() {
-      const adminEmail = this.email;
-      const addAdminRole = fbFunctions.httpsCallable("addAdminRole");
-      addAdminRole({ email: adminEmail }).then((result)=> {
-        console.log(result)
-      })
-    },
-    setAdmin() {
-      db.collection("users")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            if (doc.data().email === this.email) {
-              this.$store.dispatch("setAdmin", doc.id);
-
-            }
-          });
-        });
-    },
-  },
+  data: () => ({
+    cards: [
+      {
+        title: "Stats",
+        src: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
+        flex: 12,
+      },
+      {
+        title: "User maintenance",
+        src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
+        flex: 6,
+      },
+      {
+        title: "Project maintenance",
+        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        flex: 6,
+      },
+    ],
+  }),
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
