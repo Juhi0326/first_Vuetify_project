@@ -59,7 +59,7 @@ export default {
           querySnapshot.forEach((doc) => {
             if (doc.data().email === this.email) {
               this.$store.dispatch("setAdmin", doc.id);
-              console.log("innen elment ez az id: ", doc.id);
+
             }
           });
         });

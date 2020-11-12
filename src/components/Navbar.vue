@@ -194,14 +194,14 @@ export default {
     async signedOut() {
       try {
         await firebase.auth().signOut();
-        console.log(this.$router.currentRoute.path);
+
         if (this.$router.currentRoute.path === "/") {
           this.loggedIn = false;
         } else {
           this.$router.push("/");
           this.loggedIn = false;
           this.$store.dispatch("setActiveUserFalse");
-          console.log("ez a kilépésnél jön, az axctive user: ",this.$store.getters.getActiveUser)
+
         }
         this.snackbarSingedOut = true;
       } catch (error) {

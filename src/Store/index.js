@@ -20,7 +20,7 @@ export default new Vuex.Store({
       return state.projects;
     },
     filteredProjects: (state, getters) => {
-      console.log(state.activeUser);
+
       return state.projects.filter((project) => {
         return project.person === getters.getActiveUser;
       });
@@ -47,7 +47,6 @@ export default new Vuex.Store({
     },
   
     setAdmin({ commit }, userId) {
-      console.log("ez már a setAdmi-ból jön: ",userId)
       commit("SET_ADMIN", userId);
     },
   },
