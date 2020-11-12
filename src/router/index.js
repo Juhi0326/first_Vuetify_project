@@ -61,6 +61,27 @@ const routes = [
       meta: {requiresAuth:true}
   },
   {
+    path: "/stats",
+    name: "Stats",
+    component: () =>
+      import(/* webpackChunkName: "Stats" */ "../views/Stats.vue"),
+      meta: {requiresAuth:true}
+  },
+  {
+    path: "/userList",
+    name: "UserList",
+    component: () =>
+      import(/* webpackChunkName: "UserList" */ "../views/UserList.vue"),
+      meta: {requiresAuth:true}
+  },
+  {
+    path: "/adminProjectMaintenance",
+    name: "AdminProjectMaintenance",
+    component: () =>
+      import(/* webpackChunkName: "AdminProjectMaintenance" */ "../views/AdminProjectMaintenance.vue"),
+      meta: {requiresAuth:true}
+  },
+  {
     path: "/addAdmin",
     name: "AddAdmin",
     component: () =>

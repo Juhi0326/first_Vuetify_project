@@ -1,23 +1,24 @@
 <template>
-  <v-container class="mt-12">
-    <h1 class="subheading grey--text ml-12">Admin page</h1>
-    <v-card class="mt-16 mx-auto" max-width="800">
-      <v-toolbar color="indigo" dark>
+  <v-container>
+    <v-card class="mt-16 mx-auto" max-width="1200">
+      <v-toolbar color="grey darken-1" dark>
         <v-toolbar-title>Admin interface</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container fluid>
         <v-row dense>
           <v-col v-for="card in cards" :key="card.title" :cols="card.flex">
-            <v-card>
-              <v-img
-                :src="card.src"
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                height="200px"
-              >
-                <v-card-title v-text="card.title"></v-card-title>
-              </v-img>
+            <v-card class="py-6">
+              <router-link :to="card.route" class="">
+                <v-img
+                  :src="card.src"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  height="300px"
+                >
+                  <v-card-title v-text="card.title"></v-card-title>
+                </v-img>
+              </router-link>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -31,27 +32,41 @@
 </template>
 
 <script>
+
 export default {
   data: () => ({
     cards: [
       {
         title: "Stats",
-        src: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-        flex: 12,
+        src: require("../assets/stats.jpg"),
+        flex: 6,
+        route: "/stats",
+      },
+      {
+        title: "add/remove admin role",
+        src: require("../assets/user.jpg"),
+        flex: 6,
+        route: "/addAdmin",
       },
       {
         title: "User maintenance",
-        src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
+        src: require("../assets/team.jpg"),
         flex: 6,
+        route: "/userList",
       },
       {
         title: "Project maintenance",
-        src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
+        src: require("../assets/project.jpg"),
         flex: 6,
+        route: "/adminProjectMaintenance",
       },
     ],
   }),
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+a {
+    text-decoration: none;
+}
+</style>
