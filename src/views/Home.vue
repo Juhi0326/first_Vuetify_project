@@ -29,14 +29,14 @@
             </v-btn>
           </router-link>
 
-          <router-link class="text-decoration-none" to="/register">
+          <!-- <router-link class="text-decoration-none" to="/register">
             <v-btn large color="orange" text v-if="!loggedIn">
               Register
             </v-btn>
-          </router-link>
+          </router-link> -->
           <router-link class="text-decoration-none" to="/register2">
             <v-btn large color="orange" text v-if="!loggedIn">
-              Register2
+              Register
             </v-btn>
           </router-link>
         </v-card-actions>

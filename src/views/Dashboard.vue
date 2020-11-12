@@ -74,7 +74,9 @@
           </v-col>
           <v-col cols="6" md="2">
             <v-btn
-              v-if="project.status !== 'completed'"
+              v-if="
+                project.status !== 'completed' && project.userId == activeUserId
+              "
               color="primary"
               dark
               @click="changeId(project.id)"
@@ -119,7 +121,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 export default {
   name: "Dashboard",
-  created () {
+  created() {
     this.setActiveUser();
   },
 
@@ -127,6 +129,8 @@ export default {
     return {
       dialog: false,
       id: null,
+      activeUserId: null,
+      completed: false,
     };
   },
   computed: {
@@ -142,7 +146,19 @@ export default {
           project.status = "overdue";
         }
       });
-      return this.$store.state.projects;
+      return this.$store.getters.allProjects;
+    },
+    visibleBtn: function() {
+      console.log("computed, project uid: ", this.$store.getters.allProjects);
+      if (
+        this.$store.getters.allProjects.userId ===
+          firebase.auth().currentUser.uid &&
+        this.$store.getters.allProjects.status !== "completed"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 
@@ -165,27 +181,33 @@ export default {
           this.projects[i].status = "completed";
 
           db.collection("projects2")
-          .doc(this.id)
-          .update({status: "completed"})
+            .doc(this.id)
+            .update({ status: "completed" });
           break;
         }
       }
     },
 
     setActiveUser() {
-      console.log("ez a dashboard-ból jön, szerinte ez az active user: ", firebase.auth().currentUser)
+      console.log(
+        "ez a dashboard-ból jön, szerinte ez az active user: ",
+        firebase.auth().currentUser
+      );
       var user = firebase.auth().currentUser;
+      this.activeUserId = user.uid;
       db.collection("users")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             if (doc.data().userId === user.uid) {
-              this.$store.dispatch('setActiveUser',`${doc.data().firstName} ${doc.data().lastName}`);
+              this.$store.dispatch(
+                "setActiveUser",
+                `${doc.data().firstName} ${doc.data().lastName}`
+              );
             }
-          })
-        })
-
-    }
+          });
+        });
+    },
   },
   components: {},
 };

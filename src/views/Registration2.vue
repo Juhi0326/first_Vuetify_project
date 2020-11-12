@@ -721,13 +721,10 @@ export default {
       return s; 
     },
     async save() {
-      
       this.loading=true;
-    
       try {
         await firebase.auth().createUserWithEmailAndPassword(this.email,this.password1)
-         var user = firebase.auth().currentUser; 
-         
+         var user = firebase.auth().currentUser;  
          if (user) {
            const uid = user.uid;
             db.collection("users").add({
@@ -744,8 +741,9 @@ export default {
               deliveryHouseNumber:this.deliveryHouseNumber,
               userId: uid    
       });
-      this.setAdminFalse();
-      this.signedOut();
+      //this.setAdminFalse();
+      //this.signedOut();
+      this.$router.push("/dashboard");
       } else {
             alert("hiba a kapcsolatban!");
           }
