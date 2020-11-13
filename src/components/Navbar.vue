@@ -125,6 +125,38 @@
             <v-list-item-title>Admin Page</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item v-if="admin" to="/stats" class="ml-2">
+          <v-list-item-icon>
+            <v-icon> mdi mdi-chart-line</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Stats</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="admin" to="/addAdmin" class="ml-2">
+          <v-list-item-icon>
+            <v-icon> mdi mdi-account-convert</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Add/Remove admin role</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="admin" to="/userList" class="ml-2">
+          <v-list-item-icon>
+            <v-icon> mdi mdi-account-multiple</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>User maintenance</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="admin" to="/adminProjectMaintenance" class="ml-2">
+          <v-list-item-icon>
+            <v-icon> mdi mdi-auto-fix</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Project maintenance</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -201,7 +233,6 @@ export default {
           this.$router.push("/");
           this.loggedIn = false;
           this.$store.dispatch("setActiveUserFalse");
-
         }
         this.snackbarSingedOut = true;
       } catch (error) {
