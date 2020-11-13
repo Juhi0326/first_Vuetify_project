@@ -2,7 +2,7 @@
   <v-app >
     <Navbar/>
     <v-main class="grey lighten-4">
-      <router-view :key="$route.path"></router-view>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>

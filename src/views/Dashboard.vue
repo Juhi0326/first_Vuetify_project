@@ -122,7 +122,7 @@ import "firebase/auth";
 export default {
   name: "Dashboard",
   created() {
-    this.setActiveUser();
+    //this.setActiveUser();
     this.setAdmin();  
   },
   data() {

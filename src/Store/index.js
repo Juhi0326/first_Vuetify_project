@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import db from "../fb";
+import createPersistedState from "vuex-persistedstate";
 //import * as firebase from "firebase/app";
 import { vuexfireMutations, firestoreAction } from "vuexfire";
 
@@ -57,4 +58,5 @@ export default new Vuex.Store({
       commit("SET_ADMIN", userId);
     },
   },
+  plugins: [createPersistedState()]
 });

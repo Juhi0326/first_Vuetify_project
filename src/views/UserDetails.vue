@@ -15,11 +15,12 @@ export default {
         userId: this.$route.params.id,
     };
   },
+  created() {
+      this.userId=this.$route.params.id
+  },
   computed: {
       user() {
-          console.log(this.$store.getters.getAllUsers);
-          console.log(this.userId);
-            return this.$store.getters.getAllUsers.find(user=> user.id === this.userId)
+            return this.$store.getters.getAllUsers.find(user=> user.userId === this.userId)
       }
   }
 };

@@ -45,6 +45,7 @@
 <script>
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import db from "@/fb";
 import {bus} from "../main";
 export default {
   data() {
@@ -74,13 +75,31 @@ export default {
           .catch(function(error) {
             console.log(error);
           });
-       this.$router.replace({name:"Dashboard"});
+      
+       this.setActiveUser();
+        this.$router.replace({name:"Dashboard"});
 
      } catch (error) {
        
        this.errorMessage=error.message
      }
      
+    },
+    setActiveUser() {
+      var user = firebase.auth().currentUser;
+      this.activeUserId = user.uid;
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().userId === user.uid) {
+              this.$store.dispatch(
+                "setActiveUser",
+                `${doc.data().firstName} ${doc.data().lastName}`
+              );
+            }
+          });
+        });
     },
     cancel() {
       this.$router.replace({name:"Home"});
