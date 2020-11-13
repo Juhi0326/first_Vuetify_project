@@ -22,7 +22,7 @@
             <td class="py-6" v-if="user.admin">Admin</td>
             <td class="py-6" v-else></td>
             <td class="py-6">
-              <v-chip class="chip" @click="editUser()">
+              <v-chip class="chip" :to="{name: 'UserDetails', params: {id:user.id} }">
                 <v-icon left>
                   mdi mdi-pencil
                 </v-icon>
