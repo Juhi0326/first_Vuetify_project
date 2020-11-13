@@ -24,7 +24,7 @@
             <td class="py-6">
               <v-chip class="chip" @click="editUser()">
                 <v-icon left>
-                  mdi mdi-account-convert
+                  mdi mdi-pencil
                 </v-icon>
                 Edit
               </v-chip>
