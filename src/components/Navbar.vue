@@ -54,7 +54,7 @@
           </template>
           <v-list>
             <v-list-item
-              v-for="(item, index) in items"
+              v-for="(item, index) in links"
               :key="index"
               :to="item.route"
             >
@@ -214,7 +214,40 @@ export default {
       ],
     };
   },
+
   computed: {
+    links() {
+      if (this.admin != true) {
+        return [
+          { title: "Home", icon: "mdi mdi-home", route: "/" },
+          {
+            title: "Dashboard",
+            icon: "mdi-view-dashboard",
+            route: "/dashboard",
+          },
+          { title: "My Projects", icon: "mdi-forum", route: "/projects" },
+          { title: "Team", icon: "mdi-forum", route: "/team" },
+        ];
+      } else {
+        return [
+          { title: "Home", icon: "mdi mdi-home", route: "/" },
+          {
+            title: "Dashboard",
+            icon: "mdi-view-dashboard",
+            route: "/dashboard",
+          },
+          { title: "My Projects", icon: "mdi-forum", route: "/projects" },
+          { title: "Team", icon: "mdi-forum", route: "/team" },
+          { title: "Admin page", icon: "mdi-forum", route: "/admin" },
+          { title: "Add/Remove admin role", icon: "mdi-forum", route: "/addAdmin" },
+          { title: "Stats", icon: "mdi-forum", route: "/stats" },
+          { title: "User maintenance", icon: "mdi-forum", route: "/userList" },
+          { title: "Project maintenance", icon: "mdi-forum", route: "/adminProjectMaintenance" },
+
+        ];
+      }
+    },
+
     isMobile() {
       return this.$vuetify.breakpoint.xsOnly;
     },
