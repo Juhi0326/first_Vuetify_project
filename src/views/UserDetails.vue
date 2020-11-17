@@ -609,14 +609,23 @@ export default {
       const adminEmail = this.email;
       const addAdminRole = fbFunctions.httpsCallable("addAdminRole");
       addAdminRole({ email: adminEmail }).then((result) => {
-        console.log(result);
+        if (result.data.message.includes("hase been maid an admin")) {
+          console.log("sikeres admin hozzáadás történt");
+        } else {
+          console.log("nem sikerült az admin hozzáadás");
+        }
       });
     },
     deleteFirebaseAdmin() {
       const adminEmail = this.email;
       const SetAdminFalse = fbFunctions.httpsCallable("SetAdminFalse");
       SetAdminFalse({ email: adminEmail }).then((result) => {
-        console.log(result);
+        if (result.data.message.includes("set the admin role to FALSE")) {
+          console.log("sikeres admin törlés");
+        } else {
+          console.log("nem sikerült az admin törlés");
+        }
+        
       });
     },
     setAdmin() {
