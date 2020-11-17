@@ -2,10 +2,10 @@
   <v-container>
     <div>
       <v-card>
-        <v-responsive :aspect-ratio="16 / 8" class="ml-6">
+        <v-responsive :aspect-ratio="16 / 8">
           <v-form @submit.prevent="save()" ref="form">
-            <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3">
+            <v-row class="font-weight-black">
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 Field name
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -17,10 +17,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Admin status
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ admin }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -32,10 +32,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 First Name
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ firstName }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -49,10 +49,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Last Name
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ lastName }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -66,10 +66,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Email
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ email }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -83,10 +83,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Billing postcode
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingPostcode }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -100,10 +100,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Billing City
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingCity }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -117,10 +117,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Billing Street
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingStreet }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -134,10 +134,10 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Billing House number
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingHouseNumber }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -151,7 +151,7 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 <v-radio-group v-model="radioGroup" column mandatory>
                   <v-radio
                     label="Delivery address is the same as billing address"
@@ -166,10 +166,10 @@
             </v-row>
             <v-divider v-if="radioGroup === 2"></v-divider>
             <v-row v-if="radioGroup === 2">
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Delivery Postcode
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryPostcode }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -183,10 +183,10 @@
             </v-row>
             <v-divider v-if="radioGroup === 2"></v-divider>
             <v-row v-if="radioGroup === 2">
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Delivery City
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryCity }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -200,10 +200,10 @@
             </v-row>
             <v-divider v-if="radioGroup === 2"></v-divider>
             <v-row v-if="radioGroup === 2">
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Delivery Street
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryStreet }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -218,10 +218,10 @@
             <v-divider v-if="radioGroup === 2"></v-divider>
 
             <v-row v-if="radioGroup === 2">
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 Delivery House number
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6">
+              <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryHouseNumber }}
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3">
@@ -540,7 +540,7 @@ export default {
       this.deliveryHouseNumber = this.user.deliveryHouseNumber;
       this.admin = this.user.admin;
     },
-    async save() {
+    save() {
       this.$v.$touch();
       if (this.admin !== this.adminStatus) {
         if (this.adminStatus == true) {
@@ -554,7 +554,7 @@ export default {
         console.log("NEM változott az admin státusz!");
       }
 
-      await db
+      db
         .collection("users")
         .get()
         .then((querySnapshot) => {
@@ -648,4 +648,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.row:hover {
+background-color:rgb(206, 206, 195);
+
+}
+.col {
+margin-left: 6px;
+}
+</style>
