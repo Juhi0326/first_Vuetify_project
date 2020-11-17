@@ -62,6 +62,8 @@ export default {
 
 .chip:hover {
     cursor: pointer;
+    background-color:mediumorchid;
+    color: snow;
 }
 
 </style>

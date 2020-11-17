@@ -8,10 +8,10 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 Field name
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 Value
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 New Value
               </v-col>
             </v-row>
@@ -23,7 +23,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ admin }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="text-field pl-8">
                 <v-switch
                   v-model="adminStatus"
                   :label="`Admin: ${adminStatus.toString()}`"
@@ -38,7 +38,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ firstName }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="firstName"
@@ -55,7 +55,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ lastName }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="lastName"
@@ -72,7 +72,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ email }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="email"
@@ -89,7 +89,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingPostcode }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="billingPostcode"
@@ -106,7 +106,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingCity }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="billingCity"
@@ -123,7 +123,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingStreet }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="billingStreet"
@@ -140,7 +140,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ billingHouseNumber }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="billingHouseNumber"
@@ -172,7 +172,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryPostcode }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="deliveryPostcode"
@@ -189,7 +189,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryCity }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="deliveryCity"
@@ -206,7 +206,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryStreet }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="deliveryStreet"
@@ -224,7 +224,7 @@
               <v-col cols="12" sm="6" md="4" lg="3" class="mt-6 pl-8">
                 {{ deliveryHouseNumber }}
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
+              <v-col cols="12" sm="6" md="4" lg="3" class="px-8">
                 <v-text-field
                   rows="1"
                   v-model="deliveryHouseNumber"
@@ -236,11 +236,11 @@
             <v-divider></v-divider>
 
             <v-row>
-              <v-col cols="12" sm="6" md="4" lg="3">
-                <v-btn type="submit">Save</v-btn>
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
+                <v-btn type="submit" color="primary">Save</v-btn>
               </v-col>
-              <v-col cols="12" sm="6" md="4" lg="3">
-                <v-btn>Cancel</v-btn>
+              <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
+                <v-btn @click="$router.go(-1)">Cancel</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -544,7 +544,9 @@ export default {
       this.$v.$touch();
       if (this.admin !== this.adminStatus) {
         if (this.adminStatus == true) {
-          this.addFirebaseAdmin();
+          this.addFirebaseAdmin().then(admin=> {
+            console.log(admin);
+          });
           this.adminStatus = true;
         } else {
           this.deleteFirebaseAdmin();
