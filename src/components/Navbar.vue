@@ -39,7 +39,7 @@
       <v-spacer></v-spacer>
 
       <div v-if="admin">
-        <v-btn text color="grey" @click="GoToAdminPage()">
+        <v-btn text color="grey" @click="GoToAdminPage()" v-if="!isMobile">
           <span>Admin</span>
           <v-icon right>mdi mdi-account-key </v-icon>
         </v-btn>
@@ -108,7 +108,7 @@
 
       <v-divider></v-divider>
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.route">
+        <v-list-item v-for="item in links" :key="item.title" :to="item.route">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -117,46 +117,7 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="admin" to="/admin">
-          <v-list-item-icon>
-            <v-icon> mdi mdi-account-key</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Admin Page</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="admin" to="/stats" class="ml-2">
-          <v-list-item-icon>
-            <v-icon> mdi mdi-chart-line</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Stats</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="admin" to="/addAdmin" class="ml-2">
-          <v-list-item-icon>
-            <v-icon> mdi mdi-account-convert</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Add/Remove admin role</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="admin" to="/userList" class="ml-2">
-          <v-list-item-icon>
-            <v-icon> mdi mdi-account-multiple</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>User maintenance</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="admin" to="/adminProjectMaintenance" class="ml-2">
-          <v-list-item-icon>
-            <v-icon> mdi mdi-auto-fix</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Project maintenance</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -206,12 +167,6 @@ export default {
       drawer: false,
       loggedIn: false,
       admin: null,
-      items: [
-        { title: "Home", icon: "mdi mdi-home", route: "/" },
-        { title: "Dashboard", icon: "mdi-view-dashboard", route: "/dashboard" },
-        { title: "My Projects", icon: "mdi-forum", route: "/projects" },
-        { title: "Team", icon: "mdi-forum", route: "/team" },
-      ],
     };
   },
 
@@ -238,11 +193,11 @@ export default {
           },
           { title: "My Projects", icon: "mdi-forum", route: "/projects" },
           { title: "Team", icon: "mdi-forum", route: "/team" },
-          { title: "Admin page", icon: "mdi-forum", route: "/admin" },
-          { title: "Add/Remove admin role", icon: "mdi-forum", route: "/addAdmin" },
-          { title: "Stats", icon: "mdi-forum", route: "/stats" },
-          { title: "User maintenance", icon: "mdi-forum", route: "/userList" },
-          { title: "Project maintenance", icon: "mdi-forum", route: "/adminProjectMaintenance" },
+          { title: "Admin page", icon: "mdi mdi-account-key", route: "/admin" },
+          { title: "Add/Remove admin role", icon: "mdi mdi-account-convert", route: "/addAdmin" },
+          { title: "Stats", icon: "mdi mdi-chart-line", route: "/stats" },
+          { title: "User maintenance", icon: "mdi mdi-account-multiple", route: "/userList" },
+          { title: "Project maintenance", icon: "mdi mdi-auto-fix", route: "/adminProjectMaintenance" },
 
         ];
       }
