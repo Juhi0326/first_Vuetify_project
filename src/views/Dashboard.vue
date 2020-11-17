@@ -75,7 +75,8 @@
           <v-col cols="6" md="2">
             <v-btn
               v-if="
-                project.status !== 'completed' && (project.userId == activeUserId || admin)
+                project.status !== 'completed' &&
+                  (project.userId == activeUserId || admin)
               "
               color="primary"
               dark
@@ -123,7 +124,7 @@ export default {
   name: "Dashboard",
   created() {
     //this.setActiveUser();
-    this.setAdmin();  
+    this.setAdmin();
   },
   data() {
     return {
@@ -193,16 +194,19 @@ export default {
         });
     },
     setAdmin() {
-      firebase
-        .auth()
-        .currentUser.getIdTokenResult(true)
-        .then((idToken) => {
-          this.admin = idToken.claims.admin;
-          
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          firebase
+            .auth()
+            .currentUser.getIdTokenResult(true)
+            .then((idToken) => {
+              this.admin = idToken.claims.admin;
+            })
+            .catch((err) => {
+              console.log("a dashboard-ból jön a hiba", err);
+            });
+        }
+      });
     },
   },
   components: {},

@@ -542,7 +542,7 @@ export default {
     },
     save() {
       this.$v.$touch();
-      if (this.admin !== this.adminStatus) {
+      if (this.user.admin !== this.adminStatus) {
         if (this.adminStatus == true) {
           this.addFirebaseAdmin().then(admin=> {
             console.log(admin);

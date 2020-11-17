@@ -232,7 +232,6 @@ export default {
         } else {
           this.$router.push("/");
           this.loggedIn = false;
-          this.$store.dispatch("setActiveUserFalse");
         }
         this.snackbarSingedOut = true;
       } catch (error) {
