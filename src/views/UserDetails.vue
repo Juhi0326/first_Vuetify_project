@@ -237,7 +237,9 @@
 
             <v-row>
               <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
-                <v-btn type="submit" color="primary">Save</v-btn>
+                <v-btn type="submit" color="primary"  :loading="loading"
+                  >Save</v-btn
+                >
               </v-col>
               <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
                 <v-btn @click="$router.go(-1)">Cancel</v-btn>
@@ -358,6 +360,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       adminStatus: false,
       radioGroup: null,
       userId: this.$route.params.id,
@@ -542,6 +545,7 @@ export default {
     },
     save() {
       this.$v.$touch();
+      this.loading=true;
       db.collection("users")
         .get()
         .then((querySnapshot) => {
@@ -579,9 +583,11 @@ export default {
             console.log("NEM változott az admin státusz!");
           }
           this.$store.dispatch("getUsers");
-        }).catch((err=>{
+          
+        })
+        .catch((err) => {
           console.log(err);
-        }));
+        });
     },
     initAdminStatus() {
       if (this.admin == false) {
@@ -611,8 +617,10 @@ export default {
       addAdminRole({ email: adminEmail }).then((result) => {
         if (result.data.message.includes("hase been maid an admin")) {
           console.log("sikeres admin hozzáadás történt");
+          this.loading=false;
         } else {
           console.log("nem sikerült az admin hozzáadás");
+          this.loading=false;
         }
       });
     },
@@ -622,10 +630,11 @@ export default {
       SetAdminFalse({ email: adminEmail }).then((result) => {
         if (result.data.message.includes("set the admin role to FALSE")) {
           console.log("sikeres admin törlés");
+          this.loading=false;
         } else {
           console.log("nem sikerült az admin törlés");
+          this.loading=false;
         }
-        
       });
     },
     setAdmin() {
