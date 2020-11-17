@@ -542,22 +542,7 @@ export default {
     },
     save() {
       this.$v.$touch();
-      if (this.user.admin !== this.adminStatus) {
-        if (this.adminStatus == true) {
-          this.addFirebaseAdmin().then(admin=> {
-            console.log(admin);
-          });
-          this.adminStatus = true;
-        } else {
-          this.deleteFirebaseAdmin();
-          this.adminStatus = false;
-        }
-      } else {
-        console.log("NEM változott az admin státusz!");
-      }
-
-      db
-        .collection("users")
+      db.collection("users")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -580,9 +565,23 @@ export default {
                 });
             }
           });
-        }).then(()=> {
-          this.$store.dispatch("getUsers");
         })
+        .then(() => {
+          if (this.user.admin !== this.adminStatus) {
+            if (this.adminStatus == true) {
+              this.addFirebaseAdmin();
+              this.adminStatus = true;
+            } else {
+              this.deleteFirebaseAdmin();
+              this.adminStatus = false;
+            }
+          } else {
+            console.log("NEM változott az admin státusz!");
+          }
+          this.$store.dispatch("getUsers");
+        }).catch((err=>{
+          console.log(err);
+        }));
     },
     initAdminStatus() {
       if (this.admin == false) {
@@ -652,10 +651,9 @@ export default {
 
 <style scoped>
 .row:hover {
-background-color:rgb(206, 206, 195);
-
+  background-color: rgb(206, 206, 195);
 }
 .col {
-margin-left: 6px;
+  margin-left: 6px;
 }
 </style>
