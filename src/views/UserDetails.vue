@@ -548,7 +548,11 @@ export default {
       this.$v.$touch();
       this.loading = true;
       if (this.$v.$error == false) {
-        this.changeAdmin();
+        if (this.user.admin == this.adminStatus) {
+          this.updateDatabase();
+        } else {
+          this.changeAdmin();
+        }
         this.loading = false;
         this.$store.dispatch("getUsers");
       } else {
@@ -557,7 +561,6 @@ export default {
       }
     },
     changeAdmin() {
-
       if (this.user.admin !== this.adminStatus) {
         if (this.adminStatus == true) {
           this.addFirebaseAdmin();
@@ -576,7 +579,6 @@ export default {
       }
     },
     initRadio() {
-  
       if (
         this.deliveryPostcode === null &&
         this.deliveryCity === "" &&
@@ -596,7 +598,9 @@ export default {
           console.log("sikeres admin hozzáadás történt");
           this.updateDatabase();
         } else {
-          console.log("nem sikerült az admin hozzáadás, és így a user update is elmaradt.");
+          console.log(
+            "nem sikerült az admin hozzáadás, és így a user update is elmaradt."
+          );
         }
       });
     },
@@ -609,7 +613,9 @@ export default {
           this.updateDatabase();
           this.loading = false;
         } else {
-          console.log("nem sikerült az admin törlés, és így a user update is elmaradt.");
+          console.log(
+            "nem sikerült az admin törlés, és így a user update is elmaradt."
+          );
           this.loading = false;
         }
       });
@@ -663,7 +669,7 @@ export default {
                   deliveryHouseNumber: this.deliveryHouseNumber,
                 })
                 .then(() => {
-                  console.log("sikeres update!"); 
+                  console.log("sikeres update!");
                 })
                 .catch((err) => {
                   console.log(err);
@@ -671,7 +677,7 @@ export default {
                 });
             }
           });
-        })
+        });
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
   <nav>
+    <Snackbar text="ez egy teszt szöveg" color="green"/>
     <v-snackbar dark color="primary" v-model="snackbar" :timeout="4000" top>
       <span>You added a new project!</span>
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
@@ -127,6 +128,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import Popup from "./Popup";
+import Snackbar from "./Snackbar"
 import { bus } from "../main";
 export default {
   created() {
@@ -156,6 +158,7 @@ export default {
 
   components: {
     Popup,
+    Snackbar
   },
   name: "Navbar",
   data() {
