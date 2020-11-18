@@ -237,7 +237,7 @@
 
             <v-row>
               <v-col cols="12" sm="6" md="4" lg="3" class="pl-8">
-                <v-btn type="submit" color="primary"  :loading="loading"
+                <v-btn type="submit" color="primary" :loading="loading"
                   >Save</v-btn
                 >
               </v-col>
@@ -360,6 +360,7 @@ export default {
   },
   data() {
     return {
+      success: false,
       loading: false,
       adminStatus: false,
       radioGroup: null,
@@ -545,49 +546,27 @@ export default {
     },
     save() {
       this.$v.$touch();
-      this.loading=true;
-      db.collection("users")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            if (doc.data().email === this.user.email) {
-              db.collection("users")
-                .doc(doc.id)
-                .update({
-                  admin: this.adminStatus,
-                  firstName: this.firstName,
-                  lastName: this.lastName,
-                  //email: this.email,
-                  billingPostcode: this.billingPostcode,
-                  billingCity: this.billingCity,
-                  billingStreet: this.billingStreet,
-                  billingHouseNumber: this.billingHouseNumber,
-                  deliveryPostcode: this.deliveryPostcode,
-                  deliveryCity: this.deliveryCity,
-                  deliveryStreet: this.deliveryStreet,
-                  deliveryHouseNumber: this.deliveryHouseNumber,
-                });
-            }
-          });
-        })
-        .then(() => {
-          if (this.user.admin !== this.adminStatus) {
-            if (this.adminStatus == true) {
-              this.addFirebaseAdmin();
-              this.adminStatus = true;
-            } else {
-              this.deleteFirebaseAdmin();
-              this.adminStatus = false;
-            }
-          } else {
-            console.log("NEM változott az admin státusz!");
-          }
-          this.$store.dispatch("getUsers");
-          
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.loading = true;
+      if (this.$v.$error == false) {
+        this.changeAdmin();
+        this.loading = false;
+        this.$store.dispatch("getUsers");
+      } else {
+        console.log("hiba");
+        this.loading = false;
+      }
+    },
+    changeAdmin() {
+
+      if (this.user.admin !== this.adminStatus) {
+        if (this.adminStatus == true) {
+          this.addFirebaseAdmin();
+          this.adminStatus = true;
+        } else {
+          this.deleteFirebaseAdmin();
+          this.adminStatus = false;
+        }
+      }
     },
     initAdminStatus() {
       if (this.admin == false) {
@@ -597,9 +576,7 @@ export default {
       }
     },
     initRadio() {
-      console.log(
-        `${this.deliveryPostcode}${this.deliveryCity}${this.deliveryStreet}${this.deliveryHouseNumber}`
-      );
+  
       if (
         this.deliveryPostcode === null &&
         this.deliveryCity === "" &&
@@ -617,10 +594,9 @@ export default {
       addAdminRole({ email: adminEmail }).then((result) => {
         if (result.data.message.includes("hase been maid an admin")) {
           console.log("sikeres admin hozzáadás történt");
-          this.loading=false;
+          this.updateDatabase();
         } else {
-          console.log("nem sikerült az admin hozzáadás");
-          this.loading=false;
+          console.log("nem sikerült az admin hozzáadás, és így a user update is elmaradt.");
         }
       });
     },
@@ -630,10 +606,11 @@ export default {
       SetAdminFalse({ email: adminEmail }).then((result) => {
         if (result.data.message.includes("set the admin role to FALSE")) {
           console.log("sikeres admin törlés");
-          this.loading=false;
+          this.updateDatabase();
+          this.loading = false;
         } else {
-          console.log("nem sikerült az admin törlés");
-          this.loading=false;
+          console.log("nem sikerült az admin törlés, és így a user update is elmaradt.");
+          this.loading = false;
         }
       });
     },
@@ -662,6 +639,39 @@ export default {
             }
           });
         });
+    },
+    updateDatabase() {
+      db.collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().email === this.user.email) {
+              db.collection("users")
+                .doc(doc.id)
+                .update({
+                  admin: this.adminStatus,
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  //email: this.email,
+                  billingPostcode: this.billingPostcode,
+                  billingCity: this.billingCity,
+                  billingStreet: this.billingStreet,
+                  billingHouseNumber: this.billingHouseNumber,
+                  deliveryPostcode: this.deliveryPostcode,
+                  deliveryCity: this.deliveryCity,
+                  deliveryStreet: this.deliveryStreet,
+                  deliveryHouseNumber: this.deliveryHouseNumber,
+                })
+                .then(() => {
+                  console.log("sikeres update!"); 
+                })
+                .catch((err) => {
+                  console.log(err);
+                  this.loading = false;
+                });
+            }
+          });
+        })
     },
   },
 };
