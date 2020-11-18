@@ -3,6 +3,11 @@
     <h1 class="subheading grey--text ml-12">Our Team</h1>
   
     <v-container class="my-5">
+      <SlotButton>
+        Click me! :)
+      </SlotButton>
+
+
       <v-row>
         <v-col
           cols="12"
@@ -42,9 +47,13 @@
 </template>
 
 <script>
+import SlotButton from "../components/SlotButton"
 
 export default {
   name: "Team",
+  components: {
+    SlotButton
+  },
   data() {
     return {
       team: [
