@@ -32,6 +32,12 @@ const routes = [
       import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
   },
   {
+    path: "/slot",
+    name: "LogPageForSlotComponentin",
+    component: () =>
+      import(/* webpackChunkName: "PageForSlotComponent" */ "../views/PageForSlotComponent.vue"),
+  },
+  {
     path: "/projects",
     name: "Projects",
 

@@ -3,7 +3,7 @@
     <h1 class="subheading grey--text ml-12">Our Team</h1>
   
     <v-container class="my-5">
-      <SlotButton>
+      <SlotButton @click="log">
         Click me! :)
       </SlotButton>
 
@@ -76,6 +76,11 @@ export default {
       ],
     };
   },
+  methods: {
+    log() {
+      console.log("megy a slot")
+    }
+  }
   
 };
 </script>
