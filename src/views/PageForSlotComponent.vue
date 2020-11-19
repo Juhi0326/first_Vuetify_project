@@ -1,6 +1,6 @@
 <template>
   <SlotComp>
-    <template v-slot:main>
+    <template #main>
       ez a main
         <v-divider></v-divider>
         <SlotButton @click="log" class="mt-8 ml-6" >
