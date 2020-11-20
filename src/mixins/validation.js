@@ -288,9 +288,4 @@ export default {
           }  
         }
       },
-    
-
-
-
-
 }
