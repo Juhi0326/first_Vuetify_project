@@ -34,15 +34,6 @@
                 @enter="firstNameSubmit()"
                 :errorMessage="firstNameErrors"
               />
-              <!-- <v-text-field
-                flat
-                v-model="firstName"
-                label="First Name"
-                required
-                :error-messages="firstNameErrors"
-                v-on:keyup.13="firstNameSubmit()"
-                ref="firstName"
-              ></v-text-field> -->
             </v-card>
             <ButtonComponent
               @click="firstNameSubmit()"
@@ -67,15 +58,15 @@
               height="50px"
               max-width="500"
             >
-              <v-text-field
-                flat
+              <TextFieldComp
+                builtInLabel="Last Name"
+                :builtInRequiredParam="true"
+                :builtIFlatParam="true"
                 v-model="lastName"
-                label="Last Name"
-                required
-                :error-messages="lastNameErrors"
-                v-on:keyup.13="lastNameSubmit()"
                 ref="lastName"
-              ></v-text-field>
+                @enter="firstNameSubmit()"
+                :errorMessage="lastNameErrors"
+              />
             </v-card>
             <ButtonComponent
               @click="lastNameSubmit()"
@@ -106,16 +97,17 @@
               height="50px"
               max-width="500"
             >
-              <v-text-field
-                flat
+              <TextFieldComp
+                builtInLabel="email address"
+                :builtInRequiredParam="true"
+                :builtIFlatParam="true"
                 v-model="email"
-                label="email address"
-                required
-                :error-messages="emailErrors"
-                v-on:keyup.13="emailSubmit()"
                 ref="email"
-              ></v-text-field
-            ></v-card>
+                @enter="emailSubmit()"
+                :errorMessage="emailErrors"
+              />
+              ></v-card
+            >
             <ButtonComponent
               @click="emailSubmit()"
               propText="Continue"
@@ -145,7 +137,21 @@
               height="50px"
               max-width="500"
             >
-              <v-text-field
+              <TextFieldComp
+                builtInLabel="Normal with hint text"
+                :builtInRequiredParam="true"
+                :builtInCounterParam="true"
+                :builtIFlatParam="true"
+                :appendIcon="true"
+                name="input-10-1"
+                hintParam="8-10 Character Password with lowercase, uppercase letters, numbers, 
+                    special characters and at least one lowercase letter, one uppercase letter, one number and one special character"
+                v-model="password1"
+                ref="password1"
+                @enter="password1Submit()"
+                :errorMessage="password1Errors"
+              />
+              <!-- <v-text-field
                 v-model="password1"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
@@ -158,7 +164,7 @@
                 @click:append="show1 = !show1"
                 v-on:keyup.13="password1Submit()"
                 ref="password1"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-card>
             <ButtonComponent
               color="primary"
@@ -468,13 +474,9 @@ export default {
     },
   },
   mounted() {
-    console.log(this.counter);
     this.setFocus();
   },
   methods: {
-    enter() {
-      console.log("rányomtam");
-    },
     async save() {
       this.loading = true;
       try {
@@ -531,16 +533,16 @@ export default {
           this.$refs.myForm.resetValidation();
           break;
         case 2:
-          this.$refs.lastName.focus();
+          this.$refs.lastName.$refs.input.focus();
           break;
         case 3:
-          this.$refs.email.focus();
+          this.$refs.email.$refs.input.focus();
           break;
         case 4:
-          this.$refs.password1.focus();
+          this.$refs.password1.$refs.input.focus();
           break;
         case 5:
-          this.$refs.password2.focus();
+          this.$refs.password2.$refs.input.focus();
           break;
         default:
           break;
