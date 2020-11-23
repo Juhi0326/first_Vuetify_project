@@ -5,8 +5,13 @@
         <header>
           <slot name="header" class="text-center" />
         </header>
-        <main>
-          <slot name="main" class="text-center" />
+        <header>
+          <slot name="header2" />
+        </header>
+        <main v-if="hasMainSlot">
+          <slot name="main" class="text-center"> 
+            <h1>ide írok valamit</h1>
+          </slot>
         </main>
       </v-responsive>
       <footer class="d-flex align-end">
@@ -17,7 +22,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed:{
+    hasMainSlot() {
+  return !!this.$slots.main
+}
+  }
+};
 </script>
 
 <style scoped>

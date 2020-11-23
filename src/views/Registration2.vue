@@ -25,7 +25,16 @@
               height="50px"
               max-width="500"
             >
-              <v-text-field
+              <TextFieldComp
+                builtInLabel="First Name"
+                :builtInRequiredParam="true"
+                :builtIFlatParam="true"
+                v-model="firstName"
+                ref="firstName"
+                @enter="firstNameSubmit()"
+                :errorMessage="firstNameErrors"
+              />
+              <!-- <v-text-field
                 flat
                 v-model="firstName"
                 label="First Name"
@@ -33,7 +42,7 @@
                 :error-messages="firstNameErrors"
                 v-on:keyup.13="firstNameSubmit()"
                 ref="firstName"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-card>
             <ButtonComponent
               @click="firstNameSubmit()"
@@ -417,6 +426,7 @@ import "firebase/auth";
 import validation from "../mixins/validation";
 import ButtonComponent from "../components/ButtonComponent";
 import RouterLinkToHomeComp from "../components/RouterLinkToHomeComp";
+import TextFieldComp from "../components/TextFieldComp";
 
 export default {
   mixins: [validation],
@@ -450,6 +460,7 @@ export default {
   components: {
     ButtonComponent,
     RouterLinkToHomeComp,
+    TextFieldComp,
   },
   computed: {
     isMobile() {
@@ -457,9 +468,13 @@ export default {
     },
   },
   mounted() {
+    console.log(this.counter);
     this.setFocus();
   },
   methods: {
+    enter() {
+      console.log("rányomtam");
+    },
     async save() {
       this.loading = true;
       try {
@@ -512,7 +527,7 @@ export default {
     setFocus() {
       switch (this.counter) {
         case 1:
-          this.$refs.firstName.focus();
+          this.$refs.firstName.$refs.input.focus();
           this.$refs.myForm.resetValidation();
           break;
         case 2:

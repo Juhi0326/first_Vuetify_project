@@ -1,12 +1,12 @@
 <template>
   <div class="Team">
     <h1 class="subheading grey--text ml-12">Our Team</h1>
-  
     <v-container class="my-5">
       <SlotButton @click="log">
-        Click me! :)
+        <template #first>
+          kattins ide
+        </template>
       </SlotButton>
-
 
       <v-row>
         <v-col
@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import SlotButton from "../components/SlotButton"
+import SlotButton from "../components/SlotButton";
 
 export default {
   name: "Team",
   components: {
-    SlotButton
+    SlotButton,
   },
   data() {
     return {
@@ -78,9 +78,8 @@ export default {
   },
   methods: {
     log() {
-      console.log("megy a slot")
-    }
-  }
-  
+      console.log("megy a slot");
+    },
+  },
 };
 </script>
