@@ -106,8 +106,7 @@
                 @enter="emailSubmit()"
                 :errorMessage="emailErrors"
               />
-              </v-card
-            >
+            </v-card>
             <ButtonComponent
               @click="emailSubmit()"
               propText="Continue"
@@ -227,48 +226,30 @@
               max-width="500"
             >
               <v-card-title>Billing Address</v-card-title>
-
-              <!-- <TextFieldComp
+              <TextFieldComp
                 builtInLabel="postcode"
-                :builtInRequiredParam="true"
-                :builtIFlatParam="true"
-                v-model="firstName"
-                ref="firstName"
-                @enter="firstNameSubmit()"
-                :errorMessage="firstNameErrors"
-              /> -->
-              <v-text-field
-                label="postcode"
-                class="ml-4"
                 v-model="postcode"
-                :error-messages="postcodeErrors"
-              >
-              </v-text-field>
-
-              <v-text-field
-                label="city"
+                classParam="ml-4"
+                :errorMessage="postcodeErrors"
+              />
+              <TextFieldComp
+                builtInLabel="city"
                 v-model="city"
-                :error-messages="cityErrors"
-                class="ml-4"
-              >
-              </v-text-field>
-
-              <v-text-field
-                label="street"
+                classParam="ml-4"
+                :errorMessage="cityErrors"
+              />
+              <TextFieldComp
+                builtInLabel="street"
                 v-model="street"
-                :error-messages="streetErrors"
-                class="ml-4"
-              >
-              </v-text-field>
-
-              <v-text-field
-                label="house number"
+                classParam="ml-4"
+                :errorMessage="streetErrors"
+              />
+              <TextFieldComp
+                builtInLabel="house number"
                 v-model="houseNumber"
-                :error-messages="houseNumberErrors"
-                class="ml-4"
-              >
-              </v-text-field>
-
+                classParam="ml-4"
+                :errorMessage="houseNumberErrors"
+              />
               <v-radio-group v-model="radioGroup">
                 <v-radio
                   :label="`Delivery address is the same`"
@@ -318,34 +299,30 @@
               <v-card-title>
                 Delivery Address
               </v-card-title>
-              <v-text-field
-                label="postcode"
-                class="ml-4"
-                :error-messages="deliveryPostcodeErrors"
+              <TextFieldComp
+                builtInLabel="postcode"
                 v-model="deliveryPostcode"
-              >
-              </v-text-field>
-              <v-text-field
-                label="city"
+                classParam="ml-4"
+                :errorMessage="deliveryPostcodeErrors"
+              />
+              <TextFieldComp
+                builtInLabel="city"
                 v-model="deliveryCity"
-                :error-messages="deliveryCityErrors"
-                class="ml-4"
-              >
-              </v-text-field>
-              <v-text-field
-                label="street"
+                classParam="ml-4"
+                :errorMessage="deliveryCityErrors"
+              />
+              <TextFieldComp
+                builtInLabel="street"
                 v-model="deliveryStreet"
-                :error-messages="deliveryStreetErrors"
-                class="ml-4"
-              >
-              </v-text-field>
-              <v-text-field
-                label="house number"
+                classParam="ml-4"
+                :errorMessage="deliveryStreetErrors"
+              />
+              <TextFieldComp
+                builtInLabel="house number"
                 v-model="deliveryHouseNumber"
-                :error-messages="deliveryHouseNumberErrors"
-                class="ml-4"
-              >
-              </v-text-field>
+                classParam="ml-4"
+                :errorMessage="deliveryHouseNumberErrors"
+              />
             </v-card>
             <!-- buttons in case of delivery address -->
             <ButtonComponent
@@ -520,28 +497,6 @@ export default {
         this.loggedIn = false;
       } catch (error) {
         console.log(error);
-      }
-    },
-    setFocus() {
-      switch (this.counter) {
-        case 1:
-          this.$refs.firstName.$refs.input.focus();
-          this.$refs.myForm.resetValidation();
-          break;
-        case 2:
-          this.$refs.lastName.$refs.input.focus();
-          break;
-        case 3:
-          this.$refs.email.$refs.input.focus();
-          break;
-        case 4:
-          this.$refs.password1.$refs.input.focus();
-          break;
-        case 5:
-          this.$refs.password2.$refs.input.focus();
-          break;
-        default:
-          break;
       }
     },
   },

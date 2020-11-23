@@ -13,6 +13,7 @@
     :append-icon="getIcon()"
     :type="getType()"
     @click:append="show1 = !show1"
+    :class="classParam"
   >
   </v-text-field>
 </template>
@@ -29,11 +30,13 @@ export default {
     "builtInCounterParam",
     "hintParam",
     "appendIcon",
+    "classParam"
   ],
   created() {
     if (this.appendIcon !== undefined) {
       this.show1 = this.appendIcon;
     }
+    console.log(this.classParam);
 
   },
   data() {

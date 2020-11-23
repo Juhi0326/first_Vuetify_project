@@ -77,6 +77,28 @@ export default {
         },
       },
       methods: {
+        setFocus() {
+          switch (this.counter) {
+            case 1:
+              this.$refs.firstName.$refs.input.focus();
+              this.$refs.myForm.resetValidation();
+              break;
+            case 2:
+              this.$refs.lastName.$refs.input.focus();
+              break;
+            case 3:
+              this.$refs.email.$refs.input.focus();
+              break;
+            case 4:
+              this.$refs.password1.$refs.input.focus();
+              break;
+            case 5:
+              this.$refs.password2.$refs.input.focus();
+              break;
+            default:
+              break;
+          }
+        },
         firstNameSubmit() {
             this.$v.firstName.$touch();
             if (!this.$v.firstName.$error == true) {
