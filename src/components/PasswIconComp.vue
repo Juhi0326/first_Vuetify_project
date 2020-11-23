@@ -1,7 +1,5 @@
 <template>
-    <div>
-
-    </div>
+    <v-icon>'mdi-eye</v-icon>
 </template>
 
 <script>

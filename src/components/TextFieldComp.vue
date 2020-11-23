@@ -10,14 +10,16 @@
     :error-messages="errorMessage"
     ref="input"
     :hint="hintParam"
-    :type="show1 == null || show1 == false ? 'text' : 'password'"
-    :append-icon="show1 == false ? 'mdi-eye' : 'mdi-eye-off'"
+    :append-icon="getIcon()"
+    :type="getType()"
     @click:append="show1 = !show1"
-  ></v-text-field>
+  >
+  </v-text-field>
 </template>
 
 <script>
 export default {
+  components: {},
   props: [
     "builtIFlatParam",
     "builtInRequiredParam",
@@ -29,20 +31,38 @@ export default {
     "appendIcon",
   ],
   created() {
-    if (this.appendIcon == null) {
-      console.log("nem jött át semmi");
-    } else {
-      console.log("itt átjött :", this.builtInLabel, this.appendIcon);
+    if (this.appendIcon !== undefined) {
+      this.show1 = this.appendIcon;
     }
-    this.show1=this.appendIcon
+
   },
   data() {
     return {
-      show1: false,
-      show2: false,
+      show1: null,
     };
   },
+  computed: {
+    
+  },
   methods: {
+     getType() {
+      if (this.show1 == undefined) { 
+        return "text";
+      } else if (this.show1 == false) {
+        return 'text';
+      } else {
+        return "password";
+      }
+    },
+    getIcon() {
+      if (this.show1 == undefined) {
+        return null;
+      } else if (this.show1 == false) {
+        return 'mdi-eye';
+      } else {
+        return "mdi-eye-off";
+      }
+    },
     updateValue(model) {
       this.$emit("input", model);
     },

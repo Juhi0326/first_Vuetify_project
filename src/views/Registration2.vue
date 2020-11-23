@@ -106,7 +106,7 @@
                 @enter="emailSubmit()"
                 :errorMessage="emailErrors"
               />
-              ></v-card
+              </v-card
             >
             <ButtonComponent
               @click="emailSubmit()"
@@ -151,20 +151,6 @@
                 @enter="password1Submit()"
                 :errorMessage="password1Errors"
               />
-              <!-- <v-text-field
-                v-model="password1"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                :error-messages="password1Errors"
-                label="Normal with hint text"
-                hint="8-10 Character Password with lowercase, uppercase letters, numbers, 
-                    special characters and at least one lowercase letter, one uppercase letter, one number and one special character"
-                counter
-                @click:append="show1 = !show1"
-                v-on:keyup.13="password1Submit()"
-                ref="password1"
-              ></v-text-field> -->
             </v-card>
             <ButtonComponent
               color="primary"
@@ -195,20 +181,20 @@
               height="50px"
               max-width="500"
             >
-              <v-text-field
-                v-model="password2"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show1 ? 'text' : 'password'"
-                :error-messages="password2Errors"
+              <TextFieldComp
+                builtInLabel="Normal with hint text"
+                :builtInRequiredParam="true"
+                :builtInCounterParam="true"
+                :builtIFlatParam="true"
+                :appendIcon="true"
                 name="input-10-1"
-                label="Normal with hint text"
-                hint="At least 8 characters"
-                counter
-                @click:append="show1 = !show1"
-                v-on:keyup.13="password2Submit()"
+                hintParam="Confirmm password"
+                v-model="password2"
                 ref="password2"
-              ></v-text-field
-            ></v-card>
+                @enter="password2Submit()"
+                :errorMessage="password2Errors"
+              />
+            </v-card>
             <ButtonComponent
               color="primary"
               propText="Continue"
@@ -241,6 +227,16 @@
               max-width="500"
             >
               <v-card-title>Billing Address</v-card-title>
+
+              <!-- <TextFieldComp
+                builtInLabel="postcode"
+                :builtInRequiredParam="true"
+                :builtIFlatParam="true"
+                v-model="firstName"
+                ref="firstName"
+                @enter="firstNameSubmit()"
+                :errorMessage="firstNameErrors"
+              /> -->
               <v-text-field
                 label="postcode"
                 class="ml-4"
