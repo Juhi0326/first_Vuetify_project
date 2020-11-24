@@ -6,19 +6,22 @@
           <slot name="header" class="text-center" />
         </header>
         <header :class="propClassHeader">
-          <slot  name="header2" />
+          <slot name="header2" />
         </header>
         <main v-if="hasMainSlot">
-          <slot name="main" class="text-center"> 
+          <slot name="main" class="text-center">
             <h1>ide írok valamit</h1>
           </slot>
         </main>
       </v-responsive>
-      <footer class="d-flex align-end justify-center pt-4" :class="propClassFooter">
-        <slot name="footer"  />
-        
+      <footer
+        class="d-flex align-end justify-center pt-4"
+        :class="propClassFooter"
+      >
+        <slot name="footer" />
+
         <SlotButton propColorFirst="red" propColorSecond="green" class="pl-5">
-          <template #first> szöveg </template> 
+          <template #first> {{person.name}} </template>
         </SlotButton>
       </footer>
     </v-card>
@@ -26,20 +29,20 @@
 </template>
 
 <script>
-import SlotButton from "../components/SlotButton"
+import SlotButton from "../components/SlotButton";
 export default {
-  props: ["propClassHeader", "propClassFooter"],
+  props: ["propClassHeader", "propClassFooter", "person"],
   components: {
-    SlotButton
+    SlotButton,
   },
-  created () {
-   console.log(this.$slots);
+  created() {
+    console.log(this.person);
   },
-  computed:{
+  computed: {
     hasMainSlot() {
-  return !!this.$slots.main
-}
-  }
+      return !!this.$slots.main;
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
 
-  <SlotComp propClassHeader="ml-8" propClassFooter="pl-8">
+  <SlotComp propClassHeader="ml-8" propClassFooter="pl-8" :person="person">
     <!-- <template #main>
       ez a main
       <v-divider></v-divider>
@@ -30,7 +30,11 @@ export default {
   },
   data() {
     return {
-      field:""
+      person: {
+        name: "István Juhász",
+        Country: "Hungary",
+        numberOfChildren: 1
+      }
     }
   },
   methods: {
