@@ -14,18 +14,26 @@
           </slot>
         </main>
       </v-responsive>
-      <footer class="d-flex align-end justify-center" :class="propClassFooter">
+      <footer class="d-flex align-end justify-center pt-4" :class="propClassFooter">
         <slot name="footer"  />
+        
+        <SlotButton propColorFirst="red" propColorSecond="green" class="pl-5">
+          <template #first> szöveg </template> 
+        </SlotButton>
       </footer>
     </v-card>
   </v-container>
 </template>
 
 <script>
+import SlotButton from "../components/SlotButton"
 export default {
   props: ["propClassHeader", "propClassFooter"],
+  components: {
+    SlotButton
+  },
   created () {
-   console.log(this.propClassFooter);
+   console.log(this.$slots);
   },
   computed:{
     hasMainSlot() {
