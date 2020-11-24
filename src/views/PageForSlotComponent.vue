@@ -1,6 +1,8 @@
 <template>
 
-  <SlotComp>
+  <SlotComp 
+  propClassHeader="ml-8" 
+  propClassFooter="pl-8">
     <!-- <template #main>
       ez a main
       <v-divider></v-divider>
