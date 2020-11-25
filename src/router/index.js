@@ -38,6 +38,12 @@ const routes = [
       import(/* webpackChunkName: "Proba" */ "../views/Proba.vue"),
   },
   {
+    path: "/stepper",
+    name: "Stepper",
+    component: () =>
+      import(/* webpackChunkName: "Stepper" */ "../views/tryingViews/Stepper.vue"),
+  },
+  {
     path: "/slot",
     name: "LogPageForSlotComponentin",
     component: () =>
