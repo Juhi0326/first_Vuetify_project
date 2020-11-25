@@ -10,7 +10,7 @@ export default {
   props: ["text", "color"],
   data() {
     return {
-    snackbar: true
+    snackbar: false
     };
   },
 };

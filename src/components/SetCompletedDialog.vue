@@ -61,7 +61,7 @@ export default {
           break;
         }
       }
-      this.$emit("setCompleted");
+      this.$emit("set-completed");
       this.dialog = false;
     },
     cancel() {

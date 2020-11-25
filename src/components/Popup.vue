@@ -145,7 +145,7 @@ export default {
               .then(() => {
                 this.loading = false;
                 this.dialog = false;
-                this.$emit("projectAdded");
+                this.$emit("project-added");
                 this.clear();
               });
           }

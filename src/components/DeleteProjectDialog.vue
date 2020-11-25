@@ -58,7 +58,7 @@ export default {
           break;
         }
       }
-      this.$emit("projectDeleted");
+      this.$emit("project-deleted");
       this.dialog = false;
     },
     cancel() {
