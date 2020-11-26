@@ -120,6 +120,7 @@
 import db from "@/fb";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import {setCompleteProject} from "../dbService"
 export default {
   name: "Dashboard",
   created() {
@@ -170,9 +171,11 @@ export default {
         if (this.projects[i].id === this.id) {
           this.projects[i].status = "completed";
 
-          db.collection("projects2")
-            .doc(this.id)
-            .update({ status: "completed" });
+          setCompleteProject("projects2",this.id);
+
+          // db.collection("projects2")
+          //   .doc(this.id)
+          //   .update({ status: "completed" });
           break;
         }
       }

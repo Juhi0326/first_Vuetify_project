@@ -1,4 +1,5 @@
 <template>
+<v-container>
   <v-stepper v-model="stepper" vertical>
     <StepperStep propStep="1" propCompleteNumber="1" v-model="stepper">
       First Step
@@ -42,6 +43,7 @@
       save="true"
     />
   </v-stepper>
+  </v-container>
 </template>
 
 <script>
@@ -66,7 +68,9 @@ export default {
     },
     save() {
         console.log("save method fired!");
+        
     }
+    
   },
 };
 </script>
