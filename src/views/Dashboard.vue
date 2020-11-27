@@ -168,14 +168,13 @@ export default {
     setComplete() {
       this.dialog = false;
       for (let i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].id === this.id) {
-          this.projects[i].status = "completed";
-
-          setCompleteProject("projects2",this.id);
-
-          // db.collection("projects2")
-          //   .doc(this.id)
-          //   .update({ status: "completed" });
+        if (this.projects[i].id === this.id) { 
+          setCompleteProject("projects2",this.id).then(()=>{
+              console.log("módosult az adatbázis!")
+              this.projects[i].status = "completed";
+          }).catch((err)=> {
+            console.log(err);
+          })
           break;
         }
       }

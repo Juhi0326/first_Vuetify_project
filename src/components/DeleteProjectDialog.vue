@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import db from "@/fb";
+//import db from "@/fb";
+import {deleteProjectfromDb} from "../dbService"
 export default {
   data() {
     return {
@@ -52,9 +53,11 @@ export default {
       for (let i = 0; i < this.$store.getters.allProjects.length; i++) {
         const element=this.$store.getters.allProjects[i]
         if (element.id === this.id) {
-          db.collection("projects2")
-            .doc(this.id)
-            .delete()
+          deleteProjectfromDb("projects2",this.id).then(()=> {
+              console.log("deleted  project");
+          }).catch((err)=> {
+            console.log(err)
+          })
           break;
         }
       }
