@@ -7,7 +7,7 @@ const mySql = false;
 
 export async function setCompleteProject(project, id) {
   if (firestore) {
-    //firestor method
+    //firestore method
     await db
       .collection(project)
       .doc(id)
@@ -20,6 +20,7 @@ export async function setCompleteProject(project, id) {
 }
 export async function deleteProjectfromDb(project, id) {
   if (firestore) {
+    //firestore method
     await db
       .collection(project)
       .doc(id)

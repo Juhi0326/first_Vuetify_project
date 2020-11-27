@@ -2,8 +2,6 @@
   <div>
     <v-stepper-step  :step="computedStep" :complete="value >DataStep">
       <slot>
-        Select an app
-        <small>Summarize if needed</small>
       </slot>
     </v-stepper-step>
   </div>
