@@ -8,9 +8,8 @@
         <header :class="propClassHeader">
           <slot name="header2" />
         </header>
-        <main v-if="hasMainSlot">
-          <slot name="main" class="text-center">
-            <h1>ide írok valamit</h1>
+        <main>
+          <slot name="main" class="text-center" v-bind:personData="personData">
           </slot>
         </main>
       </v-responsive>
@@ -21,7 +20,7 @@
         <slot name="footer" />
 
         <SlotButton propColorFirst="red" propColorSecond="green" class="pl-5">
-          <template #first> {{person.name}} </template>
+          <template #first> {{ person.name }} </template>
         </SlotButton>
       </footer>
     </v-card>
@@ -37,6 +36,11 @@ export default {
   },
   created() {
     console.log(this.person);
+  },
+  data() {
+    return {
+      personData: { name: "István Juhász", age: 45, country: "Hungary" },
+    };
   },
   computed: {
     hasMainSlot() {
