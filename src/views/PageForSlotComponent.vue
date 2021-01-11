@@ -3,7 +3,7 @@
     <template #main="slotProps">
       ez a main
       <v-divider></v-divider>
-      <v-card class="pa-5 ma-6" >
+      <v-card class="pa-5 ma-6" max-width="400px">
         <h1>Name: {{ slotProps.personData.name }}</h1>
         <h1>Age: {{ slotProps.personData.age }}</h1>
         <h1>Country: {{ slotProps.personData.country }}</h1>
